@@ -1,11 +1,8 @@
 {
-  "config":
-  {
-    "algorithm": "",
-    "heuristic": "",
-    "initial_state": "",
-    "final_state": "123456780",
-    "max_depth": "",
-    "max_steps": ""
-  }
+  "algorithm": "bfs",
+  "heuristic": "",
+  "initial_state": "",
+  "final_state": "123456780",
+  "max_depth": "",
+  "max_steps": ""
 }
