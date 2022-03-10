@@ -1,0 +1,37 @@
+[
+  {
+    "algorithms": [
+      {
+        "name": "BFS"
+      },
+      {
+        "name": "DFS"
+      },
+      {
+        "name": "VDS"
+      },
+      {
+        "name": "LocalHeuristic"
+      },
+      {
+        "name": "GlobalHeuristic"
+      },
+      {
+        "name": "A*"
+      }
+    ]
+  },
+  {
+    "heuristics": [
+      {
+        "name": ""
+      },
+      {
+        "name": ""
+      },
+      {
+        "name": ""
+      }
+    ]
+  }
+]
