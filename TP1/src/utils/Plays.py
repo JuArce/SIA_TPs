@@ -1,25 +1,29 @@
 import collections
 from datetime import datetime
-from TP1.src.algorithms.Node import Node
-from TP1.src.algorithms.State import State
+from algorithms.Node import Node
+from algorithms.State import State
+from utils.Config import Config
 
 
 class Plays:
 
     # TODO: Comentar métodos y agregar al método los tipos de qué devuelven
     @classmethod
-    def initialize(cls, initial_state: str):
+    def initialize(cls, config: Config):
         ex = set()
-        state = State(initial_state)
+        state = State(config.initial_state)
         root = Node(state, None)
-        frontier = [root]
+        if config.algorithm in ['bfs']:
+            frontier = collections.deque()
+            frontier.append(root)
+        else:
+            frontier = [root]
         time = datetime.now()
         result = False
         return ex, root, frontier, time, result
 
     @classmethod
     def get_moves(cls, node: Node, ex: set):
-
         if node in ex:
             return []
 
@@ -69,7 +73,6 @@ class Plays:
 
     @classmethod
     def get_plays_to_win(cls, node: Node):
-
         plays = collections.deque()
 
         while node is not None:

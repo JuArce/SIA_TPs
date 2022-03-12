@@ -1,7 +1,3 @@
-import sys
-
-sys.path.append("..")
-
 from typing import Optional
 from algorithms.State import State
 

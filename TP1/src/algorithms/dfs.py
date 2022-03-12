@@ -1,18 +1,18 @@
 # Recibe estado inicial, final, límites
 #  Se fija donde está el 0. Analiza los posibles estados hijos. Crea los estados hijos. Los empieza a recorrar
 from datetime import datetime
-from utils.Results import Results
 from algorithms.Node import Node
 from algorithms.State import State
-from utils.Plays import Plays
 from utils.Config import Config
+from utils.Plays import Plays
+from utils.Results import Results
 
 
 def dfs(config: Config):
     # Conjunto Ex de nodos explorados. Hashset para guardar los estados ya visitados y accederlos rápidamente
     # Conjunto F de nodos frontera.
 
-    ex, root, frontier, time, result = Plays.initialize(config.initial_state)
+    ex, root, frontier, time, result = Plays.initialize(config)
     expanded_nodes = 0
     deep = 0
     solution = None

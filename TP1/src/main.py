@@ -1,12 +1,13 @@
 from utils.Config import Config
 from algorithms.dfs import dfs
+from algorithms.bfs import bfs
 
 f = open('./resources/config.json')
 config: Config = Config(f.read())
 print(config.algorithm)
 print(config)
 f.close()
-results = dfs(config)
+results = bfs(config)
 
 if results.result:
     for p in results.plays_to_win:
