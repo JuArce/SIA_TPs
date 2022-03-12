@@ -1,6 +1,7 @@
 from datetime import datetime
 from algorithms.dfs import dfs
 from algorithms.bfs import bfs
+from algorithms.a_star import a_star
 from algorithms.local_heuristic import local_heuristic
 from algorithms.global_heuristic import global_heuristic
 from utils.Config import Config
@@ -12,7 +13,7 @@ algorithms = {
     # "vds": vds,
     "local_heuristic": local_heuristic,
     "global_heuristic": global_heuristic,
-    # "a*": a_star
+    "a_star": a_star
 }
 
 f = open('./resources/config.json')

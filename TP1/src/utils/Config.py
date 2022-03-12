@@ -3,7 +3,7 @@ import json
 
 class Config:
     UNINFORMED_ALGORITHMS = ['bfs', 'dfs', 'vds']
-    INFORMED_ALGORITHMS = ['local_heuristic', 'global_heuristic', 'a*']
+    INFORMED_ALGORITHMS = ['local_heuristic', 'global_heuristic', 'a_star']
     HEURISTICS = ['manhattan', 'adm_heu_2', 'not_adm_heu']
 
     def __init__(self, string):
