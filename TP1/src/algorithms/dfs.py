@@ -1,10 +1,5 @@
 # Recibe estado inicial, final, límites
-
-# Se fija donde está el 0. Analiza los posibles estados hijos. Crea los estados hijos. Los empieza a recorrar
-import sys
-
-sys.path.append("..")
-
+#  Se fija donde está el 0. Analiza los posibles estados hijos. Crea los estados hijos. Los empieza a recorrar
 from datetime import datetime
 from utils.Results import Results
 from algorithms.Node import Node
@@ -14,16 +9,14 @@ from utils.Config import Config
 
 
 def dfs(config: Config):
-    ex = set()  # Conjunto Ex de nodos explorados. Hashset para guardar los estados ya visitados y accederlos rápidamente
+    # Conjunto Ex de nodos explorados. Hashset para guardar los estados ya visitados y accederlos rápidamente
+    # Conjunto F de nodos frontera.
 
-    state = State(config.initial_state)
-    root = Node(state, None)  # creación del arbol A
+    ex, root, frontier, time, result = Plays.initialize(config.initial_state)
+    expanded_nodes = 0
+    deep = 0
+    solution = None
 
-    frontier = [root]  # conjunto F de nodos frontera.
-    config = config
-    time = datetime.now()  # get initial time
-
-    result = False
     while len(frontier) > 0:
         # extraemos primer nodo n de F
         node = frontier.pop()
@@ -33,8 +26,13 @@ def dfs(config: Config):
         ex.add(node)
 
         if node.state.id == config.final_state:
+            deep = node.deep
             result = True
+            solution = node
             break
+
+        if node.deep > deep:
+            deep = node.deep
 
         for s in successors:
             state = State(s)
@@ -43,20 +41,25 @@ def dfs(config: Config):
             if child not in ex:
                 frontier.append(child)
 
-        ## agregar en A todos los nodos y en F solo si no está en ex
-        ## reordenar F según el método de búsqueda --> el set se encarga
+        # agregar en A todos los nodos y en F solo si no está en ex
+        # reordenar F según el método de búsqueda --> el set se encarga
 
     time = datetime.now() - time
+    cost = deep  # en el caso del dfs como es uniforme son iguales
 
-    # results = {
-    #     'config': config,
-    #     "result": result,
-    #     "deep": "deep",
-    #     "cost": "cost",
-    #     "expandedNodes": "plays",
-    #     # "frontierNodes": frontier,
-    #     "time": time
-    # }
-    print('Time: ' + time.__str__())
-    print('Res: ' + result.__str__())
-    # return Results(results)
+    plays_to_win = Plays.get_plays_to_win(solution) if result else None
+
+    results = {
+        'config': config,
+        "result": result,
+        "deep": deep,
+        "cost": cost,
+        "expandedNodes": expanded_nodes,
+        "frontierNodes": len(frontier),
+        "time": time,
+        "plays_to_win": plays_to_win
+    }
+    return Results(results)
+
+#  print('Time: ' + time.__str__())
+# print('Res: ' + result.__str__())

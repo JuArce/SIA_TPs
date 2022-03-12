@@ -6,9 +6,18 @@ config: Config = Config(f.read())
 print(config.algorithm)
 print(config)
 f.close()
-print(dfs(config))
-# Chequear a que algoritmo llamo
-# Llamar al algoritmo con los parametros necesarios
+results = dfs(config)
 
-# Obtengo los resultados
-# Imprimo en pantalla o en archivo resultados
+if results.result:
+    for p in results.plays_to_win:
+        print(p[0:3])
+        print(p[3:6])
+        print(p[6:9])
+        print('-------')
+
+
+        # Chequear a que algoritmo llamo
+        # Llamar al algoritmo con los parametros necesarios
+
+        # Obtengo los resultados
+        # Imprimo en pantalla o en archivo resultados

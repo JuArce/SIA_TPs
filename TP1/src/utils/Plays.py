@@ -1,13 +1,24 @@
+import collections
+from datetime import datetime
 from TP1.src.algorithms.Node import Node
-import numpy as np
+from TP1.src.algorithms.State import State
 
 
 class Plays:
+
+    # TODO: Comentar métodos y agregar al método los tipos de qué devuelven
+    @classmethod
+    def initialize(cls, initial_state: str):
+        ex = set()
+        state = State(initial_state)
+        root = Node(state, None)
+        frontier = [root]
+        time = datetime.now()
+        result = False
+        return ex, root, frontier, time, result
+
     @classmethod
     def get_moves(cls, node: Node, ex: set):
-        matrix = [(node.state.id[0:3]),
-                  (node.state.id[3:6]),
-                  (node.state.id[6:9])]
 
         if node in ex:
             return []
@@ -56,5 +67,13 @@ class Plays:
         state_id[blank_idx], state_id[blank_idx + 3] = state_id[blank_idx + 3], state_id[blank_idx]
         return ''.join(state_id)
 
+    @classmethod
+    def get_plays_to_win(cls, node: Node):
 
-Plays.get_moves = staticmethod(Plays.get_moves)
+        plays = collections.deque()
+
+        while node is not None:
+            plays.appendleft(node.state.id)
+            node = node.parent
+
+        return plays
