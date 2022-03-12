@@ -50,6 +50,7 @@ def local_heuristic_rec(ex, root, frontier, result, goal, deep):
         # el estado que lo etiqueta.
         # Formar una lista de nodos L sucesores
         f_successors = []
+        expanded_nodes += 1
         for s in successors:
             state = Heuristic_state(s, goal)
             child = Node(state, node)

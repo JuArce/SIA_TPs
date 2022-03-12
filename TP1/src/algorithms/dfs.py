@@ -34,6 +34,8 @@ def dfs(config: Config):
         if node.deep > deep:
             deep = node.deep
 
+        expanded_nodes += 1
+
         for s in successors:
             state = State(s)
             child = Node(state, node)

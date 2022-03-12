@@ -1,8 +1,8 @@
 {
-  "algorithm": "dfs",
-  "heuristic": "",
-  "initial_state": "123456708",
-  "final_state": "123456780",
+  "algorithm": "global_heuristic",
+  "heuristic": "manhattan",
+  "initial_state": "",
+  "final_state": "843217650",
   "max_depth": "",
   "max_steps": "",
   "qty": 50
