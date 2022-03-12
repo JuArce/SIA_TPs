@@ -18,9 +18,9 @@ f.close()
 
 results = algorithms[config.algorithm](config)
 
-file_name = results.config.algorithm + '-' + datetime.now().strftime("%d-%m-%Y %H:%M:%S") + '.txt'
+file_name = results.config.algorithm + '-' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.txt'
 
-rf = open('./' + file_name, "w+")
+rf = open('./' + file_name, 'w+')
 
 rf.write("".join(["Configuration: ", str(results.config), "\n"]))
 result = "Solved with success" if results.result else "Failed to solve"
