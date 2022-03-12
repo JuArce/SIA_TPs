@@ -2,18 +2,21 @@ from utils.Config import Config
 from algorithms.dfs import dfs
 from datetime import datetime
 from algorithms.bfs import bfs
+from utils.Plays import Plays
 
 algorithms = {
     "bfs": bfs,
     "dfs": dfs,
     # "vds": vds,
     # "local_heuristic": local_heuristic,
-    # "global_heuristic": global_euristic,
+    # "global_heuristic": global_heuristic,
     # "a*": a_star
 }
 
 f = open('./resources/config.json')
 config: Config = Config(f.read())
+config.initial_state = Plays.build_initial_play(config.qty)
+
 f.close()
 
 results = algorithms[config.algorithm](config)
@@ -24,7 +27,7 @@ rf = open('./' + file_name, 'w+')
 
 rf.write("".join(["Configuration: ", str(results.config), "\n"]))
 result = "Solved with success" if results.result else "Failed to solve"
-rf.write("".join(["Result: ", result]))
+rf.write("".join(["Result: ", result, "\n"]))
 rf.write("".join(["Deep: ", str(results.deep), "\n"]))
 rf.write("".join(["Cost: ", str(results.cost), "\n"]))
 rf.write("".join(["Expanded Nodes: ", str(results.expandedNodes), "\n"]))

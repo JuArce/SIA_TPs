@@ -4,5 +4,6 @@
   "initial_state": "123456708",
   "final_state": "123456780",
   "max_depth": "",
-  "max_steps": ""
+  "max_steps": "",
+  "qty": 50
 }

@@ -14,6 +14,7 @@ class Config:
         self.final_state = config.get('final_state')
         self.max_depth = int(config.get('max_depth')) if config.get('max_depth') else None
         self.max_steps = int(config.get('max_steps')) if config.get('max_steps') else None
+        self.qty = int(config.get('qty')) if config.get('qty') else 50
 
         assert (self.algorithm != ''), 'Algorithm undefined'
         assert ((self.algorithm in self.UNINFORMED_ALGORITHMS and self.heuristic is None)
@@ -23,6 +24,10 @@ class Config:
         # TODO validate final state well formatted
         assert (self.max_depth is None or self.max_depth > 0), 'Max depth must be positive or empty'
         assert (self.max_steps is None or self.max_steps > 0), 'Max steps must be positive or empty'
+        # TODO arreglar el texto
+        assert (
+                self.qty is None or 0 < self.qty <= 500), 'Max quantity of initial moves to must be positive ' \
+                                                          'and less than 500 or empty '
 
     def __str__(self):
         return self.__dict__.__str__()
