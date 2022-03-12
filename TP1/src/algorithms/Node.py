@@ -1,14 +1,31 @@
+import sys
+
+sys.path.append("..")
+
+from typing import Optional
+from algorithms.State import State
+
+
 class Node:
 
-    def __init__(self, state):
-        self.state = state  # que id es (es el estado)
-        self.col_idx = state.col_idx
-        self.row_idx = state.row_idx
+    def __init__(self, state: State, parent: Optional['Node']):
+        self.state = state
+        self.deep = (parent.deep + 1 if parent else 0)
         self.is_visited = False
+        self.parent = parent
         self.children = []
+
+    def __hash__(self):
+        return hash(self.state.id)
 
     def get_children(self):
         return self.children
 
     def set_children(self, children):
         self.children = children
+
+
+class HeuristicNode(Node):
+
+    def __init__(self, state: State, parent: Optional['HeuristicNode']):
+        super().__init__(state, parent)

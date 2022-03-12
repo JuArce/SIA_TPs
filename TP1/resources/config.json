@@ -1,7 +1,7 @@
 {
-  "algorithm": "bfs",
+  "algorithm": "dfs",
   "heuristic": "",
-  "initial_state": "",
+  "initial_state": "123456708",
   "final_state": "123456780",
   "max_depth": "",
   "max_steps": ""
