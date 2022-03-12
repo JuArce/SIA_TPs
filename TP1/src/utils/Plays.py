@@ -4,6 +4,10 @@ from algorithms.Node import Node
 from algorithms.State import State
 from algorithms.State import Heuristic_state
 from utils.Config import Config
+from algorithms.manhattan_distance import manhattan
+from algorithms.levenshtein_distance import levenshtein
+# from algorithms.not_adm_heu import not_adm_heu
+
 import random
 
 
@@ -15,6 +19,12 @@ class Plays:
 
     ROWS = 3
     COLS = 3
+
+    heuristic = {
+        "manhattan": manhattan,
+        "levenshtein": levenshtein,
+        # "not_adm_heu":not_adm_heu
+    }
 
     # TODO: Comentar métodos y agregar al método los tipos de qué devuelven
     @classmethod
@@ -42,12 +52,13 @@ class Plays:
     @classmethod
     def initialize_with_heuristic(cls, config: Config):
         ex = set()
-        state = Heuristic_state(config.initial_state, config.final_state)
+        heuristic = cls.heuristic[config.heuristic]
+        state = Heuristic_state(config.initial_state, config.final_state, heuristic)
         root = Node(state, None)
         frontier = [root]
         time = datetime.now()
         result = False
-        return ex, root, frontier, time, result
+        return ex, root, frontier, time, result, heuristic
 
     @classmethod
     def get_moves(cls, node: Node, ex: set):

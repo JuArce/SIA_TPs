@@ -16,7 +16,7 @@ sys.setrecursionlimit(x)
 def global_heuristic(config: Config):
     # L lista de nodos que empieza con n0
     # n0 nodo raiz  s es el estado del nodo raiz
-    ex, root, frontier, time, result = Plays.initialize_with_heuristic(config)
+    ex, root, frontier, time, result, heuristic = Plays.initialize_with_heuristic(config)
     deep = 0
     solution = None
     expanded_nodes = 0
@@ -45,7 +45,7 @@ def global_heuristic(config: Config):
         expanded_nodes += 1
 
         for s in successors:
-            state = Heuristic_state(s, config.final_state)
+            state = Heuristic_state(s, config.final_state, heuristic)
             child = Node(state, node)
             node.children.append(child)
 

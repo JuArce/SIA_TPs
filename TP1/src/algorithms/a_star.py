@@ -8,7 +8,7 @@ from utils.Plays import Plays
 from utils.Results import Results
 
 def a_star(config: Config):
-    ex, root, frontier, time, result = Plays.initialize_with_heuristic(config)
+    ex, root, frontier, time, result, heuristic = Plays.initialize_with_heuristic(config)
     expanded_nodes = 0
     deep = 0
     solution = None
@@ -30,7 +30,7 @@ def a_star(config: Config):
 
         expanded_nodes += 1
         for s in successors:
-            state = Heuristic_state(s, config.final_state)
+            state = Heuristic_state(s, config.final_state, heuristic)
             child = Node(state, node)
             node.children.append(child)
             if child not in ex:

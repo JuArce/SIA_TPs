@@ -16,16 +16,16 @@ sys.setrecursionlimit(x)
 def local_heuristic(config: Config):
     # L lista de nodos que empieza con n0
     # n0 nodo raiz  s es el estado del nodo raiz
-    ex, root, frontier, time, result = Plays.initialize_with_heuristic(config)
+    ex, root, frontier, time, result, heuristic = Plays.initialize_with_heuristic(config)
     deep = 0
-    node = local_heuristic_rec(ex, root, frontier, result, config.final_state, deep)
+    node = local_heuristic_rec(ex, root, frontier, result, config.final_state, deep, heuristic)
 
     print("Result: " + result.__str__())
     print(node.state.id)
     time = datetime.now() - time
 
 
-def local_heuristic_rec(ex, root, frontier, result, goal, deep):
+def local_heuristic_rec(ex, root, frontier, result, goal, deep, heuristic):
     while len(frontier) > 0:
         # Considerar al nodo n de L cuyo estado tenga
         # el menor valor de heuristica
@@ -52,7 +52,7 @@ def local_heuristic_rec(ex, root, frontier, result, goal, deep):
         f_successors = []
         expanded_nodes += 1
         for s in successors:
-            state = Heuristic_state(s, goal)
+            state = Heuristic_state(s, goal, heuristic)
             child = Node(state, node)
             node.children.append(child)
             if child not in ex:

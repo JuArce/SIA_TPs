@@ -2,7 +2,6 @@ from algorithms.manhattan_distance import manhattan
 
 
 class State:
-
     COLS = 3
     ROWS = 3
 
@@ -15,6 +14,6 @@ class State:
 
 class Heuristic_state(State):
 
-    def __init__(self, state: str, goal: str):
+    def __init__(self, state: str, goal: str, heuristic):
         super().__init__(state)
-        self.heuristic = manhattan(state, goal)
+        self.heuristic = heuristic(state, goal)
