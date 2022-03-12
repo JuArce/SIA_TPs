@@ -1,21 +1,23 @@
-from utils.Config import Config
-from algorithms.dfs import dfs
 from datetime import datetime
+from algorithms.dfs import dfs
 from algorithms.bfs import bfs
+from algorithms.local_heuristic import local_heuristic
+from utils.Config import Config
 from utils.Plays import Plays
 
 algorithms = {
     "bfs": bfs,
     "dfs": dfs,
     # "vds": vds,
-    # "local_heuristic": local_heuristic,
-    # "global_heuristic": global_heuristic,
+    "local_heuristic": local_heuristic,
+    # "global_heuristic": global_euristic,
     # "a*": a_star
 }
 
 f = open('./resources/config.json')
 config: Config = Config(f.read())
-config.initial_state = Plays.build_initial_play(config.qty)
+if config.initial_state is None or len(config.initial_state) == 0:
+    config.initial_state = Plays.build_initial_play(config.qty)
 
 f.close()
 

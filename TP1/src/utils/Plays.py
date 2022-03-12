@@ -2,6 +2,7 @@ import collections
 from datetime import datetime
 from algorithms.Node import Node
 from algorithms.State import State
+from algorithms.State import Heuristic_state
 from utils.Config import Config
 import random
 
@@ -37,6 +38,16 @@ class Plays:
     (dónde se encuentra el 0) e
     @:returns Devuelve un array de punteros a función con los posibles movimientos a ejecutar
     """
+
+    @classmethod
+    def initialize_with_heuristic(cls, config: Config):
+        ex = set()
+        state = Heuristic_state(config.initial_state, config.final_state)
+        root = Node(state, None)
+        frontier = [root]
+        time = datetime.now()
+        result = False
+        return ex, root, frontier, time, result
 
     @classmethod
     def get_moves(cls, node: Node, ex: set):

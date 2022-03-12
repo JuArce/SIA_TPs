@@ -1,3 +1,6 @@
+from algorithms.manhattan_distance import manhattan
+
+
 class State:
 
     COLS = 3
@@ -9,3 +12,9 @@ class State:
         self.col_idx = blank_idx % self.COLS
         self.row_idx = blank_idx // self.ROWS  # The // operator will be available to request floor division unambiguously.
 
+
+class Heuristic_state(State):
+
+    def __init__(self, state: str, goal: str):
+        super().__init__(state)
+        self.heuristic = manhattan(state, goal)

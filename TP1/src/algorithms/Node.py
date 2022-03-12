@@ -1,11 +1,13 @@
 from typing import Optional
 from algorithms.State import State
+from algorithms.State import Heuristic_state
 
 
 class Node:
 
-    def __init__(self, state: State, parent: Optional['Node']):
+    def __init__(self, state: State or Heuristic_state, parent: Optional['Node']):
         self.state = state
+        # profundidad de la solución
         self.deep = (parent.deep + 1 if parent else 0)
         self.is_visited = False
         self.parent = parent
@@ -16,15 +18,3 @@ class Node:
 
     def __hash__(self):
         return hash(self.state.id)
-
-    def get_children(self):
-        return self.children
-
-    def set_children(self, children):
-        self.children = children
-
-
-class HeuristicNode(Node):
-
-    def __init__(self, state: State, parent: Optional['HeuristicNode']):
-        super().__init__(state, parent)
