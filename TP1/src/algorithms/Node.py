@@ -15,6 +15,9 @@ class Node:
         self.parent = parent
         self.children = []
 
+    def __eq__(self, o: object) -> bool:
+        return isinstance(o, Node) and self.state.id == o.state.id
+
     def __hash__(self):
         return hash(self.state.id)
 

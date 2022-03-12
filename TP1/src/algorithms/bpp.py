@@ -26,12 +26,14 @@ def bpp(config: Config):
     time = datetime.now()  # get initial time
 
     result = False
-
+    i = 0
     while len(frontier) > 0:
+        print(i)
+        i += 1
         # extraemos primer nodo n de F
         node = frontier.pop()
         successors = Plays.get_moves(node, ex)
-        print(node.state.id)
+        # print(node.state.id)
         # agregamos n si no esta en Ex
         ex.add(node)
 
@@ -60,4 +62,5 @@ def bpp(config: Config):
         "frontierNodes": frontier,
         "time": time
     }
-    return Results(results)
+    # return Results(results)
+    print('Res:' + result.__str__())
