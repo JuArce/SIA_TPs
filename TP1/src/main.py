@@ -3,10 +3,20 @@ from algorithms.dfs import dfs
 from datetime import datetime
 from algorithms.bfs import bfs
 
+algorithms = {
+    "bfs": bfs,
+    "dfs": dfs,
+    # "vds": vds,
+    # "local_heuristic": local_heuristic,
+    # "global_heuristic": global_euristic,
+    # "a*": a_star
+}
+
 f = open('./resources/config.json')
 config: Config = Config(f.read())
 f.close()
-results = bfs(config)
+
+results = algorithms[config.algorithm](config)
 
 file_name = results.config.algorithm + '-' + datetime.now().strftime("%d-%m-%Y %H:%M:%S") + '.txt'
 
