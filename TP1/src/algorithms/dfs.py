@@ -1,8 +1,6 @@
 # Recibe estado inicial, final, límites
 
 # Se fija donde está el 0. Analiza los posibles estados hijos. Crea los estados hijos. Los empieza a recorrar
-import numpy as np
-
 import sys
 
 sys.path.append("..")
@@ -15,7 +13,7 @@ from utils.Plays import Plays
 from utils.Config import Config
 
 
-def bpp(config: Config):
+def dfs(config: Config):
     ex = set()  # Conjunto Ex de nodos explorados. Hashset para guardar los estados ya visitados y accederlos rápidamente
 
     state = State(config.initial_state)
@@ -26,10 +24,7 @@ def bpp(config: Config):
     time = datetime.now()  # get initial time
 
     result = False
-    i = 0
     while len(frontier) > 0:
-        print(i)
-        i += 1
         # extraemos primer nodo n de F
         node = frontier.pop()
         successors = Plays.get_moves(node, ex)
@@ -53,14 +48,15 @@ def bpp(config: Config):
 
     time = datetime.now() - time
 
-    results = {
-        "config": config,
-        "result": result,
-        "deep": "deep",
-        "cost": "cost",
-        "expandedNodes": "plays",
-        "frontierNodes": frontier,
-        "time": time
-    }
+    # results = {
+    #     'config': config,
+    #     "result": result,
+    #     "deep": "deep",
+    #     "cost": "cost",
+    #     "expandedNodes": "plays",
+    #     # "frontierNodes": frontier,
+    #     "time": time
+    # }
+    print('Time: ' + time.__str__())
+    print('Res: ' + result.__str__())
     # return Results(results)
-    print('Res:' + result.__str__())
