@@ -1,24 +1,58 @@
-import sys
 from datetime import datetime
-
 from algorithms.Node import Node
 from algorithms.State import Heuristic_state
 from utils.Config import Config
 from utils.Plays import Plays
 from utils.Results import Results
 
-x = 1500000
-sys.setrecursionlimit(x)
-
 
 def local_heuristic(config: Config):
     # L lista de nodos que empieza con n0
     # n0 nodo raiz  s es el estado del nodo raiz
     ex, root, frontier, time, result, heuristic = Plays.initialize_with_heuristic(config)
+    expanded_nodes = 0
     deep = 0
+    solution = None
 
-    solution = local_heuristic_rec(ex, root, frontier, result, config.final_state, deep,
-                                   heuristic, 0)
+    while len(frontier) > 0:
+        # Considerar al nodo n de L cuyo estado tenga
+        # el menor valor de heuristica
+        # frontier.sort(key=lambda n: n.state.heuristic, reverse=True)
+        # Remover n de L
+        node = frontier.pop()
+        successors = Plays.get_moves(node, ex)
+        ex.add(node)
+        # Si el estado s de n es solucion
+        # Fin de busqueda con exito
+        if node.state.id == config.final_state:
+            deep = node.deep
+            result = True
+            solution = node
+            break
+
+        if node.deep > deep:
+            deep = node.deep
+
+        # Expandir n de acuerdo a las acciones posibles para
+        # el estado que lo etiqueta.
+        # Formar una lista de nodos L sucesores
+        expanded_nodes += 1
+
+        f_successors = []
+        for s in successors:
+            state = Heuristic_state(s, config.final_state, heuristic)
+            child = Node(state, node)
+            node.children.append(child)
+            if child not in ex:
+                # L sucesores tiene los nodos
+                # obtenidos de la expansion de n.
+                f_successors.append(child)
+        f_successors.sort(key=lambda n: n.state.heuristic, reverse=True)
+        for n in f_successors:
+            frontier.append(n)
+        # LLamar a BusquedaHeuristicaLocal(Lsucesores)
+        # return local_heuristic_rec(ex, root, f_successors, result, goal, deep, heuristic, expanded_nodes + 1)
+
 
     time = datetime.now() - time
     cost = deep
@@ -27,53 +61,13 @@ def local_heuristic(config: Config):
 
     results = {
         'config': config,
-        "result": False,  # TODO: result,
+        "result": result,
         "deep": solution.deep,
         "cost": cost,
-        "expandedNodes": 0,  # TODO: expanded_nodes,
-        "frontierNodes": 0,  # TODO: len(frontier),
+        "expandedNodes": expanded_nodes,
+        "frontierNodes": len(frontier),
         "time": time,
         "plays_to_win": plays_to_win
     }
 
     return Results(results)
-
-
-def local_heuristic_rec(ex, root, frontier, result, goal, deep, heuristic, expanded_nodes):
-    while len(frontier) > 0:
-        # Considerar al nodo n de L cuyo estado tenga
-        # el menor valor de heuristica
-        frontier.sort(key=lambda n: n.state.heuristic, reverse=True)
-        # Remover n de L
-        node = frontier.pop()
-        successors = Plays.get_moves(node, ex)
-        ex.add(node)
-        print("bbb")
-        # Si el estado s de n es solucion
-        # Fin de busqueda con exito
-        if node.state.id == goal:
-            deep = node.deep
-            print("aaaa")
-            result = True
-            solution = node
-            return solution
-
-        if node.deep > deep:
-            deep = node.deep
-
-        # Expandir n de acuerdo a las acciones posibles para
-        # el estado que lo etiqueta.
-        # Formar una lista de nodos L sucesores
-        f_successors = []
-        expanded_nodes += 1
-        for s in successors:
-            state = Heuristic_state(s, goal, heuristic)
-            child = Node(state, node)
-            node.children.append(child)
-            if child not in ex:
-                # L sucesores tiene los nodos
-                # obtenidos de la expansion de n.
-                f_successors.append(child)
-
-        # LLamar a BusquedaHeuristicaLocal(Lsucesores)
-        return local_heuristic_rec(ex, root, f_successors, result, goal, deep, heuristic, expanded_nodes + 1)
