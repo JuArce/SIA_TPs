@@ -1,5 +1,6 @@
 import collections
 from datetime import datetime
+from typing import Optional
 from algorithms.Node import Node
 from algorithms.State import State
 from algorithms.State import Heuristic_state
@@ -32,7 +33,7 @@ class Plays:
         ex = set()
         state = State(config.initial_state)
         root = Node(state, None)
-        if config.algorithm in ['bfs']:
+        if config.algorithm in ['bfs', 'vds']:
             frontier = collections.deque()
             frontier.append(root)
         else:
@@ -127,7 +128,7 @@ class Plays:
         return ''.join(aux)
 
     @classmethod
-    def get_plays_to_win(cls, node: Node):
+    def get_plays_to_win(cls, node: Optional["Node"]):
         plays = collections.deque()
 
         while node is not None:

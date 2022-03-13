@@ -12,6 +12,7 @@ class Config:
         self.heuristic = config.get('heuristic') if config.get('heuristic') else None
         self.initial_state = config.get('initial_state')
         self.final_state = config.get('final_state')
+        self.initial_depth = config.get('initial_depth')
         self.max_depth = int(config.get('max_depth')) if config.get('max_depth') else None
         self.max_steps = int(config.get('max_steps')) if config.get('max_steps') else None
         self.qty = int(config.get('qty')) if config.get('qty') else 50

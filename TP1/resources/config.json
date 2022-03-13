@@ -1,7 +1,8 @@
 {
-  "algorithm": "local_heuristic",
-  "heuristic": "manhattan",
-  "initial_state": "843217650",
+  "algorithm": "vds",
+  "heuristic": "",
+  "initial_state": "123456708",
+  "initial_depth": "10",
   "final_state": "123456780",
   "max_depth": "",
   "max_steps": "",
