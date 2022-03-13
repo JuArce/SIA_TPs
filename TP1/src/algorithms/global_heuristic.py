@@ -1,7 +1,6 @@
 from datetime import datetime
 from algorithms.Node import Node
 
-from algorithms.State import State
 from algorithms.State import Heuristic_state
 from utils.Config import Config
 from utils.Plays import Plays

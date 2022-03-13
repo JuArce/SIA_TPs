@@ -1,5 +1,5 @@
 {
-  "algorithm": "global_heuristic",
+  "algorithm": "local_heuristic",
   "heuristic": "manhattan",
   "initial_state": "843217650",
   "final_state": "123456780",

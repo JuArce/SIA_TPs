@@ -6,7 +6,7 @@ from algorithms.State import Heuristic_state
 from utils.Config import Config
 from algorithms.manhattan_distance import manhattan
 from algorithms.levenshtein_distance import levenshtein
-# from algorithms.not_adm_heu import not_adm_heu
+from algorithms.not_adm_heu import not_adm_heu
 
 import random
 
@@ -23,7 +23,7 @@ class Plays:
     heuristic = {
         "manhattan": manhattan,
         "levenshtein": levenshtein,
-        # "not_adm_heu":not_adm_heu
+        "not_adm_heu": not_adm_heu
     }
 
     # TODO: Comentar métodos y agregar al método los tipos de qué devuelven

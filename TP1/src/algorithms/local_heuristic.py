@@ -1,13 +1,11 @@
+import sys
 from datetime import datetime
-from algorithms.Node import Node
 
-from algorithms.State import State
+from algorithms.Node import Node
 from algorithms.State import Heuristic_state
 from utils.Config import Config
 from utils.Plays import Plays
 from utils.Results import Results
-
-import sys
 
 x = 1500000
 sys.setrecursionlimit(x)
@@ -18,14 +16,30 @@ def local_heuristic(config: Config):
     # n0 nodo raiz  s es el estado del nodo raiz
     ex, root, frontier, time, result, heuristic = Plays.initialize_with_heuristic(config)
     deep = 0
-    node = local_heuristic_rec(ex, root, frontier, result, config.final_state, deep, heuristic)
 
-    print("Result: " + result.__str__())
-    print(node.state.id)
+    solution = local_heuristic_rec(ex, root, frontier, result, config.final_state, deep,
+                                   heuristic, 0)
+
     time = datetime.now() - time
+    cost = deep
+
+    plays_to_win = Plays.get_plays_to_win(solution) if result else None
+
+    results = {
+        'config': config,
+        "result": False,  # TODO: result,
+        "deep": solution.deep,
+        "cost": cost,
+        "expandedNodes": 0,  # TODO: expanded_nodes,
+        "frontierNodes": 0,  # TODO: len(frontier),
+        "time": time,
+        "plays_to_win": plays_to_win
+    }
+
+    return Results(results)
 
 
-def local_heuristic_rec(ex, root, frontier, result, goal, deep, heuristic):
+def local_heuristic_rec(ex, root, frontier, result, goal, deep, heuristic, expanded_nodes):
     while len(frontier) > 0:
         # Considerar al nodo n de L cuyo estado tenga
         # el menor valor de heuristica
@@ -34,11 +48,12 @@ def local_heuristic_rec(ex, root, frontier, result, goal, deep, heuristic):
         node = frontier.pop()
         successors = Plays.get_moves(node, ex)
         ex.add(node)
-
+        print("bbb")
         # Si el estado s de n es solucion
         # Fin de busqueda con exito
         if node.state.id == goal:
             deep = node.deep
+            print("aaaa")
             result = True
             solution = node
             return solution
@@ -61,4 +76,4 @@ def local_heuristic_rec(ex, root, frontier, result, goal, deep, heuristic):
                 f_successors.append(child)
 
         # LLamar a BusquedaHeuristicaLocal(Lsucesores)
-        return local_heuristic_rec(ex, root, f_successors, result, goal, deep)
+        return local_heuristic_rec(ex, root, f_successors, result, goal, deep, heuristic, expanded_nodes + 1)
