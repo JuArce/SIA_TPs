@@ -11,6 +11,7 @@ typing = "*"
 
 [scripts]
 main = "python ./src/main.py"
+test = "python ./src/tests.py"
 
 [requires]
 python_version = "3.9"

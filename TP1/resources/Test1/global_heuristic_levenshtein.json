@@ -1,0 +1,10 @@
+{
+  "algorithm": "global_heuristic",
+  "heuristic": "levenshtein",
+  "initial_state": "180572643",
+  "initial_depth": "",
+  "final_state": "123456780",
+  "max_depth": "",
+  "max_steps": "",
+  "qty":""
+}

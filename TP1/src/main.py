@@ -7,6 +7,7 @@ from algorithms.local_heuristic import local_heuristic
 from algorithms.global_heuristic import global_heuristic
 from utils.Config import Config
 from utils.Plays import Plays
+import sys
 
 algorithms = {
     "bfs": bfs,
@@ -17,7 +18,10 @@ algorithms = {
     "a_star": a_star
 }
 
-f = open('./resources/config.json')
+
+print('Argument List:', str(sys.argv))
+assert len(sys.argv) == 2, 'Missing config json'
+f = open(sys.argv[1])
 config: Config = Config(f.read())
 if config.initial_state is None or len(config.initial_state) == 0:
     config.initial_state = Plays.build_initial_play(config.qty)
