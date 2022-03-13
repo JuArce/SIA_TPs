@@ -73,6 +73,18 @@ class Plays:
             moves.append(m(node.state.id))
         return moves
 
+    @classmethod
+    def get_moves_from_dict(cls, node: Node, ex: dict):
+        n = ex.get(node.state.id)
+        if n is not None and node.deep > n:
+            return []
+
+        moves_to_do = cls.get_valid_moves(node.state.row_idx, node.state.col_idx)
+        moves = []
+
+        for m in moves_to_do:
+            moves.append(m(node.state.id))
+        return moves
     """
     get_valid_moves(cls,row_idx,col_idx)
     

@@ -41,7 +41,7 @@ rf.write("".join(["Time: ", str(results.time), "\n"]))
 
 if results.result:
 
-    rf.write("".join(["Number of plays: ", str(len(results.plays_to_win)), "\n"]))
+    rf.write("".join(["Number of plays: ", str(len(results.plays_to_win)-1), "\n"]))
 
     for idx, p in enumerate(results.plays_to_win):
         rf.write("".join(["Play: ", str(idx), "\n", p[0:3], "\n", p[3:6], "\n", p[6:9], "\n", '-------', "\n"]))

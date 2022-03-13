@@ -27,8 +27,8 @@ class Config:
         assert (self.max_steps is None or self.max_steps > 0), 'Max steps must be positive or empty'
         # TODO arreglar el texto
         assert (
-                self.qty is None or 0 < self.qty <= 500), 'Max quantity of initial moves to must be positive ' \
-                                                          'and less than 500 or empty '
+                self.qty is None or 0 < self.qty <= 100000), 'Max quantity of initial moves to must be positive ' \
+                                                          'and less than 100000 or empty '
 
     def __str__(self):
         return self.__dict__.__str__()

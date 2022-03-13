@@ -1,10 +1,10 @@
 {
-  "algorithm": "vds",
-  "heuristic": "",
-  "initial_state": "123456708",
+  "algorithm": "local_heuristic",
+  "heuristic": "manhattan",
+  "initial_state": "180572643",
   "initial_depth": "10",
   "final_state": "123456780",
   "max_depth": "",
   "max_steps": "",
-  "qty": 50
+  "qty":""
 }

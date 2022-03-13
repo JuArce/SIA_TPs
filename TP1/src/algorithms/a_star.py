@@ -1,11 +1,11 @@
 from datetime import datetime
-from algorithms.Node import Node
 
-from algorithms.State import State
+from algorithms.Node import Node
 from algorithms.State import Heuristic_state
 from utils.Config import Config
 from utils.Plays import Plays
 from utils.Results import Results
+
 
 def a_star(config: Config):
     ex, root, frontier, time, result, heuristic = Plays.initialize_with_heuristic(config)
