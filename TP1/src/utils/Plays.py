@@ -6,7 +6,7 @@ from tree.State import State
 from tree.State import Heuristic_state
 from utils.Config import Config
 from heuristics.manhattan_distance import manhattan
-from heuristics.levenshtein_distance import levenshtein
+from heuristics.hamming_distance import hamming
 from heuristics.not_adm_heu import not_adm_heu
 
 import random
@@ -23,7 +23,7 @@ class Plays:
 
     heuristic = {
         "manhattan": manhattan,
-        "levenshtein": levenshtein,
+        "hamming": hamming,
         "not_adm_heu": not_adm_heu
     }
 

@@ -1,6 +1,6 @@
 {
-  "algorithm": "global_heuristic",
-  "heuristic": "levenshtein",
+  "algorithm": "a_star",
+  "heuristic": "hamming",
   "initial_state": "180572643",
   "initial_depth": "",
   "final_state": "123456780",

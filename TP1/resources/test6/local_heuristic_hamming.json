@@ -1,7 +1,7 @@
 {
   "algorithm": "local_heuristic",
-  "heuristic": "levenshtein",
-  "initial_state": "180572643",
+  "heuristic": "hamming",
+  "initial_state": "152704386",
   "initial_depth": "",
   "final_state": "123456780",
   "max_depth": "",

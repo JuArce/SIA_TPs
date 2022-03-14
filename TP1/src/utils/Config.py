@@ -4,7 +4,7 @@ import json
 class Config:
     UNINFORMED_ALGORITHMS = ['bfs', 'dfs', 'vds']
     INFORMED_ALGORITHMS = ['local_heuristic', 'global_heuristic', 'a_star']
-    HEURISTICS = ['manhattan', 'levenshtein', 'not_adm_heu']
+    HEURISTICS = ['manhattan', 'hamming', 'not_adm_heu']
 
     def __init__(self, string):
         config = json.loads(string)
