@@ -25,9 +25,7 @@ path = sys.argv[1]
 
 file_name = sys.argv[2] + '-' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.csv'
 output_csv = open('./' + file_name, 'w+')
-output_csv.write(
-    'initial_state,final_state, algorithm,heuristic,result,deep,cost,expanded_nodes,frontier_nodes,time,number_of_plays\n'
-)
+output_csv.write('initial_state,final_state,algorithm,heuristic,initial_depth,result,deep,cost,expanded_nodes,frontier_nodes,time,number_of_plays\n')
 
 for filename in os.listdir(path):
     with open(os.path.join(path, filename)) as f:
@@ -40,6 +38,7 @@ for filename in os.listdir(path):
                          config.final_state + ',' +
                          config.algorithm + ',' +
                          (config.heuristic if config.heuristic is not None else '') + ',' +
+                         (config.initial_depth if config.initial_depth is not None else '') + ',' +
                          ('success' if results.result else 'failed') + ',' +
                          str(results.deep) + ',' +
                          str(results.cost) + ',' +

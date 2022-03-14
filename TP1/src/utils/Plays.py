@@ -1,13 +1,13 @@
 import collections
 from datetime import datetime
 from typing import Optional
-from algorithms.Node import Node
-from algorithms.State import State
-from algorithms.State import Heuristic_state
+from tree.Node import Node
+from tree.State import State
+from tree.State import Heuristic_state
 from utils.Config import Config
-from algorithms.manhattan_distance import manhattan
-from algorithms.levenshtein_distance import levenshtein
-from algorithms.not_adm_heu import not_adm_heu
+from heuristics.manhattan_distance import manhattan
+from heuristics.levenshtein_distance import levenshtein
+from heuristics.not_adm_heu import not_adm_heu
 
 import random
 

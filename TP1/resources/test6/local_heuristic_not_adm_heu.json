@@ -1,0 +1,10 @@
+{
+  "algorithm": "local_heuristic",
+  "heuristic": "not_adm_heu",
+  "initial_state": "152704386",
+  "initial_depth": "",
+  "final_state": "123456780",
+  "max_depth": "",
+  "max_steps": "",
+  "qty": ""
+}

@@ -1,0 +1,10 @@
+{
+  "algorithm": "a_star",
+  "heuristic": "manhattan",
+  "initial_state": "152704386",
+  "initial_depth": "",
+  "final_state": "123456780",
+  "max_depth": "",
+  "max_steps": "",
+  "qty":""
+}

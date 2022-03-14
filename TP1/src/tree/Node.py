@@ -1,6 +1,6 @@
 from typing import Optional
-from algorithms.State import State
-from algorithms.State import Heuristic_state
+from tree.State import State
+from tree.State import Heuristic_state
 
 
 class Node:

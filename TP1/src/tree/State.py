@@ -1,6 +1,3 @@
-from algorithms.manhattan_distance import manhattan
-
-
 class State:
     COLS = 3
     ROWS = 3

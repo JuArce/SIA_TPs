@@ -1,8 +1,8 @@
 # Recibe estado inicial, final, límites
 #  Se fija donde está el 0. Analiza los posibles estados hijos. Crea los estados hijos. Los empieza a recorrar
 from datetime import datetime
-from algorithms.Node import Node
-from algorithms.State import State
+from tree.Node import Node
+from tree.State import State
 from utils.Config import Config
 from utils.Plays import Plays
 from utils.Results import Results

@@ -1,8 +1,8 @@
 {
-  "algorithm": "vds",
-  "heuristic": "",
+  "algorithm": "global_heuristic",
+  "heuristic": "not_adm_heu",
   "initial_state": "180572643",
-  "initial_depth": "25",
+  "initial_depth": "",
   "final_state": "123456780",
   "max_depth": "",
   "max_steps": "",

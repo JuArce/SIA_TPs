@@ -2,7 +2,7 @@
   "algorithm": "vds",
   "heuristic": "",
   "initial_state": "180572643",
-  "initial_depth": "25",
+  "initial_depth": "2",
   "final_state": "123456780",
   "max_depth": "",
   "max_steps": "",

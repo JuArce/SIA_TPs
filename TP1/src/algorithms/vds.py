@@ -1,9 +1,9 @@
 import collections
 from datetime import datetime
 from typing import Optional
+from tree.Node import Node
+from tree.State import State
 from utils.Config import Config
-from algorithms.Node import Node
-from algorithms.State import State
 from utils.Plays import Plays
 from utils.Results import Results
 
@@ -51,12 +51,9 @@ def vds(config: Config):
 
         if not solution:  # no encontré solución y tengo que agrandar las profundidades
             vds_depth += 1
-            print('agrando' + str(vds_depth))
-
 
         elif result:  # encontre otra solución distinta a la que tenía. Sigo bajando la profundidad y sigo probando
             result = False
-            print('achico' + str(vds_depth))
             vds_depth = deep - 1
 
     time = datetime.now() - time
