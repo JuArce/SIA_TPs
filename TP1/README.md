@@ -26,15 +26,18 @@ Dento del mismo se pueden encontrar los siguientes parámetros:
 ## Ejecución
 Para ejecutar el programa existen dos configuraciones posibles:
 ```shell
-pipenv run main ./resources/config.json
+pipenv run main <path_to_file>
 ```
 donde en el mismo directorio se obtiene un archivo con el formato `algorithm-yyyy-mm-dd_hh-mm-ss.txt`.
 ```shell
-pipenv run test ./resources/test1 test1
+pipenv run test <path_to_dir> <output_filename>
 ```
 donde se corren casos de prueba de los algoritmos y se obtiene su resulado en formato `csv`. 
 
-Hay 7 tipos de pruebas disponibles y se pueden acceder reemplazando `test1` por el _test_ deseado.
+Los casos de prueba disponibles se pueden acceder reemplazando `<path_to_dir>` por la carpeta deseada (la misma debe contener sólo archivos de configuración en el formato especificado y de tipo `json`).
+
+## Casos de prueba
+Hay 7 casos de prueba que cubren los siguientes escenarios:
 * `test1`: ejecuta todos los algoritmos.
 * `test2`: ejecuta los algoritmos de `bfs`, `dfs` y `vds`.
 * `test3`: ejecuta el algoritmo `vds` con distintas profundidades.
@@ -44,4 +47,4 @@ Hay 7 tipos de pruebas disponibles y se pueden acceder reemplazando `test1` por 
 * `test7`: ejecuta el algoritmo `global_heuristic` con las tres heurísticas disponibles.
 
 ## Presentación
-El documento de la presentación oral se puede encontrar en la carpeta [`presentation`](resources/presentation) dentro de `resources`.
+El documento de la [presentación](resources/presentation/sia_tp1_presentation.pdf) oral se puede encontrar en la carpeta `presentation` dentro de `resources`.
