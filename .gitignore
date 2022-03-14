@@ -133,3 +133,4 @@ dmypy.json
 
 .DS_Store
 TP1/*.txt
+TP1/*.csv
