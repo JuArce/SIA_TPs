@@ -28,7 +28,9 @@ if config.initial_state is None or len(config.initial_state) == 0:
 
 f.close()
 
+print('Running ' + config.algorithm + '...')
 results = algorithms[config.algorithm](config)
+print(config.algorithm + ' finished.')
 
 file_name = results.config.algorithm + '-' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.txt'
 
@@ -50,4 +52,6 @@ if results.result:
     for idx, p in enumerate(results.plays_to_win):
         rf.write("".join(["Play: ", str(idx), "\n", p[0:3], "\n", p[3:6], "\n", p[6:9], "\n", '-------', "\n"]))
 
+
+print('Output printed to ' + file_name)
 rf.close()

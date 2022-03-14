@@ -33,6 +33,7 @@ for filename in os.listdir(path):
         if config.initial_state is None or len(config.initial_state) == 0:
             config.initial_state = Plays.build_initial_play(config.qty)
         f.close()
+        print('Running ' + config.algorithm + '...')
         results = algorithms[config.algorithm](config)
         output_csv.write(config.initial_state + ',' +
                          config.final_state + ',' +
@@ -46,5 +47,8 @@ for filename in os.listdir(path):
                          str(results.frontierNodes) + ',' +
                          str(results.time) + ',' +
                          str(len(results.plays_to_win) - 1) + '\n')
+        print(config.algorithm + ' finished.')
+
+    print('Output printed to ' + file_name)
 
 output_csv.close()
