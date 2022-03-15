@@ -1,6 +1,5 @@
 import collections
 from datetime import datetime
-from typing import Optional
 from tree.Node import Node
 from tree.State import State
 from utils.Config import Config
@@ -21,29 +20,36 @@ def vds(config: Config):
     ex[root.state.id] = 0
     result = False
 
-    solution: Optional[Node] = None
+    solution = None
 
     while len(pending_frontier) > 0:
 
         n = pending_frontier.popleft()
 
-        max_depth = n.deep + step
+        # la profundidad de los siguientes nodos a analizar son mayores a la de la solucion y por tanto no
+        # tiene sentido seguir buscando pues no será la optima
 
         if solution is not None and n.deep >= solution.deep:
             pending_frontier.appendleft(n)
             break
 
+        # actualizo la profundidad a buscar en la proxima iteracion
+        max_depth = n.deep + step
+
         frontier.append(n)
 
         while frontier:
-            node: Node = frontier.pop()
+            node = frontier.pop()
 
+            # lo analizo en la proxima iteración
             if node.deep >= max_depth:
                 pending_frontier.append(node)
                 continue
 
             if node.state.id == config.final_state:
                 result = True
+                # si la solucion encontrada previamente tiene mayor profundidad que
+                # la encontrada ahora actualizo la max_depth
                 if solution is None or solution.deep > node.deep:
                     solution = node
                 max_depth = solution.deep
@@ -62,11 +68,11 @@ def vds(config: Config):
     plays_to_win = Plays.get_plays_to_win(solution) if result else None
 
     time = datetime.now() - time
-    cost = solution.deep
+    cost = solution.deep if result else 0
     results = {
         'config': config,
         "result": result,
-        "deep": solution.deep,
+        "deep": solution.deep if result else 0,
         "cost": cost,
         "expandedNodes": expanded_nodes,
         "frontierNodes": len(frontier) + len(pending_frontier),
