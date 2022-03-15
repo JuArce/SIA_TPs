@@ -35,7 +35,6 @@ class Plays:
         root = Node(state, None)
         if config.algorithm in ['bfs', 'vds']:
             frontier = collections.deque()
-            frontier.append(root)
         else:
             frontier = [root]
         time = datetime.now()

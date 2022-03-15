@@ -10,67 +10,66 @@ from utils.Results import Results
 
 def vds(config: Config):
     ex, root, frontier, time, result = Plays.initialize(config)
+
+    step = int(config.initial_depth)
+
+    pending_frontier = collections.deque()
+    pending_frontier.append(root)
     expanded_nodes = 0
-    deep = 0
-    vds_depth = int(config.initial_depth)
+
     ex = dict()
+    ex[root.state.id] = 0
+    result = False
+
     solution: Optional[Node] = None
-    frontier_aux = collections.deque()
-    frontier_aux.appendleft(root)
 
-    while len(frontier_aux) > 0 and vds_depth > 0:
-        while len(frontier_aux) > 0:
-            frontier.appendleft(frontier_aux.pop())
+    while len(pending_frontier) > 0:
 
-        while len(frontier) > 0:
-            node = frontier.pop()
+        n = pending_frontier.popleft()
 
-            successors = Plays.get_moves_from_dict(node, ex)
+        max_depth = n.deep + step
 
-            d = ex.get(node.state.id)
-            if d is None or node.deep < d:
-                ex[node.state.id] = node.deep
-                expanded_nodes += 1
+        if solution is not None and n.deep >= solution.deep:
+            pending_frontier.appendleft(n)
+            break
 
-            # La profundidad de la solucion tiene que ser siempre menor que la que ya se habia obtenido
-            if not solution or (solution and node.deep < solution.deep):
-                if node.state.id == config.final_state:
+        frontier.append(n)
+
+        while frontier:
+            node: Node = frontier.pop()
+
+            if node.deep >= max_depth:
+                pending_frontier.append(node)
+                continue
+
+            if node.state.id == config.final_state:
+                result = True
+                if solution is None or solution.deep > node.deep:
                     solution = node
-                    deep = node.deep
-                    result = True
-                    break
+                max_depth = solution.deep
+                continue
 
-            for s in successors:
+            expanded_nodes += 1
+            for s in Plays.get_moves_from_dict(node, ex):
                 state = State(s)
                 child = Node(state, node)
                 node.children.append(child)
-                if child.deep > vds_depth:
-                    frontier_aux.appendleft(child)
-                else:
+
+                if child.state.id not in ex.keys() or child.deep < ex[child.state.id]:
+                    ex[child.state.id] = child.deep
                     frontier.append(child)
 
-        if not solution:  # no encontré solución y tengo que agrandar las profundidades
-            vds_depth += 1
-
-        elif result:  # encontre otra solución distinta a la que tenía. Sigo bajando la profundidad y sigo probando
-            result = False
-            vds_depth = deep - 1
+    plays_to_win = Plays.get_plays_to_win(solution) if result else None
 
     time = datetime.now() - time
-    cost = deep
-
-    plays_to_win = []
-    if solution:
-        result = True
-        plays_to_win = Plays.get_plays_to_win(solution)
-
+    cost = solution.deep
     results = {
         'config': config,
         "result": result,
-        "deep": deep,
+        "deep": solution.deep,
         "cost": cost,
         "expandedNodes": expanded_nodes,
-        "frontierNodes": len(frontier),
+        "frontierNodes": len(frontier) + len(pending_frontier),
         "time": time,
         "plays_to_win": plays_to_win
     }

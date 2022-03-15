@@ -8,6 +8,7 @@ from utils.Results import Results
 
 def bfs(config: Config):
     ex, root, frontier, time, result = Plays.initialize(config)
+    frontier.append(root)
     expanded_nodes = 0
     deep = 0
     solution = None
