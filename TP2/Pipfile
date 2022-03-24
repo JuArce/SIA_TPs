@@ -7,5 +7,8 @@ name = "pypi"
 
 [dev-packages]
 
+[scripts]
+main = "python ./src/main.py"
+
 [requires]
 python_version = "3.9"
