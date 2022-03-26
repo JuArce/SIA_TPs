@@ -29,4 +29,5 @@ with open(sys.argv[1], 'r') as f:
 
     f.close()
 
-    bag: Bag = Bag(max_weight, total_items, elements)
+    # FIXME: arreglar population
+    bag: Bag = Bag(max_weight, total_items, 20, elements)
