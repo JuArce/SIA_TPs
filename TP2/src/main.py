@@ -1,3 +1,5 @@
+import random
+
 from population.Element import Element
 from population.Bag import Bag
 from utils.Config import Config
@@ -63,5 +65,13 @@ with open(sys.argv[1], 'r') as f:
 
     f.close()
 
-    # FIXME: arreglar population
-    bag: Bag = Bag(max_weight, total_items, 20, elements)
+# FIXME: arreglar population
+bag: Bag = Bag(max_weight, total_items, 20, elements)
+
+while True:  # TODO setear condiciones de corte
+    new_gen: dict = dict()
+    while len(new_gen) < bag.population:
+        selected = random.sample([*bag.chromosomes.keys()], 2)
+        simple(selected)
+
+
