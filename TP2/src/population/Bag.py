@@ -1,5 +1,6 @@
 from population.Element import Element
 from datetime import datetime
+from utils.fitness import get_fitness
 import random
 
 TRUE = '1'
@@ -13,12 +14,12 @@ class Bag:
         self.total_items: int = total_items
         self.elements: [Element] = elements
         self.population: int = population
-        self.chromosomes: set[str] = self.initialize_chromosomes()
+        self.chromosomes: dict = self.initialize_chromosomes()
 
     def initialize_chromosomes(self):
         i: int = 0
 
-        chromosomes: set[str] = set()
+        chromosomes: dict = dict()
 
         random.seed(datetime.now())
 
@@ -29,15 +30,15 @@ class Bag:
             while j < self.total_items:
                 p = random.random()
                 if p < 0.5:
-                    chromosome.append('1')
+                    chromosome.append(TRUE)
                 else:
-                    chromosome.append('0')
+                    chromosome.append(FALSE)
                 j += 1
 
             chromosome = ''.join(chromosome)
 
             if chromosome not in chromosomes:
-                chromosomes.add(chromosome)
+                chromosomes[chromosome] = get_fitness(chromosome, self.elements, self.max_weight)
                 i += 1
 
         return chromosomes
