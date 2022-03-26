@@ -1,3 +1,3 @@
-def roulette():
+def multiple():
     return None
 

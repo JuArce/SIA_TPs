@@ -1,0 +1,2 @@
+def elite():
+    return None

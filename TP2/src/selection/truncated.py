@@ -1,0 +1,3 @@
+def truncated():
+    return None
+

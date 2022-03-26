@@ -1,3 +1,3 @@
-def roulette():
+def uniform():
     return None
 

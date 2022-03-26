@@ -1,0 +1,5 @@
+{
+  "selection_algorithm": "boltzmann",
+  "cross_over_algorithm": "simple",
+  "population": "50"
+}

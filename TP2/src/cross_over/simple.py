@@ -1,3 +1,2 @@
-def rank():
+def simple():
     return None
-
