@@ -18,6 +18,8 @@ from cross_over.multiple import multiple
 from cross_over.simple import simple
 from cross_over.uniform import uniform
 
+from mutations.mutation import mutation
+
 import sys
 
 selection = {
@@ -65,13 +67,11 @@ with open(sys.argv[1], 'r') as f:
 
     f.close()
 
-# FIXME: arreglar population
-bag: Bag = Bag(max_weight, total_items, 20, elements)
+bag: Bag = Bag(max_weight, total_items, config.population, elements)
 
 while True:  # TODO setear condiciones de corte
     new_gen: dict = dict()
     while len(new_gen) < bag.population:
         selected = random.sample([*bag.chromosomes.keys()], 2)
-        simple(selected)
-
-
+        uniform(selected)
+        mutation(selected[0])
