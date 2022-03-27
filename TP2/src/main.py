@@ -67,7 +67,7 @@ with open(sys.argv[1], 'r') as f:
 
     f.close()
 
-bag: Bag = Bag(max_weight, total_items, config.population, elements)
+bag: Bag = Bag(max_weight, total_items, int(config.population), elements)
 
 while True:  # TODO setear condiciones de corte
     new_gen: dict = dict()
