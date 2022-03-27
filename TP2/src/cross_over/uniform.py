@@ -1,7 +1,8 @@
 import random
+from utils.Config import Config
 
 
-def uniform(chromosomes: [str]):
+def uniform(chromosomes: [str], config: Config):
     aux = [[], []]
 
     for i in range(len(chromosomes[0])):
