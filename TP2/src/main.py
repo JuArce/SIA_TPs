@@ -1,4 +1,5 @@
 import random
+from typing import List
 
 from population.Element import Element
 from population.Bag import Bag
@@ -46,20 +47,20 @@ config_file.close()
 
 max_weight: int
 total_items: int
-elements: list[Element] = []
+elements: List[Element] = []
 
 with open(sys.argv[1], 'r') as f:
     line = f.readline()
     count: int = 0
 
     while line:
-        aux: list[str] = line.split()
+        aux: List[str] = line.split()
 
         if count == 0:
             total_items = int(aux[0])
             max_weight = int(aux[1])
         else:
-            aux: list[str] = line.split()
+            aux: List[str] = line.split()
             element: Element = Element(int(aux[1]), int(aux[0]))
             elements.append(element)
         count += 1

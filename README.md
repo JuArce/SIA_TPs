@@ -8,3 +8,6 @@ Trabajos practicos especiales de **72.27: Sistemas de Inteligencia Artificial** 
 
 ## [TP1: Rompecabezas de números](/TP1)
 Implementación de generador de soluciones para el juego [rompecabezas de nú́meros](https://es.wikipedia.org/wiki/Rompecabezas_deslizantes) (8 nú́meros en una grilla de 3 por 3).
+
+## [TP2: El Problema de la mochila](/TP2)
+Implementación de algoritmos genéticos para el problema de la mochila o bien [knapsack problem](https://en.wikipedia.org/wiki/Knapsack_problem#:~:text=The%20knapsack%20problem%20is%20a,is%20as%20large%20as%20possible.).
