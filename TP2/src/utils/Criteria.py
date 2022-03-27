@@ -24,12 +24,12 @@ class Criteria:
         self.last_generation: Optional[dict] = None  # contiene la generación anterior.
 
         # Estructura: Una parte relevante de la población no cambia en una cantidad de generaciones.
-        self.unchanged_percentage = 0.7  # Definir por parámetro TODO
-        self.max_unchanged_generations = 5  # Definir por parámetro TODO
+        self.unchanged_percentage = 0.9  # Definir por parámetro TODO
+        self.max_unchanged_generations = 100000  # Definir por parámetro TODO
         self.unchanged_generations = 0
 
         # Contenido: El mejor fitness no cambia en una cantidad de generaciones.
-        self.max_unchanged_fitness_generations = 1  # Definir por parámetro TODO La cantidad Máxima de generaciones que no pueden cambiar
+        self.max_unchanged_fitness_generations = 100000  # Definir por parámetro TODO La cantidad Máxima de generaciones que no pueden cambiar
         self.unchanged_fitness_generations = 0  # La cantidad de generaciones que no cambiaron hasta ahora
         self.max_fitness = 0  # El maximo fitness hasta ahora
 
@@ -42,10 +42,10 @@ class Criteria:
     # Chequeos
 
     def time_is_done(self):
-        return (datetime.now() - self.initial_time).total_seconds() >= self.limit_time
+        return (datetime.now() - self.initial_time).total_seconds() > self.limit_time
 
     def generations_quantity_is_done(self):
-        return self.limit_gen_quantity > self.current_gen_quantity
+        return self.current_gen_quantity >= self.limit_gen_quantity
 
     def generation_structure_is_done(self):
         return self.unchanged_generations >= self.max_unchanged_generations

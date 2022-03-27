@@ -20,11 +20,11 @@ class Config:
         self.cross_over_algorithm = config.get('cross_over_algorithm')
         self.multiple_cross_points = config.get('multiple_cross_points')  # TODO : agregar validaciones
 
-        self.population = config.get('population')
+        self.population = int(config.get('population'))
 
-        self.limit_time = config.get('limit_time')  # TODO : agregar validaciones
-        self.generations_quantity = config.get('generations_quantity')  # TODO: agregar validaciones
-        self.mutation_probability = config.get('mutation_probability')  # TODO: agregar validaciones
+        self.limit_time = int(config.get('limit_time'))  # TODO : agregar validaciones
+        self.generations_quantity = int(config.get('generations_quantity'))  # TODO: agregar validaciones
+        self.mutation_probability = float(config.get('mutation_probability'))  # TODO: agregar validaciones
 
         if self.population == '':
             self.population = 500
