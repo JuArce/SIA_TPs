@@ -4,8 +4,9 @@ from typing import List
 from population.Element import Element
 from population.Bag import Bag
 from utils.Config import Config
-# Selection algorithms
+from utils.fitness import get_fitness
 
+# Selection algorithms
 from selection.boltzmann import boltzmann
 from selection.elite import elite
 from selection.rank import rank
@@ -14,12 +15,13 @@ from selection.tournament import tournament
 from selection.truncated import truncated
 
 # Cross Over algorithms
-
 from cross_over.multiple import multiple
 from cross_over.simple import simple
 from cross_over.uniform import uniform
 
 from mutations.mutation import mutation
+
+from utils.Criteria import Criteria
 
 import sys
 
@@ -70,9 +72,21 @@ with open(sys.argv[1], 'r') as f:
 
 bag: Bag = Bag(max_weight, total_items, int(config.population), elements)
 
-while True:  # TODO setear condiciones de corte
+criteria: Criteria = Criteria(config.generations_quantity, config.limit_time, bag.chromosomes)
+
+while not criteria.is_completed():
     new_gen: dict = dict()
+
     while len(new_gen) < bag.population:
         selected = random.sample([*bag.chromosomes.keys()], 2)
-        uniform(selected)
-        mutation(selected[0])
+        children = cross_over[config.cross_over_algorithm](selected, config)
+
+        for child in children:
+            child = mutation(child, config.mutation_probability)
+            if child not in new_gen and child not in bag.chromosomes:
+                new_gen[child] = get_fitness(child, bag.elements, bag.max_weight)
+            if len(new_gen) == bag.population:
+                break
+
+    union = new_gen | bag.chromosomes
+    bag.chromosomes = selection[config.selection_algorithm](union, config)
