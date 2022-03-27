@@ -16,7 +16,7 @@ class Bag:
         self.population: int = population
         self.chromosomes: dict = self.initialize_chromosomes()
 
-    def initialize_chromosomes(self):
+    def initialize_chromosomes(self) -> dict:
         i: int = 0
 
         chromosomes: dict = dict()
