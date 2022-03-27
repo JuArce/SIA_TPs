@@ -3,7 +3,7 @@ from typing import List
 
 from population.Element import Element
 from population.Bag import Bag
-from utils.Config import Config
+from TP2.src.utils.Config import Config
 from utils.fitness import get_fitness
 
 # Selection algorithms
@@ -90,3 +90,13 @@ while not criteria.is_completed():
 
     union = new_gen | bag.chromosomes
     bag.chromosomes = selection[config.selection_algorithm](union, config)
+    criteria.update_criteria(bag.chromosomes)
+
+# for chromosome in bag.chromosomes:
+#     weight = 0
+#     benefit = 0
+#     for i, value in enumerate(chromosome):
+#         weight += int(value) * elements[i].weight  # x_i * w_i
+#         benefit += int(value) * elements[i].value  # x_i * b_i
+#     print('Weight ' + weight.__str__() +
+#           ' | Benefit ' + benefit.__str__())

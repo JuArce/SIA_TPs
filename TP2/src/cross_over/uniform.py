@@ -1,5 +1,5 @@
 import random
-from utils.Config import Config
+from TP2.src.utils.Config import Config
 
 
 def uniform(chromosomes: [str], config: Config):

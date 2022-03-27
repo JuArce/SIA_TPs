@@ -1,6 +1,5 @@
 import random
-from utils.Config import Config
-
+from TP2.src.utils.Config import Config
 
 def multiple(chromosomes: [str], config: Config):
     points = config.multiple_cross_points

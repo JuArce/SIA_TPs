@@ -1,4 +1,4 @@
-from utils.Config import Config
+from TP2.src.utils.Config import Config
 
 
 def rank(chromosomes: dict, config: Config):

@@ -1,5 +1,5 @@
 import random
-from utils.Config import Config
+from TP2.src.utils.Config import Config
 
 
 # The slicing starts with the start_pos index (included) and ends at end_pos index (excluded).
