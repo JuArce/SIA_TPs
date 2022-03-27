@@ -11,4 +11,5 @@ def get_fitness(chromosome: str, elements: [Element], max_weight: int):
 
     if weight > max_weight:
         weight = weight * (weight - max_weight)
-    return benefit / weight
+        return benefit / weight
+    return benefit
