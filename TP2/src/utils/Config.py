@@ -25,6 +25,7 @@ class Config:
         self.limit_time = int(config.get('limit_time'))  # TODO : agregar validaciones
         self.generations_quantity = int(config.get('generations_quantity'))  # TODO: agregar validaciones
         self.mutation_probability = float(config.get('mutation_probability'))  # TODO: agregar validaciones
+        self.k_truncated = int(config.get('k_truncated'))  # TODO: agregar validaciones.
 
         if self.population == '':
             self.population = 500

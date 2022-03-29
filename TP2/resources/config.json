@@ -1,9 +1,10 @@
 {
-  "selection_algorithm": "elite",
+  "selection_algorithm": "truncated",
   "cross_over_algorithm": "simple",
   "multiple_cross_points": "2",
   "population": "5",
   "limit_time": "1000",
-  "generations_quantity": "1000000",
-  "mutation_probability": "0.05"
+  "generations_quantity": "500",
+  "mutation_probability": "0.05",
+  "k_truncated": "2"
 }
