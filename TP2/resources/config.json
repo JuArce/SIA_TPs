@@ -1,10 +1,11 @@
 {
-  "selection_algorithm": "truncated",
+  "selection_algorithm": "tournament",
   "cross_over_algorithm": "simple",
   "multiple_cross_points": "2",
-  "population": "5",
+  "population": "100",
   "limit_time": "1000",
-  "generations_quantity": "500",
+  "generations_quantity": "5000",
   "mutation_probability": "0.05",
-  "k_truncated": "2"
+  "k_truncated": "2",
+  "tournament_probability": "0.9"
 }

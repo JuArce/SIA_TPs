@@ -27,6 +27,12 @@ class Config:
         self.mutation_probability = float(config.get('mutation_probability'))  # TODO: agregar validaciones
         self.k_truncated = int(config.get('k_truncated'))  # TODO: agregar validaciones.
 
+        if self.selection_algorithm == 'tournament':
+            assert (config.get('tournament_probability') != ''), 'Missing \'u\' probability'
+            assert (float(config.get('tournament_probability')) >= 0.5 and float(config.get(
+                'tournament_probability')) <= 1), '\'u\' must be between 0.5 and 1'
+            self.tournament_probability = float(config.get('tournament_probability'))
+
         if self.population == '':
             self.population = 500
 

@@ -25,11 +25,11 @@ class Criteria:
 
         # Estructura: Una parte relevante de la población no cambia en una cantidad de generaciones.
         self.unchanged_percentage = 0.9  # Definir por parámetro TODO
-        self.max_unchanged_generations = 100000  # Definir por parámetro TODO
+        self.max_unchanged_generations = 100  # Definir por parámetro TODO
         self.unchanged_generations = 0
 
         # Contenido: El mejor fitness no cambia en una cantidad de generaciones.
-        self.max_unchanged_fitness_generations = 100000  # Definir por parámetro TODO La cantidad Máxima de generaciones que no pueden cambiar
+        self.max_unchanged_fitness_generations = 50  # Definir por parámetro TODO La cantidad Máxima de generaciones que no pueden cambiar
         self.unchanged_fitness_generations = 0  # La cantidad de generaciones que no cambiaron hasta ahora
         self.max_fitness = 0  # El maximo fitness hasta ahora
 

@@ -69,7 +69,6 @@ with open(sys.argv[1], 'r') as f:
         line = f.readline()
 
     f.close()
-
 bag: Bag = Bag(max_weight, total_items, int(config.population), elements)
 
 criteria: Criteria = Criteria(config.generations_quantity, config.limit_time, bag.chromosomes)
@@ -92,11 +91,14 @@ while not criteria.is_completed():
     bag.chromosomes = selection[config.selection_algorithm](union, config)
     criteria.update_criteria(bag.chromosomes)
 
-# for chromosome in bag.chromosomes:
-#     weight = 0
-#     benefit = 0
-#     for i, value in enumerate(chromosome):
-#         weight += int(value) * elements[i].weight  # x_i * w_i
-#         benefit += int(value) * elements[i].value  # x_i * b_i
-#     print('Weight ' + weight.__str__() +
-#           ' | Benefit ' + benefit.__str__())
+
+bag.chromosomes = dict(sorted(bag.chromosomes.items(), key=lambda item: item[1], reverse=True))
+
+for chromosome in bag.chromosomes:
+    weight = 0
+    benefit = 0
+    for i, value in enumerate(chromosome):
+        weight += int(value) * elements[i].weight  # x_i * w_i
+        benefit += int(value) * elements[i].value  # x_i * b_i
+    print('Weight ' + weight.__str__() +
+          ' | Benefit ' + benefit.__str__())
