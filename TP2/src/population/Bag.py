@@ -30,7 +30,7 @@ class Bag:
 
             while j < self.total_items:
                 p = random.random()
-                if p < 0.5:
+                if p < 0.1:
                     chromosome.append(TRUE)
                 else:
                     chromosome.append(FALSE)
