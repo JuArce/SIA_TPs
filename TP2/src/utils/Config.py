@@ -32,6 +32,8 @@ class Config:
             assert (float(config.get('tournament_probability')) >= 0.5 and float(config.get(
                 'tournament_probability')) <= 1), '\'u\' must be between 0.5 and 1'
             self.tournament_probability = float(config.get('tournament_probability'))
+        else:
+            self.tournament_probability = None
 
         if self.population == '':
             self.population = 500
@@ -62,6 +64,10 @@ class Config:
 
         assert (self.cross_over_algorithm != ''), 'Cross over algorithm undefined'
         assert (self.cross_over_algorithm in self.CROSS_OVER_ALGORITHMS), 'Invalid cross over algorithm'
+
+        self.temperature = config.get('temperature')
+        self.temperature_goal = config.get('temperature_goal')
+        self.decrease_temp_factor = config.get('decrease_temp_factor')
 
     def __str__(self):
         return self.__dict__.__str__()

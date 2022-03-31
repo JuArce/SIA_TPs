@@ -1,16 +1,16 @@
 import copy
 import random
 
-from TP2.src.utils.Config import Config
+from utils.selection_parameters import SelectionParameter
 
 
-def roulette(chromosomes: dict, config: Config):
+def roulette(chromosomes: dict, selection_parameter: SelectionParameter):
     elements = copy.deepcopy(chromosomes)
     output = dict()
-    while len(output.keys()) < config.population:
+    while len(output.keys()) < selection_parameter.population:
         selected = random.choices(list(elements.items()),
                                   weights=list(elements.values()),
-                                  k=(config.population - len(output.keys())))
+                                  k=(selection_parameter.population - len(output.keys())))
         output.update(selected)
         for k in selected:
             if k[0] in elements:

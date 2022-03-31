@@ -1,14 +1,14 @@
 import random
 
-from TP2.src.utils.Config import Config
+from utils.selection_parameters import SelectionParameter
 
 
-def tournament(chromosomes: dict, config: Config):
-    u: float = config.tournament_probability
+def tournament(chromosomes: dict, selection_parameter: SelectionParameter):
+    u: float = selection_parameter.tournament_probability
     chromosomes_list: list = [*chromosomes.keys()]
     new_gen: dict = dict()
 
-    while len(new_gen) < config.population:
+    while len(new_gen) < selection_parameter.population:
         couple_a = random.sample(chromosomes_list, 2)
         couple_b = random.sample(chromosomes_list, 2)
         couples: [[str]] = [couple_a, couple_b]

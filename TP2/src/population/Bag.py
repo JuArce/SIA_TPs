@@ -1,7 +1,8 @@
-from population.Element import Element
-from datetime import datetime
-from utils.fitness import get_fitness
 import random
+from datetime import datetime
+
+from population.Element import Element
+from utils.fitness import get_fitness
 
 TRUE = '1'
 FALSE = '0'

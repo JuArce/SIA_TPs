@@ -1,5 +1,5 @@
-from TP2.src.utils.Config import Config
+from utils.selection_parameters import SelectionParameter
 
 
-def rank(chromosomes: dict, config: Config):
+def rank(chromosomes: dict, selection_parameter: SelectionParameter):
     return None

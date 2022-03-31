@@ -1,4 +1,5 @@
-from TP2.src.utils.Config import Config
+from utils.selection_parameters import SelectionParameter
 
-def boltzmann(chromosomes: dict, config: Config):
+
+def boltzmann(chromosomes: dict, selection_parameter: SelectionParameter):
     return None

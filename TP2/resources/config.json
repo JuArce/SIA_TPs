@@ -1,14 +1,17 @@
 {
-  "selection_algorithm": "tournament",
+  "selection_algorithm": "elite",
   "cross_over_algorithm": "simple",
   "multiple_cross_points": "2",
-  "population": "5",
+  "population": "50",
   "limit_time": "1000",
-  "generations_quantity": "5000",
+  "generations_quantity": "50000",
   "mutation_probability": "0.05",
   "k_truncated": "2",
   "tournament_probability": "0.9",
-  "max_unchanged_fitness_generations": "50",
+  "max_unchanged_fitness_generations": "500",
   "unchanged_percentage": "0.9",
-  "max_unchanged_generations": "10000"
+  "max_unchanged_generations": "10000",
+  "temperature": "1000",
+  "temperature_goal": "0",
+  "decrease_temp_factor": "0.5"
 }

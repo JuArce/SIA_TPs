@@ -19,6 +19,7 @@ from selection.tournament import tournament
 from selection.truncated import truncated
 from utils.Criteria import Criteria
 from utils.fitness import get_fitness
+from utils.selection_parameters import SelectionParameter
 
 selection = {
     "boltzmann": boltzmann,
@@ -67,6 +68,7 @@ with open(sys.argv[1], 'r') as f:
 bag: Bag = Bag(max_weight, total_items, int(config.population), elements)
 
 criteria: Criteria = Criteria(config, bag.chromosomes)
+selection_parameters: SelectionParameter = SelectionParameter(config)
 
 while not criteria.is_completed():
     new_gen: dict = dict()
@@ -83,7 +85,8 @@ while not criteria.is_completed():
                 break
 
     union = new_gen | bag.chromosomes
-    bag.chromosomes = selection[config.selection_algorithm](union, config)
+    bag.chromosomes = selection[config.selection_algorithm](union, selection_parameters)
+    selection_parameters.current_gen += 1
     criteria.update_criteria(bag.chromosomes)
 
 bag.chromosomes = dict(sorted(bag.chromosomes.items(), key=lambda item: item[1], reverse=True))
