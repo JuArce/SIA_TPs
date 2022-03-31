@@ -36,6 +36,27 @@ class Config:
         if self.population == '':
             self.population = 500
 
+        assert (config.get('max_unchanged_generations') != ''), 'Must define max unchanged generations'
+        assert (int(config.get('max_unchanged_generations')) > 0 and int(
+            config.get(
+                'max_unchanged_generations')) <= 50000), 'The value of the max unchanged generations ' \
+                                                         'must be between 0 and 500 '
+        self.max_unchanged_generations = int(config.get('max_unchanged_generations'))
+
+        assert (config.get('unchanged_percentage') != ''), 'Must define unchanged percentage of generations'
+        assert (float(config.get('unchanged_percentage')) > 0 and float(
+            config.get(
+                'unchanged_percentage')) < 1), 'The value of the unchanged percentage must ' \
+                                               'be greater than 0 and less than 1 '
+        self.unchanged_percentage = float(config.get('unchanged_percentage'))
+
+        assert (config.get('max_unchanged_fitness_generations') != ''), 'Must define max unchanged fitness generations'
+        assert (int(config.get('max_unchanged_fitness_generations')) > 0 and int(
+            config.get(
+                'max_unchanged_fitness_generations')) <= 500), 'The value of the max unchanged generations ' \
+                                                               'fitness in generations must be between 0 and 500 '
+        self.max_unchanged_fitness_generations = int(config.get('max_unchanged_fitness_generations'))
+
         assert (self.selection_algorithm != ''), 'Selection algorithm undefined'
         assert (self.selection_algorithm in self.SELECTION_ALGORITHMS), 'Invalid selection algorithm'
 

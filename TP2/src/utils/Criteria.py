@@ -1,22 +1,23 @@
-from datetime import datetime
 import copy
+from datetime import datetime
 from typing import Optional
 
 import math
+
+from TP2.src.utils.Config import Config
 
 
 class Criteria:
 
     def __init__(self,
-                 generations_quantity: int,
-                 limit_time: int,
+                 config: Config,
                  current_generation: dict):
         # Time
-        self.limit_time = limit_time  # cuánto tiempo tiene que correr el algoritmo genético
+        self.limit_time = config.limit_time  # cuánto tiempo tiene que correr el algoritmo genético
         self.initial_time = datetime.now()
 
         # Cantidad de generacioens
-        self.limit_gen_quantity = generations_quantity  # hasta cuántas generaciones hay que analizar.
+        self.limit_gen_quantity = config.generations_quantity  # hasta cuántas generaciones hay que analizar.
         self.current_gen_quantity = 0  # contiene que número de generación se está analizando.
 
         # Generaciones
@@ -24,12 +25,12 @@ class Criteria:
         self.last_generation: Optional[dict] = None  # contiene la generación anterior.
 
         # Estructura: Una parte relevante de la población no cambia en una cantidad de generaciones.
-        self.unchanged_percentage = 0.9  # Definir por parámetro TODO
-        self.max_unchanged_generations = 100  # Definir por parámetro TODO
+        self.unchanged_percentage = config.unchanged_percentage
+        self.max_unchanged_generations = config.max_unchanged_generations
         self.unchanged_generations = 0
 
         # Contenido: El mejor fitness no cambia en una cantidad de generaciones.
-        self.max_unchanged_fitness_generations = 50  # Definir por parámetro TODO La cantidad Máxima de generaciones que no pueden cambiar
+        self.max_unchanged_fitness_generations = config.max_unchanged_fitness_generations
         self.unchanged_fitness_generations = 0  # La cantidad de generaciones que no cambiaron hasta ahora
         self.max_fitness = 0  # El maximo fitness hasta ahora
 

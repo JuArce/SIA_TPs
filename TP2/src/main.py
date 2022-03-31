@@ -1,11 +1,15 @@
 import random
+import sys
 from typing import List
 
-from population.Element import Element
-from population.Bag import Bag
 from TP2.src.utils.Config import Config
-from utils.fitness import get_fitness
-
+# Cross Over algorithms
+from cross_over.multiple import multiple
+from cross_over.simple import simple
+from cross_over.uniform import uniform
+from mutations.mutation import mutation
+from population.Bag import Bag
+from population.Element import Element
 # Selection algorithms
 from selection.boltzmann import boltzmann
 from selection.elite import elite
@@ -13,17 +17,8 @@ from selection.rank import rank
 from selection.roulette import roulette
 from selection.tournament import tournament
 from selection.truncated import truncated
-
-# Cross Over algorithms
-from cross_over.multiple import multiple
-from cross_over.simple import simple
-from cross_over.uniform import uniform
-
-from mutations.mutation import mutation
-
 from utils.Criteria import Criteria
-
-import sys
+from utils.fitness import get_fitness
 
 selection = {
     "boltzmann": boltzmann,
@@ -71,7 +66,7 @@ with open(sys.argv[1], 'r') as f:
     f.close()
 bag: Bag = Bag(max_weight, total_items, int(config.population), elements)
 
-criteria: Criteria = Criteria(config.generations_quantity, config.limit_time, bag.chromosomes)
+criteria: Criteria = Criteria(config, bag.chromosomes)
 
 while not criteria.is_completed():
     new_gen: dict = dict()
@@ -90,7 +85,6 @@ while not criteria.is_completed():
     union = new_gen | bag.chromosomes
     bag.chromosomes = selection[config.selection_algorithm](union, config)
     criteria.update_criteria(bag.chromosomes)
-
 
 bag.chromosomes = dict(sorted(bag.chromosomes.items(), key=lambda item: item[1], reverse=True))
 

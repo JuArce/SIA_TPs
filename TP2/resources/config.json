@@ -2,10 +2,13 @@
   "selection_algorithm": "tournament",
   "cross_over_algorithm": "simple",
   "multiple_cross_points": "2",
-  "population": "100",
+  "population": "5",
   "limit_time": "1000",
   "generations_quantity": "5000",
   "mutation_probability": "0.05",
   "k_truncated": "2",
-  "tournament_probability": "0.9"
+  "tournament_probability": "0.9",
+  "max_unchanged_fitness_generations": "50",
+  "unchanged_percentage": "0.9",
+  "max_unchanged_generations": "10000"
 }
