@@ -65,9 +65,9 @@ class Config:
         assert (self.cross_over_algorithm != ''), 'Cross over algorithm undefined'
         assert (self.cross_over_algorithm in self.CROSS_OVER_ALGORITHMS), 'Invalid cross over algorithm'
 
-        self.temperature = config.get('temperature')
-        self.temperature_goal = config.get('temperature_goal')
-        self.decrease_temp_factor = config.get('decrease_temp_factor')
+        self.temperature = float(config.get('temperature'))
+        self.temperature_goal = float(config.get('temperature_goal'))
+        self.decrease_temp_factor = float(config.get('decrease_temp_factor'))
 
     def __str__(self):
         return self.__dict__.__str__()
