@@ -1,0 +1,17 @@
+{
+  "selection_algorithm": "boltzmann",
+  "cross_over_algorithm": "multiple",
+  "multiple_cross_points": "2",
+  "population": "50",
+  "limit_time": "1000",
+  "generations_quantity": "20000",
+  "mutation_probability": "0.005",
+  "k_truncated": "2",
+  "tournament_probability": "0.9",
+  "max_unchanged_fitness_generations": "50",
+  "unchanged_percentage": "0.9",
+  "max_unchanged_generations": "50",
+  "temperature": "2000",
+  "temperature_goal": "20",
+  "decrease_temp_factor": "50"
+}
