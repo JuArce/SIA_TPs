@@ -1,4 +1,3 @@
-import copy
 import random
 
 from TP2.src.utils.selection_parameters import SelectionParameter

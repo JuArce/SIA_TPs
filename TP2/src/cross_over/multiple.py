@@ -1,6 +1,7 @@
 import random
 from TP2.src.utils.Config import Config
 
+
 def multiple(chromosomes: [str], config: Config):
     points = config.multiple_cross_points
     p = random.sample(range(len(chromosomes[0]) - 1), points)
