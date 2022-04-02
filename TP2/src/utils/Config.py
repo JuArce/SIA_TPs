@@ -18,7 +18,7 @@ class Config:
         config = json.loads(string)
         self.selection_algorithm = config.get('selection_algorithm')
         self.cross_over_algorithm = config.get('cross_over_algorithm')
-        self.multiple_cross_points = config.get('multiple_cross_points')  # TODO : agregar validaciones
+        self.multiple_cross_points = int(config.get('multiple_cross_points'))  # TODO : agregar validaciones
 
         self.population = int(config.get('population'))
 
