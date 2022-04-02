@@ -1,28 +1,23 @@
 import copy
+import datetime
 import os
 import random
 import sys
 from typing import List
 
-from utils.Config_ga import Config
-from utils.graphs import *
-from utils.Results_ga import Results
 # Cross Over algorithms
-from cross_over.multiple import multiple
 from cross_over.simple import simple
-from cross_over.uniform import uniform
 from mutations.mutation import mutation
 from population.Bag import Bag
 from population.Element import Element
 # Selection algorithms
 from selection.boltzmann import boltzmann
-from selection.elite import elite
-from selection.rank import rank
-from selection.roulette import roulette
 from selection.tournament import tournament
 from selection.truncated import truncated
+from utils.Config_ga import Config
 from utils.Criteria import Criteria
 from utils.fitness import get_fitness
+from utils.graphs import *
 from utils.selection_parameters import SelectionParameter
 
 selection = {
@@ -71,6 +66,7 @@ results: ['Results'] = []
 
 for root, dirs, files in os.walk(config_dir):
     for f in files:
+        initial_time: datetime = datetime.datetime.now()
         f = open(os.path.join(root, f))
         config: Config = Config(f.read())
         f.close()
@@ -101,7 +97,7 @@ for root, dirs, files in os.walk(config_dir):
             criteria.update_criteria(bag.chromosomes)
 
         bag.chromosomes = dict(sorted(bag.chromosomes.items(), key=lambda item: item[1], reverse=True))
-        results.append(Results(bag, config))
+        results.append(Results(bag, config, initial_time))
 
         # for chromosome in bag.chromosomes:
         #     weight = 0

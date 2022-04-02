@@ -1,10 +1,10 @@
+import datetime
 import random
 import sys
 from typing import List
 
 import matplotlib.pyplot as plt
 
-from utils.Config_ga import Config
 # Cross Over algorithms
 from cross_over.multiple import multiple
 from cross_over.simple import simple
@@ -19,7 +19,9 @@ from selection.rank import rank
 from selection.roulette import roulette
 from selection.tournament import tournament
 from selection.truncated import truncated
+from utils.Config_ga import Config
 from utils.Criteria import Criteria
+from utils.Results_ga import Results
 from utils.fitness import get_fitness
 from utils.selection_parameters import SelectionParameter
 
@@ -40,10 +42,6 @@ cross_over = {
 
 print('Argument List:', str(sys.argv))
 assert len(sys.argv) == 3, 'Missing arguments'
-
-config_file = open(sys.argv[2], 'r')
-config: Config = Config(config_file.read())
-config_file.close()
 
 max_weight: int
 total_items: int
@@ -67,6 +65,11 @@ with open(sys.argv[1], 'r') as f:
         line = f.readline()
 
     f.close()
+
+initial_time = datetime.datetime.now()
+config_file = open(sys.argv[2], 'r')
+config: Config = Config(config_file.read())
+config_file.close()
 bag: Bag = Bag(max_weight, total_items, int(config.population), elements)
 
 criteria: Criteria = Criteria(config, bag.chromosomes)
@@ -93,7 +96,7 @@ while not criteria.is_completed():
     criteria.update_criteria(bag.chromosomes)
 
 bag.chromosomes = dict(sorted(bag.chromosomes.items(), key=lambda item: item[1], reverse=True))
-
+result: Results = Results(bag, config, initial_time)
 # for chromosome in bag.chromosomes:
 #     weight = 0
 #     benefit = 0
@@ -103,13 +106,14 @@ bag.chromosomes = dict(sorted(bag.chromosomes.items(), key=lambda item: item[1],
 #     print('Weight ' + weight.__str__() +
 #           ' | Benefit ' + benefit.__str__())
 print('+-------------------------------------------------------------+')
-print('Population size: ' + config.population.__str__())
-print('Generations quantity: ' + config.generations_quantity.__str__())
-print('Time limit: ' + config.limit_time.__str__() + 's')
-print('Mutation probability: ' + config.mutation_probability.__str__())
-print('Algorithms: ' + config.__str__())
+print('Population size: ' + result.config.population.__str__())
+print('Generations quantity: ' + result.config.generations_quantity.__str__())
+print('Time limit: ' + result.config.limit_time.__str__() + 's')
+print('Mutation probability: ' + result.config.mutation_probability.__str__())
+print('Algorithms: ' + result.config.__str__())
 print('---------------------------------------------------------------')
 print('Results:')
+print('Time: ' + str(result.time))
 print('Generation:' + selection_parameters.current_gen.__str__())
 
 print('+-------------------------------------------------------------+')

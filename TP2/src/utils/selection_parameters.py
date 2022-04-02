@@ -1,3 +1,5 @@
+import datetime
+
 from utils.Config_ga import Config
 
 
@@ -11,3 +13,4 @@ class SelectionParameter:
         self.initial_temperature = config.temperature
         self.temperature_goal = config.temperature_goal
         self.decrease_temp_factor = config.decrease_temp_factor
+
