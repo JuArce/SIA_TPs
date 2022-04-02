@@ -105,6 +105,11 @@ result: Results = Results(bag, config, initial_time)
 #         benefit += int(value) * elements[i].value  # x_i * b_i
 #     print('Weight ' + weight.__str__() +
 #           ' | Benefit ' + benefit.__str__())
+weight = 0
+benefit = 0
+for i, value in enumerate(list(bag.chromosomes.keys())[0]):
+    weight += int(value) * elements[i].weight  # x_i * w_i
+    benefit += int(value) * elements[i].value  # x_i * b_i
 print('+-------------------------------------------------------------+')
 print('Population size: ' + result.config.population.__str__())
 print('Generations quantity: ' + result.config.generations_quantity.__str__())
@@ -115,7 +120,8 @@ print('---------------------------------------------------------------')
 print('Results:')
 print('Time: ' + str(result.time))
 print('Generation:' + selection_parameters.current_gen.__str__())
-
+print('Weight: ' + weight.__str__())
+print('Benefit: ' + benefit.__str__())
 print('+-------------------------------------------------------------+')
 
 plt.figure(figsize=(7, 7), layout='constrained', dpi=200)

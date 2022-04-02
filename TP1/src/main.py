@@ -5,7 +5,7 @@ from algorithms.vds import vds
 from algorithms.a_star import a_star
 from algorithms.local_heuristic import local_heuristic
 from algorithms.global_heuristic import global_heuristic
-from utils.Config import Config
+from utils.Config_sm import Config
 from utils.Plays import Plays
 import sys
 
