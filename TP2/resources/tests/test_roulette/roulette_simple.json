@@ -1,10 +1,10 @@
 {
   "selection_algorithm": "roulette",
-  "cross_over_algorithm": "multiple",
+  "cross_over_algorithm": "simple",
   "multiple_cross_points": "2",
   "population": "50",
   "limit_time": "1000",
-  "generations_quantity": "20000",
+  "generations_quantity": "50",
   "mutation_probability": "0.005",
   "k_truncated": "2",
   "tournament_probability": "0.9",
