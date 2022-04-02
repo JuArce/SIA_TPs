@@ -1,6 +1,7 @@
 import random
 import sys
 from typing import List
+
 import matplotlib.pyplot as plt
 
 from TP2.src.utils.Config import Config

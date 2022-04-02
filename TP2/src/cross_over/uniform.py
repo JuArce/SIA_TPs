@@ -1,4 +1,5 @@
 import random
+
 from TP2.src.utils.Config import Config
 
 

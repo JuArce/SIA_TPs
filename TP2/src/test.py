@@ -3,9 +3,10 @@ import os
 import random
 import sys
 from typing import List
-import matplotlib.pyplot as plt
 
 from TP2.src.utils.Config import Config
+from TP2.src.utils.graphs import *
+from TP2.src.utils.results import Results
 # Cross Over algorithms
 from cross_over.multiple import multiple
 from cross_over.simple import simple
@@ -42,9 +43,10 @@ cross_over = {
 POPULATION = 500
 
 print('Argument List:', str(sys.argv))
-assert len(sys.argv) == 3, 'Missing arguments'
+assert len(sys.argv) == 4, 'Missing arguments'
 
 config_dir = sys.argv[2]
+charts_dir = sys.argv[3]
 
 max_weight: int
 total_items: int
@@ -70,6 +72,7 @@ with open(sys.argv[1], 'r') as f:
     f.close()
 
 initial_bag: Bag = Bag(max_weight, total_items, int(POPULATION), elements)
+results: ['Results'] = []
 
 for root, dirs, files in os.walk(config_dir):
     for f in files:
@@ -103,17 +106,21 @@ for root, dirs, files in os.walk(config_dir):
             criteria.update_criteria(bag.chromosomes)
 
         bag.chromosomes = dict(sorted(bag.chromosomes.items(), key=lambda item: item[1], reverse=True))
+        results.append(Results(bag, config))
 
-        for chromosome in bag.chromosomes:
-            weight = 0
-            benefit = 0
-            for i, value in enumerate(chromosome):
-                weight += int(value) * elements[i].weight  # x_i * w_i
-                benefit += int(value) * elements[i].value  # x_i * b_i
-            print('Weight ' + weight.__str__() +
-                  ' | Benefit ' + benefit.__str__())
+        # for chromosome in bag.chromosomes:
+        #     weight = 0
+        #     benefit = 0
+        #     for i, value in enumerate(chromosome):
+        #         weight += int(value) * elements[i].weight  # x_i * w_i
+        #         benefit += int(value) * elements[i].value  # x_i * b_i
+        #     print('Weight ' + weight.__str__() +
+        #           ' | Benefit ' + benefit.__str__())
 
-        plt.clf()
-        plt.plot(bag.evolution.keys(), bag.evolution.values())
-        plt.savefig(config.selection_algorithm + config.cross_over_algorithm + '.png')
+# Impresión de cada gráfico por algoritmo de selección
+for s in selection.keys():
+    get_charts_by_selection_algorithm(s, results, charts_dir)
 
+# Impresión de cada gráfico por algoritmo de selección
+for c in cross_over.keys():
+    get_charts_by_cross(c, results, charts_dir)
