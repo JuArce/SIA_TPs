@@ -2,9 +2,9 @@ from datetime import datetime
 
 from tree.Node import Node
 from tree.State import Heuristic_state
-from utils.Config import Config
+from utils.Config_sm import Config
 from utils.Plays import Plays
-from utils.Results import Results
+from utils.Results_sm import Results
 
 
 def a_star(config: Config):

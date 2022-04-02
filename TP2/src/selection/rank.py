@@ -1,6 +1,6 @@
 import random
 
-from TP2.src.utils.selection_parameters import SelectionParameter
+from utils.selection_parameters import SelectionParameter
 
 
 def rank(chromosomes: dict, selection_parameter: SelectionParameter):

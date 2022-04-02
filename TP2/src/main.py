@@ -4,7 +4,7 @@ from typing import List
 
 import matplotlib.pyplot as plt
 
-from TP2.src.utils.Config import Config
+from utils.Config_ga import Config
 # Cross Over algorithms
 from cross_over.multiple import multiple
 from cross_over.simple import simple
@@ -94,14 +94,25 @@ while not criteria.is_completed():
 
 bag.chromosomes = dict(sorted(bag.chromosomes.items(), key=lambda item: item[1], reverse=True))
 
-for chromosome in bag.chromosomes:
-    weight = 0
-    benefit = 0
-    for i, value in enumerate(chromosome):
-        weight += int(value) * elements[i].weight  # x_i * w_i
-        benefit += int(value) * elements[i].value  # x_i * b_i
-    print('Weight ' + weight.__str__() +
-          ' | Benefit ' + benefit.__str__())
+# for chromosome in bag.chromosomes:
+#     weight = 0
+#     benefit = 0
+#     for i, value in enumerate(chromosome):
+#         weight += int(value) * elements[i].weight  # x_i * w_i
+#         benefit += int(value) * elements[i].value  # x_i * b_i
+#     print('Weight ' + weight.__str__() +
+#           ' | Benefit ' + benefit.__str__())
+print('+-------------------------------------------------------------+')
+print('Population size: ' + config.population.__str__())
+print('Generations quantity: ' + config.generations_quantity.__str__())
+print('Time limit: ' + config.limit_time.__str__() + 's')
+print('Mutation probability: ' + config.mutation_probability.__str__())
+print('Algorithms: ' + config.__str__())
+print('---------------------------------------------------------------')
+print('Results:')
+print('Generation:' + selection_parameters.current_gen.__str__())
+
+print('+-------------------------------------------------------------+')
 
 plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
 plt.plot(bag.evolution.keys(), bag.evolution.values(), label=config.__str__())

@@ -1,4 +1,4 @@
-from TP2.src.utils.Config import Config
+from utils.Config_ga import Config
 
 
 class SelectionParameter:

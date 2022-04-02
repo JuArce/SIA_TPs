@@ -4,7 +4,7 @@ from typing import Optional
 from tree.Node import Node
 from tree.State import State
 from tree.State import Heuristic_state
-from utils.Config import Config
+from utils.Config_sm import Config
 from heuristics.manhattan_distance import manhattan
 from heuristics.hamming_distance import hamming
 from heuristics.not_adm_heu import not_adm_heu

@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from TP2.src.utils.results import Results
+from utils.Results_ga import Results
 
 
 def get_charts_by_selection_algorithm(selection_algorithm_selected: str, results: [Results], charts_dir: str):

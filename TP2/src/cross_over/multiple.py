@@ -1,6 +1,6 @@
 import random
 
-from TP2.src.utils.Config import Config
+from utils.Config_ga import Config
 
 
 def multiple(chromosomes: [str], config: Config):

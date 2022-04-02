@@ -13,5 +13,5 @@
   "max_unchanged_generations": "500",
   "temperature": "2000",
   "temperature_goal": "20",
-  "decrease_temp_factor": "0.1"
+  "decrease_temp_factor": "1"
 }

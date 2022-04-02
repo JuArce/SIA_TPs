@@ -4,9 +4,9 @@ import random
 import sys
 from typing import List
 
-from TP2.src.utils.Config import Config
-from TP2.src.utils.graphs import *
-from TP2.src.utils.results import Results
+from utils.Config_ga import Config
+from utils.graphs import *
+from utils.Results_ga import Results
 # Cross Over algorithms
 from cross_over.multiple import multiple
 from cross_over.simple import simple
