@@ -8,9 +8,9 @@
   "mutation_probability": "0.01",
   "k_truncated": "2",
   "tournament_probability": "0.9",
-  "max_unchanged_fitness_generations": "50",
+  "max_unchanged_fitness_generations": "500",
   "unchanged_percentage": "0.9",
-  "max_unchanged_generations": "50",
+  "max_unchanged_generations": "500",
   "temperature": "2000",
   "temperature_goal": "20",
   "decrease_temp_factor": "0.1"
