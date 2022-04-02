@@ -16,6 +16,7 @@ class Bag:
         self.elements: [Element] = elements
         self.population: int = population
         self.chromosomes: dict = self.initialize_chromosomes()
+        self.evolution = dict()  # Key: Gen Value: Max fitness
 
     def initialize_chromosomes(self) -> dict:
         i: int = 0

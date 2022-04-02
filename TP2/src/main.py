@@ -1,6 +1,7 @@
 import random
 import sys
 from typing import List
+import matplotlib.pyplot as plt
 
 from TP2.src.utils.Config import Config
 # Cross Over algorithms
@@ -87,6 +88,7 @@ while not criteria.is_completed():
     union = new_gen | bag.chromosomes
     bag.chromosomes = selection[config.selection_algorithm](union, selection_parameters)
     selection_parameters.current_gen += 1
+    bag.evolution[selection_parameters.current_gen] = max(bag.chromosomes.values())
     criteria.update_criteria(bag.chromosomes)
 
 bag.chromosomes = dict(sorted(bag.chromosomes.items(), key=lambda item: item[1], reverse=True))
@@ -99,3 +101,6 @@ for chromosome in bag.chromosomes:
         benefit += int(value) * elements[i].value  # x_i * b_i
     print('Weight ' + weight.__str__() +
           ' | Benefit ' + benefit.__str__())
+
+plt.plot(bag.evolution.keys(), bag.evolution.values())
+plt.show()
