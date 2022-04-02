@@ -102,5 +102,12 @@ for chromosome in bag.chromosomes:
     print('Weight ' + weight.__str__() +
           ' | Benefit ' + benefit.__str__())
 
-plt.plot(bag.evolution.keys(), bag.evolution.values())
+label = config.selection_algorithm + ' | ' + config.cross_over_algorithm
+plt.figure(figsize=(5, 5), layout='constrained', dpi=200)
+plt.plot(bag.evolution.keys(), bag.evolution.values(), label=label)
+plt.xlabel('Generación')
+plt.ylabel('Fitness')
+plt.title("Evolución")
+plt.figtext(0.5, 0, 'esto es una descripcion', wrap=False, horizontalalignment='center', fontsize=10)
+plt.legend()
 plt.show()
