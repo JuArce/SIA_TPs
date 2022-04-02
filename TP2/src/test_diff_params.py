@@ -27,17 +27,12 @@ from utils.selection_parameters import SelectionParameter
 
 selection = {
     "boltzmann": boltzmann,
-    "elite": elite,
-    "rank": rank,
-    "roulette": roulette,
     "tournament": tournament,
     "truncated": truncated
 }
 
 cross_over = {
-    "multiple": multiple,
     "simple": simple,
-    "uniform": uniform,
 }
 
 POPULATION = 500
@@ -123,7 +118,3 @@ if not os.path.exists(charts_dir):
 # Impresión de cada gráfico por algoritmo de selección
 for s in selection.keys():
     get_charts_by_selection_algorithm(s, results, charts_dir)
-
-# Impresión de cada gráfico por algoritmo de selección
-for c in cross_over.keys():
-    get_charts_by_cross(c, results, charts_dir)
