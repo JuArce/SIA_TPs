@@ -38,9 +38,10 @@ La siguiente tabla describe las configuraciones posibles con sus opciones:
 ## Ejecución
 Para ejecutar el programa se hace uso del siguiente comando:
 ```shell
-pipenv run main <path_to_file> <path_to_config>
+pipenv run main <path_to_file> <path_to_config> <path_to_output>
 ```
 donde `<path_to_file>` representa el archivo de datos de la mochila a ser analizada. Por defecto se recomienda usar `./resources/Mochila100Elementos.txt`, el archivo aportado por la cátedra.
+`<path_to_output>` representa el directorio donde guardar el archivo de salida.
 
 ## Presentación
 El documento de la [presentación]() de las conclusiones se encuentra en formato `pdf` en la sección de documentos.
