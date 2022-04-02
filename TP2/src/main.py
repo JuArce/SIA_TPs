@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+import os
 import random
 import sys
 from typing import List
@@ -41,7 +42,11 @@ cross_over = {
 }
 
 print('Argument List:', str(sys.argv))
-assert len(sys.argv) == 3, 'Missing arguments'
+assert len(sys.argv) == 4, 'Missing arguments'
+
+output_dir = sys.argv[3]
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
 
 max_weight: int
 total_items: int
@@ -66,7 +71,7 @@ with open(sys.argv[1], 'r') as f:
 
     f.close()
 
-initial_time = datetime.datetime.now()
+initial_time = datetime.now()
 config_file = open(sys.argv[2], 'r')
 config: Config = Config(config_file.read())
 config_file.close()
@@ -131,4 +136,4 @@ plt.ylabel('Fitness')
 plt.title("Evolución en cada generación")
 plt.grid(True)
 plt.legend()
-plt.show()
+plt.savefig(output_dir + '/' + config.selection_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png')
