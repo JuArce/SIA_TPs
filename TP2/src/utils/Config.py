@@ -70,4 +70,18 @@ class Config:
         self.decrease_temp_factor = float(config.get('decrease_temp_factor'))
 
     def __str__(self):
-        return self.__dict__.__str__()
+        label = [self.selection_algorithm]
+        if self.selection_algorithm == 'boltzmann':
+            label.extend([' (t0=', self.temperature.__str__(), ', tc=', self.temperature_goal.__str__(), ', k=',
+                          self.decrease_temp_factor.__str__(), ')'])
+        if self.selection_algorithm == 'truncated':
+            label.extend([' (k=', self.k_truncated.__str__(), ')'])
+        if self.selection_algorithm == 'tournament':
+            label.extend([' (p=', self.tournament_probability.__str__(), ')'])
+
+        label.append(' | ')
+        label.append(self.cross_over_algorithm)
+        if self.cross_over_algorithm == 'multiple':
+            label.extend([' (', self.multiple_cross_points.__str__(), ' points)'])
+
+        return ''.join(label)

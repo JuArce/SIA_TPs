@@ -1,17 +1,17 @@
 {
-  "selection_algorithm": "truncated",
-  "cross_over_algorithm": "simple",
+  "selection_algorithm": "boltzmann",
+  "cross_over_algorithm": "multiple",
   "multiple_cross_points": "2",
   "population": "500",
   "limit_time": "1000",
   "generations_quantity": "500",
-  "mutation_probability": "0.01",
-  "k_truncated": "250",
+  "mutation_probability": "0.005",
+  "k_truncated": "100",
   "tournament_probability": "0.9",
   "max_unchanged_fitness_generations": "500",
   "unchanged_percentage": "0.9",
   "max_unchanged_generations": "500",
   "temperature": "2000",
   "temperature_goal": "1",
-  "decrease_temp_factor": "0.001"
+  "decrease_temp_factor": "0.01"
 }
