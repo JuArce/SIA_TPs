@@ -5,11 +5,11 @@ from TP2.src.utils.results import Results
 
 def get_charts_by_selection_algorithm(selection_algorithm_selected: str, results: [Results], charts_dir: str):
     plt.clf()
+    plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
     plt.xlabel('Generación')
     plt.ylabel('Fitness')
     plt.title("Evolución en cada generación")
     plt.grid(True)
-    plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
 
     for r in results:
         if r.config.selection_algorithm == selection_algorithm_selected:
@@ -21,11 +21,11 @@ def get_charts_by_selection_algorithm(selection_algorithm_selected: str, results
 
 def get_charts_by_cross(cross_over_selected: str, results: [Results], charts_dir: str):
     plt.clf()
+    plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
     plt.xlabel('Generación')
     plt.ylabel('Fitness')
     plt.title("Evolución en cada generación")
     plt.grid(True)
-    plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
 
     for r in results:
         if r.config.cross_over_algorithm == cross_over_selected:
