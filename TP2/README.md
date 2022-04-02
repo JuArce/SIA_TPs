@@ -6,6 +6,7 @@ Implementación de algoritmos genéticos para el problema de la mochila o bien [
 * [Pip](https://pip.pypa.io/en/stable/installation/)
 * [Pipenv](https://pipenv.pypa.io/en/latest/)
 * [Typing](https://pypi.org/project/typing/)
+* [Matplotlib](https://pypi.org/project/matplotlib/)
 
 ## Instalación
 Correr, parado en el directorio `TP2`, el siguiente comando para realizar toda instalación necesaria:
@@ -36,12 +37,25 @@ La siguiente tabla describe las configuraciones posibles con sus opciones:
  | `decrease_temp_factor`              | `int`                                                                 | Factor de decrecimiento en algoritmo de selección de Boltzmann.                                                    | 
 
 ## Ejecución
-Para ejecutar el programa se hace uso del siguiente comando:
+Para ejecutar el programa principal se hace uso del siguiente comando:
 ```shell
 pipenv run main <path_to_file> <path_to_config> <path_to_output>
 ```
 donde `<path_to_file>` representa el archivo de datos de la mochila a ser analizada. Por defecto se recomienda usar `./resources/Mochila100Elementos.txt`, el archivo aportado por la cátedra.
 `<path_to_output>` representa el directorio donde guardar el archivo de salida.
+
+Para ejecutar el programa de testeos se hace uso del siguiente comando:
+```shell
+pipenv run test <path_to_file> <path_to_tests> <path_to_output>
+```
+```shell
+pipenv run test_dp <path_to_file> <path_to_tests> <path_to_output>
+```
+donde `<path_to_file>` representa el archivo de datos de la mochila a ser analizada. Por defecto se recomienda usar `./resources/Mochila100Elementos.txt`, el archivo aportado por la cátedra.
+`<path_to_tests>` representa el directorio donde se encuentran los archivos de configuración a ser ejecutados. Pueden estar en subdirectorios.
+`<path_to_output>` representa el directorio donde guardar los archivos de salida.
+
+
 
 ## Presentación
 El documento de la [presentación]() de las conclusiones se encuentra en formato `pdf` en la sección de documentos.
