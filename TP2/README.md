@@ -28,7 +28,7 @@ La siguiente tabla describe las configuraciones posibles con sus opciones:
  | `generations_quantity`              | `int`                                                                 | Cantidad de generaciones a usar como condición de corte.                                                           |
  | `mutation_probability`              | `float`                                                               | Probabilidad a usar al momento de mutar los genes en el algoritmo de mutación.                                     |
 | `k_truncated`                       | `int`                                                                 | Cantidad de individuos con menor aptitud a eliminar en algoritmo de selección truncada.                            |
-| `tournament_probability`            | `float`                                                               | Probabilidad a usar en método de selección competitiva (tournament).                                               |
+| `tournament_probability`            | `float`                                                               | Probabilidad `u` a usar en método de selección competitiva (tournament).                                           |
  | `max_unchanged_fitness_generations` | `int`                                                                 | Criterio de corte para cantidad de generaciones que no poseen un cambio de fitness máximo.                         |
 | `unchanged_percentage`              | `float`                                                               | Criterio de corte en base al porcentaje de generaciones que no poseen cambios.                                     |
 | `max_unchanged_generations`         | `int`                                                                 | Criterio de corte en base a la cantidad máxima de generaciones que no poseen cambios en base a el porcentaje dado. |
@@ -51,11 +51,12 @@ pipenv run test <path_to_file> <path_to_tests> <path_to_output>
 ```shell
 pipenv run test_dp <path_to_file> <path_to_tests> <path_to_output>
 ```
-donde `<path_to_file>` representa el archivo de datos de la mochila a ser analizada. Por defecto se recomienda usar `./resources/Mochila100Elementos.txt`, el archivo aportado por la cátedra.
-`<path_to_tests>` representa el directorio donde se encuentran los archivos de configuración a ser ejecutados. Pueden estar en subdirectorios.
-`<path_to_output>` representa el directorio donde guardar los archivos de salida.
+donde se tiene: 
+* `<path_to_file>` representa el archivo de datos de la mochila a ser analizada. Por defecto se recomienda usar `./resources/Mochila100Elementos.txt`, el archivo aportado por la cátedra.
+* `<path_to_tests>` representa el directorio donde se encuentran los archivos de configuración a ser ejecutados. Pueden estar en subdirectorios.
+* `<path_to_output>` representa el directorio donde guardar los archivos de salida.
 
 
 
 ## Presentación
-El documento de la [presentación]() de las conclusiones se encuentra en formato `pdf` en la sección de documentos.
+El documento de la [presentación](/TP2/docs/TP2-Presentación-Grupo7.pdf) de las conclusiones se encuentra en formato `pdf` en la sección de documentos.

@@ -132,7 +132,12 @@ dmypy.json
 .pyre/
 
 .DS_Store
+
+# TP1
 TP1/*.txt
 TP1/*.csv
+
+# TP2
 TP2/resources/charts/*
 TP2/resources/charts_diff_params/*
+TP2/*.png
