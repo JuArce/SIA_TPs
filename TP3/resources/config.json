@@ -1,0 +1,5 @@
+{
+  "perceptron_algorithm": "simple_perceptron",
+  "cota": "100",
+  "eta": "0.1"
+}
