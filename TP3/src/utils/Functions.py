@@ -1,3 +1,4 @@
+import math
 import numpy as np
 
 
@@ -8,4 +9,12 @@ def sign(n: float):
 
 
 def get_error(x: np.array, y: np.array, w: np.array, p: int):
-    return 0.1
+    i = 0
+    ret = 0
+    while i < p:
+        o = x[i] @ w
+        if not math.isclose(o, y[i], abs_tol=0.00001):
+            ret = ret + 1
+        i = i + 1
+
+    return ret

@@ -1,14 +1,17 @@
 import copy
+import random
+from datetime import datetime
 
 import numpy as np
 
-from utils.PerceptronParameters import PerceptronParameters
-from utils.Functions import sign
 from utils.Functions import get_error
-import random
+from utils.Functions import sign
+from utils.PerceptronParameters import PerceptronParameters
+from utils.Results_p import Results
 
 
 def simple_perceptron(perceptron_parameters: PerceptronParameters, x: np.array, y: np.array):
+    time = datetime.now()
     i = 0
     w = np.zeros(len(x[0]))
     w_min = np.zeros(len(x[0]))
@@ -31,4 +34,4 @@ def simple_perceptron(perceptron_parameters: PerceptronParameters, x: np.array, 
             w_min = copy.deepcopy(w)
         i += 1
 
-    return None
+    return Results(x, y, w_min, perceptron_parameters, time, i)
