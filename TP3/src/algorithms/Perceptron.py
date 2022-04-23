@@ -4,13 +4,11 @@ from datetime import datetime
 
 import numpy as np
 
-from utils.Functions import get_error
-from utils.Functions import sign
 from utils.PerceptronParameters import PerceptronParameters
 from utils.Results_p import Results
 
 
-def simple_perceptron(perceptron_parameters: PerceptronParameters, x: np.array, y: np.array):
+def perceptron(perceptron_parameters: PerceptronParameters, x: np.array, y: np.array):
     time = datetime.now()
     i = 0
     w = np.zeros(len(x[0]))
@@ -24,10 +22,10 @@ def simple_perceptron(perceptron_parameters: PerceptronParameters, x: np.array, 
         idx = random.randint(0, len(x) - 1)
 
         h = x[idx] @ w  # producto interno (válida desde python 3.5)
-        o = sign(h)
+        o = perceptron_parameters.activation_function(h, perceptron_parameters)
         delta_w = (eta * (y[idx] - o)) * x[idx]
         w = w + delta_w
-        error = get_error(x, y, w, len(x))
+        error = perceptron_parameters.error_function(x, y, w, len(x))
 
         if error < error_min:
             error_min = error

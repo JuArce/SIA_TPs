@@ -1,44 +1,67 @@
-import numpy
-
-from algorithms.SimplePerceptron import simple_perceptron
-from utils.PerceptronParameters import PerceptronParameters
-from utils.Config_p import Config
 import sys
 
-algorithms = {
-    "simple_perceptron": simple_perceptron,
-    "linear_perceptron": None,
-    "not_linear_perceptron": None,
-    "multi_layer_perceptron": None
-}
+import numpy
 
-print('Argument List:', str(sys.argv))
-assert len(sys.argv) == 4, 'Missing arguments'
-f = open(sys.argv[1])
-config: Config = Config(f.read())
-f.close()
+from algorithms.Perceptron import perceptron
+from utils.Config_p import Config
+from utils.Functions import get_error, get_error_sign, sigmoide_logistic, sign, identity, sigmoide_tanh
+from utils.PerceptronParameters import PerceptronParameters
 
-x = []
-with open(sys.argv[2], 'r') as inputs_file:
-    for line in inputs_file:
-        values = line.split()
-        aux = []
-        for v in values:
-            aux.append(float(v))
-        aux.append(float(1))
-        x.append(aux)
-x = numpy.array(x)
-print(x)
 
-y: [] = []
-with open(sys.argv[3], 'r') as expected_outputs_file:
-    for line in expected_outputs_file:
-        y.append(float(line))
-y = numpy.array(y)
-print(y)
+def get_error_function(config: Config):
+    if config.perceptron_algorithm == 'simple_perceptron':
+        return get_error_sign
+    else:
+        return get_error
 
-perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
 
-print('Running ' + config.perceptron_algorithm + '...')
-results = algorithms[config.perceptron_algorithm](perceptron_parameters, x, y)
-print(config.perceptron_algorithm + ' finished.')
+def get_activation_function(config: Config):
+    if config.perceptron_algorithm == 'simple_perceptron':
+        return sign
+    elif config.perceptron_algorithm == 'no_linear_perceptron':
+        if config.function == 'sigmoid_logistic':
+            return sigmoide_logistic
+        else:
+            return sigmoide_tanh
+    else:
+        return identity
+
+
+def __main__():
+    print('Argument List:', str(sys.argv))
+    assert len(sys.argv) == 4, 'Missing arguments'
+    f = open(sys.argv[1])
+    config: Config = Config(f.read())
+    f.close()
+
+    x = []
+    with open(sys.argv[2], 'r') as inputs_file:
+        for line in inputs_file:
+            values = line.split()
+            aux = []
+            for v in values:
+                aux.append(float(v))
+            aux.append(float(1))
+            x.append(aux)
+    x = numpy.array(x)
+    print(x)
+
+    y: [] = []
+    with open(sys.argv[3], 'r') as expected_outputs_file:
+        for line in expected_outputs_file:
+            y.append(float(line))
+    y = numpy.array(y)
+    print(y)
+
+    activation_function = get_activation_function(config)
+    error_function = get_error_function(config)
+
+    perceptron_parameters: PerceptronParameters = PerceptronParameters(config, activation_function, error_function)
+
+    print('Running ' + config.perceptron_algorithm + '...')
+    results = perceptron(perceptron_parameters, x, y)
+    print(config.perceptron_algorithm + ' finished.')
+
+
+if __name__ == "__main__":
+    __main__()

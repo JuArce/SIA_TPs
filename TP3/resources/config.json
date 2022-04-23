@@ -1,5 +1,7 @@
 {
-  "perceptron_algorithm": "simple_perceptron",
+  "perceptron_algorithm": "not_linear_perceptron",
   "cota": "100",
-  "eta": "0.1"
+  "eta": "0.01",
+  "betha": "0.5",
+  "function": "sigmoid_logistic"
 }

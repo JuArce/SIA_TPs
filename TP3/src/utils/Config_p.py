@@ -12,6 +12,8 @@ class Config:
         self.perceptron_algorithm = config.get('perceptron_algorithm')
         self.cota = int(config.get('cota'))
         self.eta = float(config.get('eta'))
+        self.betha = float(config.get('betha'))
+        self.function = config.get('function')
 
     def __str__(self):
         label = [self.perceptron_algorithm]
