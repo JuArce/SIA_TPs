@@ -1,7 +1,5 @@
-# TP2: El problema de la mochila
+# TP3: Perceptron Simple y Multicapa
 Implementación de redes neuronales para perceptron simple y multicapa. 
-
-Implementación de redes neuronales para ... .
 
 ## Dependencias
 
