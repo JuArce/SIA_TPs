@@ -7,6 +7,7 @@ class PerceptronParameters:
         self.cota = config.cota
         self.eta = config.eta
         self.activation_function = activation_function
+        self.tol_error = config.tol_error
         self.error_function = error_function
         self.betha = config.betha
         self.function = config.function

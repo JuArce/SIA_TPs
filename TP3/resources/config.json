@@ -1,7 +1,8 @@
 {
-  "perceptron_algorithm": "not_linear_perceptron",
-  "cota": "100",
-  "eta": "0.01",
-  "betha": "0.5",
+  "perceptron_algorithm": "no_linear_perceptron",
+  "cota": "1000000",
+  "eta": "0.1",
+  "betha": "0.005",
+  "tol_error": "0.01",
   "function": "sigmoid_logistic"
 }

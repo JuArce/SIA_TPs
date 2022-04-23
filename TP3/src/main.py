@@ -34,6 +34,10 @@ def __main__():
     config: Config = Config(f.read())
     f.close()
 
+    activation_function = get_activation_function(config)
+    error_function = get_error_function(config)
+    perceptron_parameters: PerceptronParameters = PerceptronParameters(config, activation_function, error_function)
+
     x = []
     with open(sys.argv[2], 'r') as inputs_file:
         for line in inputs_file:
@@ -44,19 +48,16 @@ def __main__():
             aux.append(float(1))
             x.append(aux)
     x = numpy.array(x)
-    print(x)
 
     y: [] = []
     with open(sys.argv[3], 'r') as expected_outputs_file:
         for line in expected_outputs_file:
-            y.append(float(line))
+            v = float(line)
+            if config.perceptron_algorithm == 'no_linear_perceptron':
+                v = activation_function(v, perceptron_parameters)
+            y.append(float(v))
+
     y = numpy.array(y)
-    print(y)
-
-    activation_function = get_activation_function(config)
-    error_function = get_error_function(config)
-
-    perceptron_parameters: PerceptronParameters = PerceptronParameters(config, activation_function, error_function)
 
     print('Running ' + config.perceptron_algorithm + '...')
     results = perceptron(perceptron_parameters, x, y)

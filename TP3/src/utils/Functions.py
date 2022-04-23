@@ -24,24 +24,24 @@ def sigmoide_logistic(n: float, perceptron_parameters: PerceptronParameters):
     return 1 / (1 + math.exp(-2 * n * perceptron_parameters.betha))
 
 
-def get_error_sign(x: np.array, y: np.array, w: np.array, p: int):
+def get_error_sign(x: np.array, y: np.array, w: np.array, p: int, tol_error: float):
     i = 0
     ret = 0
     while i < p:
         o = x[i] @ w
-        if not math.isclose(sign(o, None), y[i], abs_tol=0.00001):
+        if not math.isclose(sign(o, None), y[i], abs_tol=tol_error):
             ret = ret + 1
         i = i + 1
 
     return ret
 
 
-def get_error(x: np.array, y: np.array, w: np.array, p: int):
+def get_error(x: np.array, y: np.array, w: np.array, p: int, tol_error: float):
     i = 0
     ret = 0
     while i < p:
         o = x[i] @ w
-        if not math.isclose(o, y[i], abs_tol=0.00001):
+        if not math.isclose(o, y[i], abs_tol=tol_error):
             ret = ret + 1
         i = i + 1
 
