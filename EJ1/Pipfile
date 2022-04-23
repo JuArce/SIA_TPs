@@ -15,6 +15,9 @@ nose = "*"
 autograd = "*"
 numdifftools = "*"
 
+[scripts]
+main = "python ./src/main.py"
+
 [dev-packages]
 
 [requires]
