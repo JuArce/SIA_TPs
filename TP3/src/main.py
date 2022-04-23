@@ -4,15 +4,10 @@ import numpy
 
 from algorithms.Perceptron import perceptron
 from utils.Config_p import Config
-from utils.Functions import get_error, get_error_sign, sigmoide_logistic, sign, identity, sigmoide_tanh
+from utils.Functions import get_error, sigmoide_logistic, sign, identity, sigmoide_tanh, delta_function, \
+    delta_function_no_linear, \
+    sigmoide_logistic_derivative, sigmoide_tanh_derivative
 from utils.PerceptronParameters import PerceptronParameters
-
-
-def get_error_function(config: Config):
-    if config.perceptron_algorithm == 'simple_perceptron':
-        return get_error_sign
-    else:
-        return get_error
 
 
 def get_activation_function(config: Config):
@@ -35,8 +30,20 @@ def __main__():
     f.close()
 
     activation_function = get_activation_function(config)
-    error_function = get_error_function(config)
-    perceptron_parameters: PerceptronParameters = PerceptronParameters(config, activation_function, error_function)
+    error_function = get_error
+
+    if not config.perceptron_algorithm == 'no_linear_perceptron':
+        activation_function_derivative = None
+        delta_f = delta_function
+    else:
+        delta_f = delta_function_no_linear
+        if config.function == 'sigmoid_logistic':
+            activation_function_derivative = sigmoide_logistic_derivative
+        else:
+            activation_function_derivative = sigmoide_tanh_derivative
+
+    perceptron_parameters: PerceptronParameters = PerceptronParameters(config, activation_function, error_function,
+                                                                       delta_f, activation_function_derivative)
 
     x = []
     with open(sys.argv[2], 'r') as inputs_file:
