@@ -1,6 +1,7 @@
 import sys
 
 import numpy
+import matplotlib.pyplot as plt
 
 from algorithms.Perceptron import perceptron
 from utils.Config_p import Config
@@ -8,6 +9,9 @@ from utils.Functions import get_error, sigmoide_logistic, sign, identity, sigmoi
     delta_function_no_linear, \
     sigmoide_logistic_derivative, sigmoide_tanh_derivative
 from utils.PerceptronParameters import PerceptronParameters
+from utils.Config_p import Config
+from utils.Results_p import Results
+import sys
 
 
 def get_activation_function(config: Config):
@@ -69,6 +73,24 @@ def __main__():
     print('Running ' + config.perceptron_algorithm + '...')
     results = perceptron(perceptron_parameters, x, y)
     print(config.perceptron_algorithm + ' finished.')
+
+    for i, x in enumerate(results.x):
+        e = (x @ results.w) - results.y[i]
+        print(str(e))
+
+    plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
+    plt.scatter(results.x[:, 0], results.x[:, 1], s=100, c=results.y)
+    x = range(-2, 4)
+    # -w_0/w_1 x - w_2/w_1
+    y = (- (results.w[0] / results.w[1]) * x - (results.w[2] / results.w[1]))
+    plt.plot(x, y)
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title("Separabilidad")
+    plt.grid(True)
+    # plt.legend()
+    # plt.show()
+    # plt.savefig(output_dir + '/' + config.selection_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png')
 
 
 if __name__ == "__main__":
