@@ -42,7 +42,7 @@ class SimplePerceptron:
         while error > 0 and i < self.cota:
             idx = random.randint(0, len(self.x) - 1)
             h: ndarray = self.x @ w  # producto interno (válida desde python 3.5) Estado de excitacion
-            o: ndarray = vectorize(pyfunc=self.activation_function)(h)  # Activacion
+            o: ndarray = vectorize(pyfunc=self.activation_function)(h)  # Estado de Activacion
             delta_w = self.delta_function(self.x[idx], self.y[idx], h[idx], o[idx])
             w = w + delta_w
 
@@ -54,7 +54,16 @@ class SimplePerceptron:
             i += 1
 
         self.w = w_min
+
         return Results(self.x, self.y, self.w, self.algorithm, self.function, time, i)
+
+    def test(self, x: np.ndarray, y: np.ndarray):
+
+        h: ndarray = x @ self.w
+        o: ndarray = vectorize(pyfunc=self.activation_function)(h)
+        error = self.error_function(y, o)
+
+        return error
 
 
 class LinearPerceptron(SimplePerceptron):

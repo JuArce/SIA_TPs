@@ -6,6 +6,5 @@ class PerceptronParameters:
         self.algorithm = config.perceptron_algorithm
         self.cota = config.cota
         self.eta = config.eta
-        # self.tol_error = config.tol_error
         self.betha = config.betha
         self.function = config.function
