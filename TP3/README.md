@@ -1,5 +1,6 @@
 # TP3: Perceptron Simple y Multicapa
-Implementación de redes neuronales para perceptron simple y multicapa. 
+
+Implementación de redes neuronales para perceptron simple y multicapa.
 
 ## Dependencias
 
@@ -11,7 +12,9 @@ Implementación de redes neuronales para perceptron simple y multicapa.
 * [Matplotlib](https://pypi.org/project/matplotlib/)
 
 ## Instalación
+
 Correr, parado en el directorio [`TP3`](/TP3), el siguiente comando para realizar toda instalación necesaria:
+
 ```sh
 pipenv install
 ```
@@ -27,7 +30,7 @@ describe las configuraciones posibles con sus opciones:
 | `cota`                 | `int`                                                                                      | Cantidad de iteraciones máximas                                                                       |
 | `eta`                  | `float`                                                                                    | Factor para modificar W (η).                                                                          |
 | `betha`                | `float`                                                                                    | Valor por el cual se multiplica parámetro de función sigmoidea. Solo sirve para perceptron no lineal. |
-| `function`             | `sigmoid_tanh`,`sigmoid_logistic`                                                          | Función `g()` a utilizar en estado activación.                                                        |
+| `function`             | `tanh`,`logistic`                                                          | Función `g()` a utilizar en estado activación para el perceptrón no lineal.                                                        |
 
 ## Ejecución
 
@@ -36,10 +39,13 @@ Para ejecutar el programa principal se hace uso del siguiente comando:
 ```shell
 pipenv run main <path_to_config> <path_to_input_training> <path_to_output_expected>
 ```
+
 donde se tiene que:
+
 * `<path_to_config>` posee la configuración mencionada.
 * `<path_to_input_training>` posee el path al directorio donde se encuentran los archivos para entrenar la red.
-* `<path_to_output_expected>` posee el path al directorio donde se encuentran los archivos con los resultados esperados de dicho entrenamiento.
+* `<path_to_output_expected>` posee el path al directorio donde se encuentran los archivos con los resultados esperados
+  de dicho entrenamiento.
 
 ## Presentación
 
