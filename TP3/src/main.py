@@ -61,12 +61,12 @@ def __main__():
     y: [] = []
     with open(sys.argv[3], 'r') as expected_outputs_file:
         for line in expected_outputs_file:
-            v = float(line)
-            if config.perceptron_algorithm == 'no_linear_perceptron':
-                v = activation_function(v, perceptron_parameters)
-            y.append(float(v))
+            y.append(float(line))
 
     y = numpy.array(y)
+
+    if config.perceptron_algorithm == 'no_linear_perceptron':
+        y = 2*(y - min(y))/(max(y)-min(y)) - 1
 
     print('Running ' + config.perceptron_algorithm + '...')
     results = perceptron(perceptron_parameters, x, y)
