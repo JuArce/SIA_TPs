@@ -3,25 +3,9 @@ import sys
 import matplotlib.pyplot as plt
 import numpy
 
-from algorithms.Perceptron import perceptron
+from algorithms.Perceptron import SimplePerceptron, NoLinearPerceptron, LinearPerceptron
 from utils.Config_p import Config
-from utils.Functions import get_error
 from utils.PerceptronParameters import PerceptronParameters
-from utils.activation_functions import sigmoide_logistic, sign, identity, sigmoide_tanh, sigmoide_logistic_derivative, \
-    sigmoide_tanh_derivative
-from utils.delta_functions import delta_function, delta_function_no_linear
-
-
-def get_activation_function(config: Config):
-    if config.perceptron_algorithm == 'simple_perceptron':
-        return sign
-    elif config.perceptron_algorithm == 'no_linear_perceptron':
-        if config.function == 'sigmoid_logistic':
-            return sigmoide_logistic
-        else:
-            return sigmoide_tanh
-    else:
-        return identity
 
 
 def __main__():
@@ -30,22 +14,6 @@ def __main__():
     f = open(sys.argv[1])
     config: Config = Config(f.read())
     f.close()
-
-    activation_function = get_activation_function(config)
-    error_function = get_error
-
-    if not config.perceptron_algorithm == 'no_linear_perceptron':
-        activation_function_derivative = None
-        delta_f = delta_function
-    else:
-        delta_f = delta_function_no_linear
-        if config.function == 'sigmoid_logistic':
-            activation_function_derivative = sigmoide_logistic_derivative
-        else:
-            activation_function_derivative = sigmoide_tanh_derivative
-
-    perceptron_parameters: PerceptronParameters = PerceptronParameters(config, activation_function, error_function,
-                                                                       delta_f, activation_function_derivative)
 
     x = []
     with open(sys.argv[2], 'r') as inputs_file:
@@ -65,11 +33,19 @@ def __main__():
 
     y = numpy.array(y)
 
+    perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
+
+    perceptron: SimplePerceptron
+
     if config.perceptron_algorithm == 'no_linear_perceptron':
-        y = 2*(y - min(y))/(max(y)-min(y)) - 1
+        perceptron = NoLinearPerceptron(x, y, perceptron_parameters)
+    elif config.perceptron_algorithm == 'linear_perceptron':
+        perceptron = LinearPerceptron(x, y, perceptron_parameters)
+    else:
+        perceptron = SimplePerceptron(x, y, perceptron_parameters)
 
     print('Running ' + config.perceptron_algorithm + '...')
-    results = perceptron(perceptron_parameters, x, y)
+    results = perceptron.train_perceptron()
     print(config.perceptron_algorithm + ' finished.')
 
     for i, x in enumerate(results.x):
