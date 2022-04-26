@@ -13,7 +13,6 @@ class Config:
         self.cota = int(config.get('cota'))
         self.eta = float(config.get('eta'))
         self.betha = float(config.get('betha'))
-        self.tol_error = float(config.get('tol_error'))
         self.function = config.get('function')
 
     def __str__(self):

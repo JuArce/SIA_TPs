@@ -11,7 +11,7 @@ from utils.Results_p import Results
 
 class SimplePerceptron:
 
-    def __init__(self, x: np.ndarray, y: np.ndarray, perceptron_parameters: PerceptronParameters):
+    def __init__(self, x: np.array, y: np.array, perceptron_parameters: PerceptronParameters):
         self.x = x
         self.y = y
         self.eta = perceptron_parameters.eta
@@ -29,7 +29,13 @@ class SimplePerceptron:
         return self.eta * (y - o) * x
 
     def error_function(self, y: np.ndarray, o: np.ndarray):
-        return (sum(y - o) ** 2) / 2
+        dim = len(y)
+        ret = 0
+        for i in range(dim):
+            if not math.isclose(o[i], y[i], abs_tol=0.01):
+                ret += 1
+        return ret
+        # return (sum(y - o) ** 2) / 2
 
     def train_perceptron(self):
         time = datetime.now()
@@ -40,6 +46,11 @@ class SimplePerceptron:
         error_min = 2 * len(self.x)
 
         while error > 0 and i < self.cota:
+
+            norm = np.linalg.norm(w)
+            if norm != 0:
+                w = w / norm
+
             idx = random.randint(0, len(self.x) - 1)
             h: ndarray = self.x @ w  # producto interno (válida desde python 3.5) Estado de excitacion
             o: ndarray = vectorize(pyfunc=self.activation_function)(h)  # Estado de Activacion
