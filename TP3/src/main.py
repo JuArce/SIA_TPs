@@ -1,17 +1,15 @@
 import sys
 
-import numpy
 import matplotlib.pyplot as plt
+import numpy
 
 from algorithms.Perceptron import perceptron
 from utils.Config_p import Config
-from utils.Functions import get_error, sigmoide_logistic, sign, identity, sigmoide_tanh, delta_function, \
-    delta_function_no_linear, \
-    sigmoide_logistic_derivative, sigmoide_tanh_derivative
+from utils.Functions import get_error
 from utils.PerceptronParameters import PerceptronParameters
-from utils.Config_p import Config
-from utils.Results_p import Results
-import sys
+from utils.activation_functions import sigmoide_logistic, sign, identity, sigmoide_tanh, sigmoide_logistic_derivative, \
+    sigmoide_tanh_derivative
+from utils.delta_functions import delta_function, delta_function_no_linear
 
 
 def get_activation_function(config: Config):
