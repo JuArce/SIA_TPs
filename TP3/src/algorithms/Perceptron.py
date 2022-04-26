@@ -29,13 +29,7 @@ class SimplePerceptron:
         return self.eta * (y - o) * x
 
     def error_function(self, y: np.ndarray, o: np.ndarray):
-        dim = len(y)
-        ret = 0
-        for i in range(dim):
-            if not math.isclose(o[i], y[i], abs_tol=0.01):
-                ret += 1
-        return ret
-        # return (sum(y - o) ** 2) / 2
+        return (sum(y - o) ** 2) / 2
 
     def train_perceptron(self):
         time = datetime.now()
@@ -47,16 +41,11 @@ class SimplePerceptron:
 
         while error > 0 and i < self.cota:
 
-            norm = np.linalg.norm(w)
-            if norm != 0:
-                w = w / norm
-
-            idx = random.randint(0, len(self.x) - 1)
+            idx = random.randint(0, len(self.x))
             h: ndarray = self.x @ w  # producto interno (válida desde python 3.5) Estado de excitacion
             o: ndarray = vectorize(pyfunc=self.activation_function)(h)  # Estado de Activacion
             delta_w = self.delta_function(self.x[idx], self.y[idx], h[idx], o[idx])
             w = w + delta_w
-
             error = self.error_function(self.y, o)
 
             if error < error_min:
@@ -110,4 +99,4 @@ class NoLinearPerceptron(SimplePerceptron):
         return self.act_function(h, self.betha)
 
     def delta_function(self, x: np.ndarray, y: np.ndarray, h: np.ndarray, o: np.ndarray):
-        return self.eta * (y - o) * self.act_function_derivative(h, self.betha)
+        return self.eta * (y - o) * x * self.act_function_derivative(h, self.betha)

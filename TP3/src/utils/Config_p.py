@@ -6,6 +6,7 @@ class Config:
                              "lineal_perceptron",
                              "not_linear_perceptron",
                              "multi_layer_perceptron"]
+    FUNCTIONS = ['logistic', 'tanh']
 
     def __init__(self, string):
         config = json.loads(string)
