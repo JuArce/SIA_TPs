@@ -144,7 +144,8 @@ class MultiPerceptron:
             # Propago los estados de activación. Empiezo en 1 porque el 0 ya se calculo antes.
             for m in range(1, self.len_layers):  # por cada capa 1 a M
                 for i in range(self.layers[m]):  # recorro todos los de la capa actual menos el del umbral
-                    self.perceptrons[m][i].h = self.calculate_h(self.perceptrons[m][i].w, self.perceptrons[m - 1])
+                    self.perceptrons[m][i].h = self.calculate_h(self.perceptrons[m][i].w, self.perceptrons[
+                        m - 1])  # le paso los pesos que me llegan y la capa anterior
                     self.perceptrons[m][i].o = self.activation_function(self.perceptrons[m][i].h)
 
             # Calculo d en la capa de salida
@@ -158,8 +159,24 @@ class MultiPerceptron:
             # Retropropagar hacia abajo
 
             for m in range(self.len_layers - 1, 1, -1):  # retropropagar de la capa de salida a la anteultima
+                for i in range(len(self.perceptrons[m - 1])):
+                    h = self.perceptrons[m - 1][i].h
+                    self.perceptrons[m - 1][i].d = self.activation_function_derivative(h) * self.calculate_d(
+                        self.perceptrons[m], idx)
+
+            # Calculando los nuevos pesos
+
+            for m in range(self.len_layers - 1, 1, -1):
                 for i in range(len(self.perceptrons[m])):
-                    pass  # TODO
+                    self.perceptrons[m][i].w = self.perceptrons[m][i].w + self.calculate_delta_w(
+                        self.perceptrons[m][i].d, self.perceptrons[m - 1])
+
+            errors = []
+            #Calculo las funciones de activacion con toods los
+            # Propago los estados de activación. Empiezo en 1 porque el 0 ya se calculo antes.
+            for j in range(len(self.x)):
+                pass
+                # for m in range
 
         return Results(self.x, self.y, self.w, self.algorithm, self.function, time)
 
@@ -178,14 +195,28 @@ class MultiPerceptron:
             h += w[i] * perceptrons[i].o
         return h
 
-    def create_layer(self, q, w, isLast: bool):
+    def calculate_delta_w(self, d, layer: np.array):
+        d_w = []
+
+        for i in range(len(layer)):
+            d_w.append(self.eta * d * layer[i].o)
+        return d_w
+
+    def create_layer(self, q, w, is_last: bool):
         perceptrons = []
         for i in range(q):
-            if i == q - 1 and not isLast:
+            if i == q - 1 and not is_last:
                 perceptrons.append(Perceptron(None))
             else:
                 perceptrons.append(Perceptron(copy.deepcopy(w)))
         return np.array(perceptrons)
+
+    def calculate_d(self, layer: np.array, idx):
+        acum = 0
+
+        for i in range(len(layer)):
+            acum += layer[i].d * layer[i].w[idx]
+        return acum
 
 
 class Perceptron:
