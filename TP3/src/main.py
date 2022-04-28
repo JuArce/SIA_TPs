@@ -3,7 +3,7 @@ import sys
 import matplotlib.pyplot as plt
 import numpy
 
-from algorithms.Perceptron import SimplePerceptron, NoLinearPerceptron, LinearPerceptron
+from algorithms.Perceptron import SimplePerceptron, NoLinearPerceptron, LinearPerceptron, MultiPerceptron
 from utils.Config_p import Config
 from utils.PerceptronParameters import PerceptronParameters
 
@@ -34,6 +34,10 @@ def __main__():
     y = numpy.array(y)
 
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
+    perceptron: MultiPerceptron = MultiPerceptron(x, y, perceptron_parameters)
+    perceptron.train()
+    if len(x) > 0:
+        return 0
 
     perceptron: SimplePerceptron
 

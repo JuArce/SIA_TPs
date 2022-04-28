@@ -8,3 +8,5 @@ class PerceptronParameters:
         self.eta = config.eta
         self.betha = config.betha
         self.function = config.function
+        self.layers = config.layers
+        self.max_error = config.max_error

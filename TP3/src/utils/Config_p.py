@@ -15,6 +15,8 @@ class Config:
         self.eta = float(config.get('eta'))
         self.betha = float(config.get('betha'))
         self.function = config.get('function')
+        self.layers = config.get('layers')
+        self.max_error = float(config.get('max_error'))
 
     def __str__(self):
         label = [self.perceptron_algorithm]
