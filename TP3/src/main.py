@@ -26,26 +26,30 @@ def __main__():
             x.append(aux)
     x = numpy.array(x)
 
+    k = config.k
+    if k % len(x) != 0:
+        return 0
+
     y: [] = []
     with open(sys.argv[3], 'r') as expected_outputs_file:
         for line in expected_outputs_file:
-            values = line.split()
-            aux = []
-            for v in values:
-                aux.append(float(v))
-            y.append(aux)
+            # values = line.split()
+            # aux = []
+            # for v in values:
+            #     aux.append(float(v))
+            # y.append(aux)
+            y.append(float(line))
 
     y = numpy.array(y)
 
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
-    perceptron: MultiPerceptron = MultiPerceptron(x, y, perceptron_parameters)
-    perceptron.train()
-    if len(x) > 0:
-        return 0
+    # perceptron: MultiPerceptron = MultiPerceptron(x, y, perceptron_parameters)
+    # perceptron.train()
+    # if len(x) > 0:
+    #     return 0
 
     perceptron: SimplePerceptron
-
-    if config.perceptron_algorithm == 'no_linear_perceptron':
+    if config.perceptron_algorithm == 'not_linear_perceptron':
         perceptron = NoLinearPerceptron(x, y, perceptron_parameters)
     elif config.perceptron_algorithm == 'linear_perceptron':
         perceptron = LinearPerceptron(x, y, perceptron_parameters)
@@ -53,7 +57,7 @@ def __main__():
         perceptron = SimplePerceptron(x, y, perceptron_parameters)
 
     print('Running ' + config.perceptron_algorithm + '...')
-    results = perceptron.train_perceptron()
+    results = perceptron.train()
     print(config.perceptron_algorithm + ' finished.')
 
     for i, x in enumerate(results.x):
@@ -71,7 +75,7 @@ def __main__():
     plt.title("Separabilidad")
     plt.grid(True)
     # plt.legend()
-    # plt.show()
+    plt.show()
     # plt.savefig(output_dir + '/' + config.selection_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png')
 
 

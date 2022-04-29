@@ -1,5 +1,5 @@
 {
-  "perceptron_algorithm": "no_linear_perceptron",
+  "perceptron_algorithm": "simple_perceptron",
   "cota": "10000",
   "eta": "0.001",
   "betha": "2",
