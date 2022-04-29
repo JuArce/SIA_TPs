@@ -1,9 +1,9 @@
 import copy
 from datetime import datetime
 from typing import Optional
-import matplotlib.pyplot as plt
 
 import math
+import matplotlib.pyplot as plt
 import numpy as np
 from numpy import random, vectorize, ndarray
 
@@ -108,9 +108,10 @@ class MultiPerceptron:
 
     def __init__(self, x: np.array, y: np.array, perceptron_parameters: PerceptronParameters):
         self.x = x
-        self.y = 2 * (y - min(y)) / (max(y) - min(y)) - 1
+        self.y = y
         self.eta = perceptron_parameters.eta
         self.cota = perceptron_parameters.cota
+        self.betha = perceptron_parameters.betha
         self.algorithm = perceptron_parameters.algorithm
         self.function = perceptron_parameters.function
         self.layers = perceptron_parameters.layers
@@ -123,24 +124,25 @@ class MultiPerceptron:
 
             if i == 0:
                 self.perceptrons.append(
-                    self.create_layer(self.layers[i] + 1, None, False))  # si es el primero no le llega ningun peso
+                    self.create_layer(self.layers[i] + 1, i))  # si es el primero no le llega ningun peso
             elif i == self.len_layers - 1:
-                self.perceptrons.append(self.create_layer(self.layers[i], np.append(np.zeros(self.layers[
-                                                                                                 i - 1]), 1),
-                                                          True))  # si es el último tiene la cantidad de pesos de la capa inferior + 1 por el umbral
+
+                self.perceptrons.append(
+                    self.create_layer(self.layers[i],
+                                      i))  # si es el último tiene la cantidad de pesos de la capa inferior + 1 por el umbral
             else:
                 self.perceptrons.append(
-                    self.create_layer(self.layers[i] + 1, np.append(np.zeros(self.layers[i - 1]), 1), False))
+                    self.create_layer(self.layers[i] + 1, i))
 
     def train(self):
         time = datetime.now()
         error = 1
         errors = []
         i = 0
-        while error > self.max_error and i < 5000:
+        while error > self.max_error and i < 50000:
             idx = random.randint(0, len(self.x))
 
-            # Propagar el estado de excitación y de error a partir de la entrada x[idx]
+            # Propagar el estado de excitación y de activación a partir de  x[idx]
             self.propagate(idx)
 
             # calcular los estados de salida
@@ -159,25 +161,47 @@ class MultiPerceptron:
         plt.plot([*range(len(errors))], errors)
         plt.show()
 
+        o = self.predict()
+        y = self.y
+
         return Results(self.x, self.y, self.w, self.algorithm, self.function, time)
 
     def predict(self):
-        return None
+        o = []
+        perceptrons = copy.deepcopy(self.perceptrons)
+        for j in range(len(self.x)):
+            for i in range(len(perceptrons[0])):
+                perceptrons[0][i].o = self.x[j][i]
+                perceptrons[0][i].h = None
 
-    def create_layer(self, q, w, is_last: bool):
+            # Propago los estados de activación. Empiezo en 1 porque el 0 ya se calculo antes.
+            for m in range(1, self.len_layers):  # por cada capa 1 a M
+                for i in range(self.layers[m]):  # recorro todos los de la capa actual menos el del umbral
+                    perceptrons[m][i].h = self.calculate_h(perceptrons[m][i].w, perceptrons[
+                        m - 1])  # le paso los pesos que me llegan y la capa anterior
+                    perceptrons[m][i].o = self.activation_function(perceptrons[m][i].h)
+
+            aux = []
+            for i in range((self.layers[-1])):
+                aux.append(perceptrons[-1][i].o)
+            o.append(aux)
+        return o
+
+    def create_layer(self, q, layer_idx):
         perceptrons = []
         for i in range(q):
-            if i == q - 1 and not is_last:
-                perceptrons.append(Perceptron(None))
+            if layer_idx == 0 or (i == q - 1 and layer_idx != len(self.layers) - 1):
+                perceptrons.append(Perceptron(None, None, 1, None))
             else:
-                perceptrons.append(Perceptron(copy.deepcopy(w)))
+                perceptrons.append(Perceptron(random.uniform(-1, 1, size=self.layers[layer_idx - 1] + 1), 0, 0, 0))
+
         return np.array(perceptrons)
 
     def propagate(self, idx):
         # Le asigno a la capa de entrada los valores de entrada
         for i in range(len(self.perceptrons[0])):
             self.perceptrons[0][i].o = self.x[idx][i]
-            self.perceptrons[0][i].h = self.x[idx][i]
+            self.perceptrons[0][i].h = None
 
         # Propago los estados de activación. Empiezo en 1 porque el 0 ya se calculo antes.
         for m in range(1, self.len_layers):  # por cada capa 1 a M
@@ -193,10 +217,10 @@ class MultiPerceptron:
         return h
 
     def activation_function(self, h):
-        return h
+        return math.tanh(h * self.betha)
 
     def activation_function_derivative(self, h):
-        return 1
+        return self.betha * (1 - (math.tanh(h * self.betha) ** 2))
 
     def calculate_d(self, idx):
         # Calculo d en la capa de salida
@@ -204,16 +228,16 @@ class MultiPerceptron:
         for i in range(len(self.perceptrons[self.len_layers - 1])):  # recorro los perceptrones de la capa de salida
             self.perceptrons[self.len_layers - 1][i].d = self.activation_function_derivative(
                 self.perceptrons[self.len_layers - 1][i].h) * \
-                                                         (self.y[idx][i] - self.perceptrons[self.len_layers - 1][
-                                                             i].o)  # TODO: ver si recibe otro Yi que pasa
+                                                         (self.y[idx][i] - self.perceptrons[self.len_layers - 1][i].o)
         # Retropropagar el error
-        self.backpropagation(idx)
+        self.backpropagation()
 
-    def backpropagation(self, idx):
+    def backpropagation(self):
+
         # Retropropagar hacia abajo
 
         for m in range(self.len_layers - 1, 1, -1):  # retropropagar de la capa de salida a la anteultima
-            for i in range(len(self.perceptrons[m - 1])):
+            for i in range(len(self.perceptrons[m - 1]) - 1):
                 h = self.perceptrons[m - 1][i].h
                 self.perceptrons[m - 1][i].d = self.activation_function_derivative(h) * self.calculate_d_aux(
                     self.perceptrons[m], i)
@@ -243,7 +267,7 @@ class MultiPerceptron:
         for j in range(len(self.x)):
             for i in range(len(perceptrons[0])):
                 perceptrons[0][i].o = self.x[j][i]
-                perceptrons[0][i].h = self.x[j][i]
+                perceptrons[0][i].h = None
 
             # Propago los estados de activación. Empiezo en 1 porque el 0 ya se calculo antes.
             for m in range(1, self.len_layers):  # por cada capa 1 a M
@@ -260,14 +284,13 @@ class MultiPerceptron:
         return self.error_function(self.y, np.array(o))
 
     def error_function(self, y: np.ndarray, o: np.ndarray):
-
-        return (sum(sum(y - o)) ** 2) / 2
+        return ((sum(sum(y - o))) ** 2) / 2
 
 
 class Perceptron:
 
-    def __init__(self, w: Optional['np.array']):
+    def __init__(self, w: Optional['np.array'], h: Optional['float'], o: Optional['float'], d: Optional['float']):
         self.w = w
-        self.h = 0
-        self.o = 0
-        self.d = 0
+        self.h = h
+        self.o = o
+        self.d = d
