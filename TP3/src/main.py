@@ -29,7 +29,11 @@ def __main__():
     y: [] = []
     with open(sys.argv[3], 'r') as expected_outputs_file:
         for line in expected_outputs_file:
-            y.append(float(line))
+            values = line.split()
+            aux = []
+            for v in values:
+                aux.append(float(v))
+            y.append(aux)
 
     y = numpy.array(y)
 
