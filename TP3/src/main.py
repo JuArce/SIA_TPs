@@ -43,10 +43,6 @@ def __main__():
     y = numpy.array(y)
 
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
-    # perceptron: MultiPerceptron = MultiPerceptron(x, y, perceptron_parameters)
-    # perceptron.train()
-    # if len(x) > 0:
-    #     return 0
 
     perceptron: SimplePerceptron
     if config.perceptron_algorithm == 'not_linear_perceptron':
@@ -60,15 +56,11 @@ def __main__():
     results = perceptron.train()
     print(config.perceptron_algorithm + ' finished.')
 
-    for i, x in enumerate(results.x):
-        e = (x @ results.w) - results.y[i]
-        print(str(e))
-
     plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
     plt.scatter(results.x[:, 0], results.x[:, 1], s=100, c=results.y)
     x = range(-2, 4)
-    # -w_0/w_1 x - w_2/w_1
-    y = (- (results.w[0] / results.w[1]) * x - (results.w[2] / results.w[1]))
+    # -w_1/w_2 x - w_0/w_2
+    y = (- (results.w[1] / results.w[2]) * x - (results.w[0] / results.w[2]))
     plt.plot(x, y)
     plt.xlabel('x')
     plt.ylabel('y')
