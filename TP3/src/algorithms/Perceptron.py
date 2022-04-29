@@ -69,12 +69,20 @@ class SimplePerceptron:
 
 
 class LinearPerceptron(SimplePerceptron):
+    FUNCTIONS = {
+        "identity": {
+            "f": lambda h: h,
+            "fp": lambda h: 1
+        },
+    }
 
     def __init__(self, x: np.ndarray, y: np.ndarray, perceptron_parameters: PerceptronParameters):
         super().__init__(x, y, perceptron_parameters)
+        self.act_function = LinearPerceptron.FUNCTIONS[perceptron_parameters.function]["f"]
+        self.act_function_derivative = LinearPerceptron.FUNCTIONS[perceptron_parameters.function]["fp"]
 
     def activation_function(self, h):
-        return h
+        return self.act_function(h)
 
 
 class NoLinearPerceptron(SimplePerceptron):
@@ -107,6 +115,14 @@ class NoLinearPerceptron(SimplePerceptron):
 class MultiPerceptron:
 
     def __init__(self, x: np.array, y: np.array, perceptron_parameters: PerceptronParameters):
+        if perceptron_parameters.algorithm == 'no_linear_perceptron':
+            self.act_function = NoLinearPerceptron.FUNCTIONS[perceptron_parameters.function]['f']
+            self.act_function_derivative = NoLinearPerceptron.FUNCTIONS[perceptron_parameters.function]['fp']
+        elif perceptron_parameters.algorithm == 'linear_perceptron':
+            self.act_function = LinearPerceptron.FUNCTIONS[perceptron_parameters.function]['f']
+            self.act_function_derivative = LinearPerceptron.FUNCTIONS[perceptron_parameters.function]['fp']
+        else:
+            raise 'Invalid algorithm for multiperceptron '
         self.x = x
         self.y = y
         self.eta = perceptron_parameters.eta
@@ -224,10 +240,16 @@ class MultiPerceptron:
                     self.perceptrons[m][i].o = 1
 
     def activation_function(self, h):
-        return math.tanh(h * self.betha)
+        if self.algorithm == 'no_linear_perceptron':
+            return self.act_function(h, self.betha)
+        else:
+            return self.act_function(h)
 
     def activation_function_derivative(self, h):
-        return self.betha * (1 - (math.tanh(h * self.betha) ** 2))
+        if self.algorithm == 'no_linear_perceptron':
+            return self.act_function_derivative(h, self.betha)
+        else:
+            return self.act_function(h)
 
     def calculate_d(self, idx):
         # Calculo d en la capa de salida
