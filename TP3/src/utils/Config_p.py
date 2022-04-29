@@ -17,6 +17,7 @@ class Config:
         self.function = config.get('function')
         self.layers = config.get('layers')
         self.max_error = float(config.get('max_error'))
+        self.k = int(config.get('k'))
 
     def __str__(self):
         label = [self.perceptron_algorithm]
