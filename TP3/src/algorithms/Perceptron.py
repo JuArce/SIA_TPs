@@ -162,11 +162,8 @@ class MultiPerceptron:
         for value in self.x:
             o.append(self.predict(value))
 
-
-
-        # return Results(self.x, self.y, self.w, self.algorithm, self.function, time)
-
-
+        return Results(self.x, self.y, self.build_w(), self.algorithm, self.function,
+                       time, errors, self.max_error, i)
 
     def predict(self, x):
         layers = []
@@ -280,6 +277,17 @@ class MultiPerceptron:
 
     def error_function(self, y: np.ndarray, o: np.ndarray):
         return ((sum(sum(y - o))) ** 2) / 2
+
+    def build_w(self):
+
+        w = []
+
+        for m in range(1, len(self.layers)):
+            aux = []
+            for j in range(len(self.perceptrons[m])):
+                aux.append(self.perceptrons[m][j].w)
+            w.append(aux)
+        return w
 
 
 class Perceptron:
