@@ -31,7 +31,7 @@ class SimplePerceptron:
         return self.eta * (y[idx] - o[idx]) * x[idx]
 
     def error_function(self, y: np.ndarray, o: np.ndarray):
-        return (sum(y - o) ** 2) / 2
+        return sum((y - o) ** 2) / 2
 
     def train(self):
         time = datetime.now()

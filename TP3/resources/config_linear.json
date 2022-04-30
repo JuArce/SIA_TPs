@@ -1,6 +1,6 @@
 {
-  "perceptron_algorithm": "simple_perceptron",
-  "cota": "100",
+  "perceptron_algorithm": "linear_perceptron",
+  "cota": "1000",
   "eta": "0.001",
   "betha": "2",
   "function": "identity",
@@ -10,5 +10,5 @@
     1
   ],
   "max_error": "0.001",
-  "k": "100"
+  "k": "10"
 }
