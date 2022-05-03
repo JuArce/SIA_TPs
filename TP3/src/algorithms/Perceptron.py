@@ -169,10 +169,6 @@ class MultiPerceptron:
 
             i += 1
 
-        plt.figure(dpi=200)
-        plt.plot([*range(len(errors))], errors)
-        plt.show()
-
         return Results(x, y, self.build_w(), self.algorithm, self.function,
                        time, errors, self.max_error, i)
 
@@ -291,6 +287,9 @@ class MultiPerceptron:
             o.append(self.predict(x[i]))
         o = np.array(o)
         return 0.5 * sum((y - o) ** 2)
+
+    def predict_set(self, x, y):
+        return self.calculate_errors(x, y)
 
     def error_function(self, y: np.ndarray, o: np.ndarray):
         return ((sum(sum(y - o))) ** 2) / 2
