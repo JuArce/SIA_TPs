@@ -1,11 +1,10 @@
-import random
 import sys
 
 import matplotlib.pyplot as plt
 import numpy
 import numpy as np
 
-from algorithms.Perceptron import SimplePerceptron, NoLinearPerceptron, LinearPerceptron
+from algorithms.Perceptron import MultiPerceptron
 from utils.Config_p import Config
 from utils.PerceptronParameters import PerceptronParameters
 
@@ -36,13 +35,11 @@ def __main__():
     y: [] = []
     with open(sys.argv[3], 'r') as expected_outputs_file:
         for line in expected_outputs_file:
-            # values = line.split()
-            # aux = []
-            # for v in values:
-            #     aux.append(float(v))
-            # y.append(aux)
-
-            y.append(float(line))
+            values = line.split()
+            aux = []
+            for v in values:
+                aux.append(float(v))
+            y.append(numpy.array(aux))
 
     y = numpy.array(y)
 
@@ -51,42 +48,9 @@ def __main__():
 
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
 
-    perceptron: SimplePerceptron
-    if config.perceptron_algorithm == 'not_linear_perceptron':
-        y = 2 * (y - min(y)) / (max(y) - min(y)) - 1
-        perceptron = NoLinearPerceptron(perceptron_parameters)
-    elif config.perceptron_algorithm == 'linear_perceptron':
-        perceptron = LinearPerceptron(perceptron_parameters)
-    else:
-        perceptron = SimplePerceptron(perceptron_parameters)
-
-    # capacidad del perceptron para aprender la funciónn cuyas muestras están presentes
-    # graficar todos los errores en el entrenamiento
-    result = perceptron.train(x, y)
-    #reiniciamos el perceptron
-    perceptron = perceptron.__init__(perceptron_parameters)
-
-    # capacidad de generalización del perceptron
-    indexes = [*range(len(x))]
-    random.shuffle(indexes)
-    indexes = np.array(indexes)
-    indexes = np.array_split(indexes, k)
-
-    # [[1 3 2], [9 5 2], ...[]]
-    results_training = []
-    results_test = []
-    for i in range(k):
-        training_x, training_y, testing_x, testing_y = build_train(indexes, x, y, i)
-        r_train = perceptron.train(training_x, training_y)
-        r_test = perceptron.predict(testing_x, testing_y)
-        results_training.append(r_train)
-        results_test.append(r_test)
-
-    # normalizar la salida del no lineal
-
-    # results = perceptron.train(training_x, training_y)
-
+    perceptron: MultiPerceptron = MultiPerceptron(perceptron_parameters)
     print('Running ' + config.perceptron_algorithm + '...')
+    results = perceptron.train(x, y)
     print(config.perceptron_algorithm + ' finished.')
 
     plt.figure(figsize=(7, 7), layout='constrained', dpi=200)

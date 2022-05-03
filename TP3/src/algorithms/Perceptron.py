@@ -114,7 +114,7 @@ class NoLinearPerceptron(SimplePerceptron):
 
 class MultiPerceptron:
 
-    def __init__(self, x: np.array, y: np.array, perceptron_parameters: PerceptronParameters):
+    def __init__(self, perceptron_parameters: PerceptronParameters):
         if perceptron_parameters.algorithm == 'no_linear_perceptron':
             self.act_function = NoLinearPerceptron.FUNCTIONS[perceptron_parameters.function]['f']
             self.act_function_derivative = NoLinearPerceptron.FUNCTIONS[perceptron_parameters.function]['fp']
@@ -123,8 +123,6 @@ class MultiPerceptron:
             self.act_function_derivative = LinearPerceptron.FUNCTIONS[perceptron_parameters.function]['fp']
         else:
             raise 'Invalid algorithm for multiperceptron '
-        self.x = x
-        self.y = y
         self.eta = perceptron_parameters.eta
         self.cota = perceptron_parameters.cota
         self.betha = perceptron_parameters.betha
@@ -156,10 +154,10 @@ class MultiPerceptron:
             idx = random.randint(0, len(x))
 
             # Propagar el estado de excitación y de activación a partir de  x[idx]
-            self.propagate(idx)
+            self.propagate(x, idx)
 
             # calcular los estados de salida
-            self.calculate_d(idx)
+            self.calculate_d(y, idx)
 
             # Calculando los nuevos pesos
             self.calculate_delta_w()
@@ -170,13 +168,10 @@ class MultiPerceptron:
             errors.append(error)
 
             i += 1
+
         plt.figure(dpi=200)
         plt.plot([*range(len(errors))], errors)
         plt.show()
-
-        o = []
-        for value in x:
-            o.append(self.predict(value))
 
         return Results(x, y, self.build_w(), self.algorithm, self.function,
                        time, errors, self.max_error, i)
@@ -219,10 +214,10 @@ class MultiPerceptron:
 
         return np.array(perceptrons)
 
-    def propagate(self, idx):
+    def propagate(self, x, idx):
         # Le asigno a la capa de entrada los valores de entrada
         for i in range(len(self.perceptrons[0])):
-            self.perceptrons[0][i].o = self.x[idx][i]
+            self.perceptrons[0][i].o = x[idx][i]
 
         # Propago los estados de activación. Empiezo en 1 porque el 0 ya se calculo antes.
         for m in range(1, len(self.layers)):  # por cada capa 1 a M
@@ -251,12 +246,12 @@ class MultiPerceptron:
         else:
             return self.act_function(h)
 
-    def calculate_d(self, idx):
+    def calculate_d(self, y, idx):
         # Calculo d en la capa de salida
         for i in range(len(self.perceptrons[-1])):  # recorro los perceptrones de la capa de salida
             self.perceptrons[-1][i].d = self.activation_function_derivative(
                 self.perceptrons[-1][i].h) * \
-                                        (self.y[idx][i] - self.perceptrons[-1][i].o)
+                                        (y[idx][i] - self.perceptrons[-1][i].o)
         # Retropropagar el error
         self.backpropagation()
 
@@ -292,8 +287,8 @@ class MultiPerceptron:
 
     def calculate_errors(self, x, y):
         o = []
-        for value in x:
-            o.append(self.predict(value))
+        for i in range(len(x)):
+            o.append(self.predict(x[i]))
         o = np.array(o)
         return 0.5 * sum((y - o) ** 2)
 
