@@ -13,9 +13,7 @@ from utils.Results_p import Results
 
 class SimplePerceptron:
 
-    def __init__(self, x: np.array, y: np.array, perceptron_parameters: PerceptronParameters):
-        self.x = x
-        self.y = y
+    def __init__(self, perceptron_parameters: PerceptronParameters):
         self.eta = perceptron_parameters.eta
         self.cota = perceptron_parameters.cota
         self.algorithm = perceptron_parameters.algorithm
@@ -33,34 +31,34 @@ class SimplePerceptron:
     def error_function(self, y: np.ndarray, o: np.ndarray):
         return sum((y - o) ** 2) / 2
 
-    def train(self):
+    def train(self, x, y):
         time = datetime.now()
         i = 0
-        w = np.zeros(len(self.x[0]))
+        w = np.zeros(len(x[0]))
         w_min = w
         error = 1
-        error_min = 2 * len(self.x)
+        error_min = 2 * len(x)
         errors = []
 
         while error > 0 and i < self.cota:
 
-            idx = random.randint(0, len(self.x))
-            h: ndarray = self.x @ w  # producto interno (válida desde python 3.5) Estado de excitacion
+            idx = random.randint(0, len(x))
+            h: ndarray = x @ w  # producto interno (válida desde python 3.5) Estado de excitacion
             o: ndarray = vectorize(pyfunc=self.activation_function)(h)  # Estado de Activacion
-            delta_w = self.delta_function(self.x, self.y, h, o, idx)
+            delta_w = self.delta_function(x, y, h, o, idx)
             w = w + delta_w
-            error = self.error_function(self.y, o)
+            error = self.error_function(y, o)
 
             if error < error_min:
                 error_min = error
                 w_min = copy.deepcopy(w)
             i += 1
             self.w = w
-            errors.append(self.predict(self.x, self.y))
+            errors.append(self.predict(x, y))
 
         self.w = w_min
 
-        return Results(self.x, self.y, self.w, self.algorithm, self.function, time, errors, 0, i)
+        return Results(x, y, self.w, self.algorithm, self.function, time, errors, 0, i)
 
     def predict(self, x: np.ndarray, y: np.ndarray):
 
@@ -79,8 +77,8 @@ class LinearPerceptron(SimplePerceptron):
         },
     }
 
-    def __init__(self, x: np.ndarray, y: np.ndarray, perceptron_parameters: PerceptronParameters):
-        super().__init__(x, y, perceptron_parameters)
+    def __init__(self, perceptron_parameters: PerceptronParameters):
+        super().__init__(perceptron_parameters)
         self.act_function = LinearPerceptron.FUNCTIONS[perceptron_parameters.function]["f"]
         self.act_function_derivative = LinearPerceptron.FUNCTIONS[perceptron_parameters.function]["fp"]
 
@@ -101,9 +99,8 @@ class NoLinearPerceptron(SimplePerceptron):
         }
     }
 
-    def __init__(self, x: np.ndarray, y: np.ndarray, perceptron_parameters: PerceptronParameters):
-        y = 2 * (y - min(y)) / (max(y) - min(y)) - 1
-        super().__init__(x, y, perceptron_parameters)
+    def __init__(self, perceptron_parameters: PerceptronParameters):
+        super().__init__(perceptron_parameters)
         self.betha = perceptron_parameters.betha
         self.act_function = NoLinearPerceptron.FUNCTIONS[perceptron_parameters.function]["f"]
         self.act_function_derivative = NoLinearPerceptron.FUNCTIONS[perceptron_parameters.function]["fp"]
@@ -150,13 +147,13 @@ class MultiPerceptron:
             else:
                 self.perceptrons.append(self.create_layer(self.layers[i] + 1, i))
 
-    def train(self):
+    def train(self, x, y):
         time = datetime.now()
         error = 1
         errors = []
         i = 0
         while error > self.max_error and i < 50000:
-            idx = random.randint(0, len(self.x))
+            idx = random.randint(0, len(x))
 
             # Propagar el estado de excitación y de activación a partir de  x[idx]
             self.propagate(idx)
@@ -169,7 +166,7 @@ class MultiPerceptron:
 
             # Calculo las funciones de activacion con todas las entradas
             # Propago los estados de activación. Empiezo en 1 porque el 0 ya se calculo antes.
-            error = self.calculate_errors(self.x, self.y)
+            error = self.calculate_errors(x, y)
             errors.append(error)
 
             i += 1
@@ -178,10 +175,10 @@ class MultiPerceptron:
         plt.show()
 
         o = []
-        for value in self.x:
+        for value in x:
             o.append(self.predict(value))
 
-        return Results(self.x, self.y, self.build_w(), self.algorithm, self.function,
+        return Results(x, y, self.build_w(), self.algorithm, self.function,
                        time, errors, self.max_error, i)
 
     def predict(self, x):

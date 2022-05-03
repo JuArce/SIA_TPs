@@ -21,7 +21,7 @@ pipenv install
 
 ## Configuración
 
-La configuración del programa se encuentra en el archivo [config.json](/TP3/resources/config.json). La siguiente tabla
+La configuración del programa se encuentra en el archivo [config.json](/TP3/resources/config_ej1.json). La siguiente tabla
 describe las configuraciones posibles con sus opciones:
 
 | Configuración          | Posibles Parámetros                                                                        | Descripción                                                                                                                                                                              | 
