@@ -1,12 +1,12 @@
 import sys
+from datetime import datetime
 
-import matplotlib.pyplot as plt
 import numpy
 
 from algorithms.Perceptron import SimplePerceptron, NoLinearPerceptron, LinearPerceptron
 from utils.Config_p import Config
 from utils.PerceptronParameters import PerceptronParameters
-
+from utils.Graph import graph
 
 def __main__():
     print('Argument List:', str(sys.argv))
@@ -29,11 +29,6 @@ def __main__():
     y: [] = []
     with open(sys.argv[3], 'r') as expected_outputs_file:
         for line in expected_outputs_file:
-            # values = line.split()
-            # aux = []
-            # for v in values:
-            #     aux.append(float(v))
-            # y.append(aux)
             y.append(float(line))
 
     y = numpy.array(y)
@@ -53,30 +48,13 @@ def __main__():
     results = perceptron.train(x, y)
     print(config.perceptron_algorithm + ' finished.')
 
-    plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
-    plt.scatter(results.x[:, 0], results.x[:, 1], s=100, c=results.y)
     x = range(-2, 4)
     # -w_0/w_1 x - w_2/w_1
     y = (- (results.w[0] / results.w[1]) * x - (results.w[2] / results.w[1]))
-    plt.plot(x, y)
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.title("Separabilidad")
-    plt.grid(True)
-    # plt.legend()
-    plt.show()
-    # plt.savefig(output_dir + '/' + config.selection_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png')
-    plt.clf()
-    plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
-    x = range(results.iterations)
-    y = results.errors
-    plt.plot(x, y)
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.title("Errores por iteración")
-    plt.grid(True)
-    # plt.legend()
-    plt.show()
+    output_dir = './line_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
+    graph(x, y, 'x', 'y', 'Separabilidad', results=results, output_dir=output_dir)
+    output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
+    graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
 
 
 if __name__ == "__main__":
