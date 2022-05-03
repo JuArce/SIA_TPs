@@ -52,7 +52,7 @@ def __main__():
     # -w_0/w_1 x - w_2/w_1
     y = (- (results.w[0] / results.w[1]) * x - (results.w[2] / results.w[1]))
     output_dir = './line_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
-    graph(x, y, 'x', 'y', 'Separabilidad', results=results, output_dir=output_dir)
+    graph(x, y, 'x', 'y', 'Separabilidad', points=results.x, points_color=results.y, output_dir=output_dir)
     output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
     graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
 

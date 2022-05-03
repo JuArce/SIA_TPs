@@ -1,5 +1,6 @@
 import random
 import sys
+from datetime import datetime
 
 import matplotlib.pyplot as plt
 import numpy
@@ -8,6 +9,7 @@ import numpy as np
 from algorithms.Perceptron import SimplePerceptron, NoLinearPerceptron, LinearPerceptron
 from utils.Config_p import Config
 from utils.PerceptronParameters import PerceptronParameters
+from utils.Graph import graph, graph_init, graph_plot
 
 
 def __main__():
@@ -60,11 +62,15 @@ def __main__():
     else:
         perceptron = SimplePerceptron(perceptron_parameters)
 
+    print('Running ' + config.perceptron_algorithm + '...')
+
     # capacidad del perceptron para aprender la funciónn cuyas muestras están presentes
     # graficar todos los errores en el entrenamiento
-    result = perceptron.train(x, y)
+    results = perceptron.train(x, y)
+    output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
+    graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración')
     #reiniciamos el perceptron
-    perceptron = perceptron.__init__(perceptron_parameters)
+    perceptron.__init__(perceptron_parameters)
 
     # capacidad de generalización del perceptron
     indexes = [*range(len(x))]
@@ -75,44 +81,27 @@ def __main__():
     # [[1 3 2], [9 5 2], ...[]]
     results_training = []
     results_test = []
+    points = []
+    colors = []
     for i in range(k):
         training_x, training_y, testing_x, testing_y = build_train(indexes, x, y, i)
         r_train = perceptron.train(training_x, training_y)
         r_test = perceptron.predict(testing_x, testing_y)
         results_training.append(r_train)
         results_test.append(r_test)
+        points.append([i, r_test])
+        colors.append('#fa0000')  # Red -> PREDICT
+        points.append([i, r_train.errors[-1]])
+        colors.append('#00ff3c')  # Green -> TRAIN
 
+    graph(points=numpy.array(points), points_color=colors)
     # normalizar la salida del no lineal
+
+
 
     # results = perceptron.train(training_x, training_y)
 
-    print('Running ' + config.perceptron_algorithm + '...')
     print(config.perceptron_algorithm + ' finished.')
-
-    plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
-    plt.scatter(results.x[:, 0], results.x[:, 1], s=100, c=results.y)
-    x = range(-2, 4)
-    # -w_0/w_1 x - w_2/w_1
-    y = (- (results.w[0] / results.w[1]) * x - (results.w[2] / results.w[1]))
-    plt.plot(x, y)
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.title("Separabilidad")
-    plt.grid(True)
-    # plt.legend()
-    plt.show()
-    # plt.savefig(output_dir + '/' + config.selection_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png')
-    plt.clf()
-    plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
-    x = range(results.iterations)
-    y = results.errors
-    plt.plot(x, y)
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.title("Errores por iteración")
-    plt.grid(True)
-    # plt.legend()
-    plt.show()
 
 
 def build_train(indexes: np.array, data_x: np.array, data_y: np.array, idx: int):
