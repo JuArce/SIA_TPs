@@ -29,6 +29,7 @@ def __main__():
             number.extend(aux)
 
             if i % 7 == 0:
+                number.append(1)
                 x.append(number)
                 number = []
             i += 1
