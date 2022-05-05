@@ -161,12 +161,10 @@ class MultiPerceptron:
             # Calculando los nuevos pesos
             self.calculate_delta_w()
 
-            # TODO: nos quedamos con el máximo ???
-
             # Calculo las funciones de activacion con todas las entradas
             # Propago los estados de activación. Empiezo en 1 porque el 0 ya se calculo antes.
             error = self.calculate_errors(x, y)
-            errors.append(error)
+            errors.append(error.max())
 
             i += 1
 
@@ -287,13 +285,12 @@ class MultiPerceptron:
         for i in range(len(x)):
             o.append(self.predict(x[i]))
         o = np.array(o)
+        # TODO: Revisar
+        # return 0.5 * (sum(sum((y - o)))) ** 2
         return 0.5 * sum((y - o) ** 2)
 
     def predict_set(self, x, y):
         return self.calculate_errors(x, y)
-
-    def error_function(self, y: np.ndarray, o: np.ndarray):
-        return ((sum(sum(y - o))) ** 2) / 2
 
     def build_w(self):
 
