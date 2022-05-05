@@ -66,7 +66,7 @@ def __main__():
         colors.append('#00ff3c')  # Green -> TRAIN
         # graph(range(r_train.iterations), r_train.errors, 'x', 'y', 'Errores por Iteración')
 
-    graph(points=numpy.array(points), points_color=colors)
+    graph(points=numpy.array(points, dtype=object), points_color=colors)
 
 
 if __name__ == "__main__":
