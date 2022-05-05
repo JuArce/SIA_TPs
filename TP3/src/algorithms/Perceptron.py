@@ -3,7 +3,6 @@ from datetime import datetime
 from typing import Optional
 
 import math
-import matplotlib.pyplot as plt
 import numpy as np
 from numpy import random, vectorize, ndarray
 
@@ -150,7 +149,7 @@ class MultiPerceptron:
         error = 1
         errors = []
         i = 0
-        while error > self.max_error and i < 50000:
+        while error > self.max_error and i < self.cota:
             idx = random.randint(0, len(x))
 
             # Propagar el estado de excitación y de activación a partir de  x[idx]
@@ -161,6 +160,8 @@ class MultiPerceptron:
 
             # Calculando los nuevos pesos
             self.calculate_delta_w()
+
+            # TODO: nos quedamos con el máximo ???
 
             # Calculo las funciones de activacion con todas las entradas
             # Propago los estados de activación. Empiezo en 1 porque el 0 ya se calculo antes.
@@ -304,6 +305,12 @@ class MultiPerceptron:
                 aux.append(self.perceptrons[m][j].w)
             w.append(aux)
         return w
+
+    def build_layers_quantity(self, hidden_layers, input_layer_len, output_layer_len):
+        layers = [input_layer_len]
+        layers.extend(hidden_layers)
+        layers.append(output_layer_len)
+        return layers
 
 
 class Perceptron:

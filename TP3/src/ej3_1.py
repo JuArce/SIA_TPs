@@ -1,7 +1,6 @@
 import sys
 from datetime import datetime
 
-import matplotlib.pyplot as plt
 import numpy
 import numpy as np
 
@@ -45,9 +44,6 @@ def __main__():
 
     y = numpy.array(y)
 
-    if config.perceptron_algorithm == 'not_linear_perceptron':
-        y = 2 * (y - min(y)) / (max(y) - min(y)) - 1
-
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
 
     perceptron: MultiPerceptron = MultiPerceptron(perceptron_parameters)
@@ -58,27 +54,6 @@ def __main__():
     output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
     graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
 
-
-def build_train(indexes: np.array, data_x: np.array, data_y: np.array, idx: int):
-    train_set_x = []
-    train_set_y = []
-    test_set_x = []
-    test_set_y = []
-
-    for i in range(len(indexes)):
-        for j in indexes[i]:
-            if i != idx:
-                test_set_x.append(data_x[j])
-                test_set_y.append(data_y[j])
-            else:
-                train_set_x.append(data_x[j])
-                train_set_y.append(data_y[j])
-
-    return np.array(train_set_x), np.array(train_set_y), np.array(test_set_x), np.array(test_set_y)
-
-
-def build_test():
-    return None
 
 
 if __name__ == "__main__":
