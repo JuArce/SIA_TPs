@@ -5,9 +5,7 @@
   "betha": "2",
   "function": "tanh",
   "layers": [
-    2,
-    2,
-    1
+    2
   ],
   "max_error": "0.001",
   "k": "1"

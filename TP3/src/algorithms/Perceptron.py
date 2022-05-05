@@ -113,7 +113,7 @@ class NoLinearPerceptron(SimplePerceptron):
 
 class MultiPerceptron:
 
-    def __init__(self, perceptron_parameters: PerceptronParameters):
+    def __init__(self, perceptron_parameters: PerceptronParameters, input_len, output_len):
         if perceptron_parameters.algorithm == 'no_linear_perceptron':
             self.act_function = NoLinearPerceptron.FUNCTIONS[perceptron_parameters.function]['f']
             self.act_function_derivative = NoLinearPerceptron.FUNCTIONS[perceptron_parameters.function]['fp']
@@ -127,7 +127,7 @@ class MultiPerceptron:
         self.betha = perceptron_parameters.betha
         self.algorithm = perceptron_parameters.algorithm
         self.function = perceptron_parameters.function
-        self.layers = perceptron_parameters.layers
+        self.layers = self.build_layers_quantity(perceptron_parameters.layers, input_len - 1, output_len)
         self.max_error = perceptron_parameters.max_error
 
         self.perceptrons: [[Perceptron]] = []

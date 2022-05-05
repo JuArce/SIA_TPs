@@ -54,7 +54,7 @@ def __main__():
 
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
 
-    perceptron: MultiPerceptron = MultiPerceptron(perceptron_parameters)
+    perceptron: MultiPerceptron = MultiPerceptron(perceptron_parameters, len(x[0]), len(y[0]))
     print('Running ' + config.perceptron_algorithm + '...')
     results = perceptron.train(x, y)
     print(config.perceptron_algorithm + ' finished.')
