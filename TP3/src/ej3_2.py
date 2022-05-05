@@ -1,5 +1,4 @@
 import sys
-from datetime import datetime
 
 import numpy
 
@@ -7,6 +6,7 @@ from algorithms.Perceptron import MultiPerceptron
 from utils.Config_p import Config
 from utils.Graph import graph
 from utils.PerceptronParameters import PerceptronParameters
+from utils.Utils import build_train, get_shuffle_indexes
 
 
 def __main__():
@@ -41,26 +41,32 @@ def __main__():
         print("length of training set is not divisible by k-fold parameter.")
         return 0
 
-    y: [] = []
-    with open(sys.argv[3], 'r') as expected_outputs_file:
-        for line in expected_outputs_file:
-            values = line.split()
-            aux = []
-            for v in values:
-                aux.append(float(v))
-            y.append(numpy.array(aux))
+    y: [] = []  # 0 si es par, 1 si es impar.
+    for i in range(10):
+        aux = [i % 2]
+        y.append(numpy.array(aux))
 
     y = numpy.array(y)
 
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
-
     perceptron: MultiPerceptron = MultiPerceptron(perceptron_parameters, len(x[0]), len(y[0]))
-    print('Running ' + config.perceptron_algorithm + '...')
-    results = perceptron.train(x, y)
-    print(config.perceptron_algorithm + ' finished.')
 
-    output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
-    graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
+    results_training = []
+    results_test = []
+    indexes = get_shuffle_indexes(x, k)
+    points = []
+    colors = []
+    for i in range(k):
+        training_x, training_y, testing_x, testing_y = build_train(indexes, x, y, i)
+        r_train = perceptron.train(training_x, training_y)
+        r_test = perceptron.predict_set(testing_x, testing_y)
+        points.append([i, r_test])
+        colors.append('#fa0000')  # Red -> PREDICT
+        points.append([i, r_train.errors[-1]])
+        colors.append('#00ff3c')  # Green -> TRAIN
+        # graph(range(r_train.iterations), r_train.errors, 'x', 'y', 'Errores por Iteración')
+
+    graph(points=numpy.array(points), points_color=colors)
 
 
 if __name__ == "__main__":

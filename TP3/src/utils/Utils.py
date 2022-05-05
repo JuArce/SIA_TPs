@@ -1,4 +1,14 @@
+import random
+
 import numpy as np
+
+
+def get_shuffle_indexes(x: np.array, k: int):
+    indexes = [*range(len(x))]
+    random.shuffle(indexes)
+    indexes = np.array(indexes)
+    return np.array_split(indexes, k)
+
 
 def build_train(indexes: np.array, data_x: np.array, data_y: np.array, idx: int):
     train_set_x = []
