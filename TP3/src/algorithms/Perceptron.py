@@ -1,5 +1,6 @@
 import copy
 from datetime import datetime
+from statistics import mean, stdev
 from typing import Optional
 
 import math
@@ -129,6 +130,7 @@ class MultiPerceptron:
         self.function = perceptron_parameters.function
         self.layers = self.build_layers_quantity(perceptron_parameters.layers, input_len - 1, output_len)
         self.max_error = perceptron_parameters.max_error
+        self.w_by_layer = None
 
         self.perceptrons: [[Perceptron]] = []
 
@@ -148,6 +150,8 @@ class MultiPerceptron:
         time = datetime.now()
         error = 1
         errors = []
+        std_devs = []
+
         i = 0
         while error > self.max_error and i < self.cota:
             idx = random.randint(0, len(x))
@@ -163,13 +167,19 @@ class MultiPerceptron:
 
             # Calculo las funciones de activacion con todas las entradas
             # Propago los estados de activación. Empiezo en 1 porque el 0 ya se calculo antes.
-            error = self.calculate_errors(x, y)
-            errors.append(error.max())
+            output_activation = self.calculate_activation(x)
+            error = self.calculate_errors(x, y, output_activation)
+            errors.append(error)
+
+            if len(y[0]) > 1:
+                std_dev = self.calculate_std_dev(x, y, output_activation)
+                std_devs.append(std_dev)
 
             i += 1
 
-        return Results(x, y, self.build_w(), self.algorithm, self.function,
-                       time, errors, self.max_error, i)
+        self.w_by_layer = self.build_w()
+        return Results(x, y, self.w_by_layer, self.algorithm, self.function,
+                       time, errors, self.max_error, i, std_devs=std_devs)
 
     def predict(self, x):
         layers = []
@@ -280,20 +290,34 @@ class MultiPerceptron:
             d_w.append(self.eta * d * layer[i].o)
         return np.array(d_w)
 
-    def calculate_errors(self, x, y):
+    def calculate_activation(self, x):
         o = []
         for i in range(len(x)):
             o.append(self.predict(x[i]))
         o = np.array(o)
-        # TODO: Revisar
-        # return 0.5 * (sum(sum((y - o)))) ** 2
-        return 0.5 * sum((y - o) ** 2)
+        return o
+
+    def calculate_errors(self, x, y, o):
+        # Error cuadrático medio
+        return mean((1 / len(x)) * sum((y - o) ** 2))
+
+    def calculate_std_dev(self, x, y, o):
+        return stdev((1 / len(x)) * sum((y - o) ** 2))
 
     def predict_set(self, x, y):
-        return self.calculate_errors(x, y)
+        o = self.calculate_activation(x)
+        return self.calculate_errors(x, y, o)
+
+    def predict_set_with_multiple_outputs(self, x, y):
+
+        o = self.calculate_activation(x)
+        std_dev = None
+        if len(y[0]) > 0:
+            std_dev = self.calculate_std_dev(x, y, o)
+
+        return self.calculate_errors(x, y, o), std_dev
 
     def build_w(self):
-
         w = []
 
         for m in range(1, len(self.layers)):

@@ -51,8 +51,6 @@ def __main__():
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
     perceptron: MultiPerceptron = MultiPerceptron(perceptron_parameters, len(x[0]), len(y[0]))
 
-    results_training = []
-    results_test = []
     indexes = get_shuffle_indexes(x, k)
     points = []
     colors = []

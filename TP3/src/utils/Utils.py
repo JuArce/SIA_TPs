@@ -18,7 +18,7 @@ def build_train(indexes: np.array, data_x: np.array, data_y: np.array, idx: int)
 
     for i in range(len(indexes)):
         for j in indexes[i]:
-            if i != idx:
+            if i == idx:
                 test_set_x.append(data_x[j])
                 test_set_y.append(data_y[j])
             else:
