@@ -1,12 +1,12 @@
 import sys
+from datetime import datetime
 
-import matplotlib.pyplot as plt
 import numpy
 
 from algorithms.Perceptron import SimplePerceptron, NoLinearPerceptron, LinearPerceptron
 from utils.Config_p import Config
 from utils.PerceptronParameters import PerceptronParameters
-
+from utils.Graph import graph
 
 def __main__():
     print('Argument List:', str(sys.argv))
@@ -36,35 +36,25 @@ def __main__():
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
 
     perceptron: SimplePerceptron
-
-    if config.perceptron_algorithm == 'no_linear_perceptron':
-        perceptron = NoLinearPerceptron(x, y, perceptron_parameters)
+    if config.perceptron_algorithm == 'not_linear_perceptron':
+        perceptron = NoLinearPerceptron(perceptron_parameters)
     elif config.perceptron_algorithm == 'linear_perceptron':
-        perceptron = LinearPerceptron(x, y, perceptron_parameters)
+        y = 2 * (y - min(y)) / (max(y) - min(y)) - 1
+        perceptron = LinearPerceptron(perceptron_parameters)
     else:
-        perceptron = SimplePerceptron(x, y, perceptron_parameters)
+        perceptron = SimplePerceptron(perceptron_parameters)
 
     print('Running ' + config.perceptron_algorithm + '...')
-    results = perceptron.train_perceptron()
+    results = perceptron.train(x, y)
     print(config.perceptron_algorithm + ' finished.')
 
-    for i, x in enumerate(results.x):
-        e = (x @ results.w) - results.y[i]
-        print(str(e))
-
-    plt.figure(figsize=(7, 7), layout='constrained', dpi=200)
-    plt.scatter(results.x[:, 0], results.x[:, 1], s=100, c=results.y)
     x = range(-2, 4)
     # -w_0/w_1 x - w_2/w_1
     y = (- (results.w[0] / results.w[1]) * x - (results.w[2] / results.w[1]))
-    plt.plot(x, y)
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.title("Separabilidad")
-    plt.grid(True)
-    # plt.legend()
-    # plt.show()
-    # plt.savefig(output_dir + '/' + config.selection_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png')
+    output_dir = './line_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
+    graph(x, y, 'x', 'y', 'Separabilidad', points=results.x, points_color=results.y, output_dir=output_dir)
+    output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
+    graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
 
 
 if __name__ == "__main__":

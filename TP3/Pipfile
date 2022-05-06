@@ -8,6 +8,10 @@ numpy = "*"
 matplotlib = "*"
 
 [dev-packages]
+[scripts]
+ej1 = "python ./src/ej1.py"
+ej2 = "python ./src/ej2.py"
+ej3 = "python ./src/ej3.py"
 
 [requires]
 python_version = "3.9"

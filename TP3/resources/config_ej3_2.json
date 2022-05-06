@@ -1,0 +1,13 @@
+{
+  "perceptron_algorithm": "no_linear_perceptron",
+  "cota": "5000",
+  "eta": "0.001",
+  "betha": "2",
+  "function": "tanh",
+  "layers": [
+    6,
+    6
+  ],
+  "max_error": "0.001",
+  "k": "5"
+}

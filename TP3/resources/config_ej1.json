@@ -1,0 +1,14 @@
+{
+  "perceptron_algorithm": "simple_perceptron",
+  "cota": "100",
+  "eta": "0.001",
+  "betha": "2",
+  "function": "identity",
+  "layers": [
+    2,
+    2,
+    1
+  ],
+  "max_error": "0.001",
+  "k": "100"
+}
