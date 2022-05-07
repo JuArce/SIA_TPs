@@ -1,17 +1,16 @@
-import random
+import copy
 import sys
+import random
 from datetime import datetime
-
-import matplotlib.pyplot as plt
-from utils.Utils import build_train
+from statistics import mean, stdev
 
 import numpy
 import numpy as np
 
 from algorithms.Perceptron import SimplePerceptron, NoLinearPerceptron, LinearPerceptron
 from utils.Config_p import Config
+from utils.Graph import graph
 from utils.PerceptronParameters import PerceptronParameters
-from utils.Graph import graph, graph_init, graph_plot
 
 
 def __main__():
@@ -72,8 +71,6 @@ def __main__():
     output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
     graph(range(results.iterations), results.errors, 'Iteración', 'Error', 'Errores por Iteración')
 
-
-
     # capacidad de generalización del perceptron
     indexes = [*range(len(x))]
     random.shuffle(indexes)
@@ -98,15 +95,59 @@ def __main__():
         points.append([i, r_train.errors[-1]])
         colors.append('#00ff3c')  # Green -> TRAIN
 
-    graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)', points=numpy.array(points), points_color=colors)
+    graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)', points=numpy.array(points),
+          points_color=colors)
     # normalizar la salida del no lineal
 
+    # Seleccionar cuál es el mejor betha para entrenar a la red
+    bethas = [0.1, 0.2, 0.5, 0.8, 1, 1.2, 1.5, 2]
+    aux_parameters = copy.deepcopy(perceptron_parameters)
+    errors_logistic = []
+    errors_tanh = []
 
+    for i in range(len(bethas)):
+        train_aux(perceptron, x, y, bethas[i], 'tanh', errors_tanh, aux_parameters)
+        train_aux(perceptron, x, y, bethas[i], 'logistic', errors_logistic, aux_parameters)
 
-    # results = perceptron.train(training_x, training_y)
+    # Seleccionar qué porcentaje es mejor tomar de población para entrenar y para testeo
+    errors_train = []
+    std_dev_train = []
+    errors_test = []
+    std_dev_test = []
+
+    percentages = [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
+    for i in range(len(percentages)):
+        i_train_errors = []
+        i_test_errors = []
+        for j in range(10):
+            indices = np.arange(x.shape[0])
+            np.random.shuffle(indices)
+            aux_x = x[indices]
+            aux_y = y[indices]
+            training_x = aux_x[0:int(len(aux_x) * percentages[i])]
+            training_y = aux_y[0:int(len(aux_y) * percentages[i])]
+            testing_x = aux_x[int(len(aux_x) * percentages[i]):]
+            testing_y = aux_y[int(len(aux_y) * percentages[i]):]
+            perceptron.__init__(perceptron_parameters)
+            r_train = perceptron.train(training_x, training_y)
+            r_test = perceptron.predict(testing_x, testing_y)
+            i_train_errors.append(r_train.errors[-1])
+            i_test_errors.append(r_test)
+
+        errors_train.append(mean(i_train_errors))
+        std_dev_train.append(stdev(i_train_errors))
+        errors_test.append(mean(i_test_errors))
+        std_dev_test.append(stdev(i_test_errors))
 
     print(config.perceptron_algorithm + ' finished.')
 
+
+def train_aux(perceptron, x, y, betha, function, errors, parameters):
+    parameters.betha = betha
+    parameters.function = function
+    perceptron.__init__(parameters)
+    r_train = perceptron.train(x, y)
+    errors.append(r_train.errors[-1])
 
 
 if __name__ == "__main__":
