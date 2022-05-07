@@ -1,7 +1,10 @@
+import copy
 import sys
 
 import numpy
 
+import random
+import datetime
 from algorithms.Perceptron import MultiPerceptron
 from utils.Config_p import Config
 from utils.Graph import graph
@@ -55,22 +58,40 @@ def __main__():
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
     perceptron: MultiPerceptron = MultiPerceptron(perceptron_parameters, len(x[0]), len(y[0]))
 
-    results_training = []
-    results_test = []
-    indexes = get_shuffle_indexes(x, k)
     points = []
     colors = []
-    for i in range(k):
-        training_x, training_y, testing_x, testing_y = build_train(indexes, x, y, i)
-        r_train = perceptron.train(training_x, training_y)
-        r_test_errors, r_test_stdevs = perceptron.predict_set_with_multiple_outputs(testing_x, testing_y)
-        points.append([i, r_test_errors])
-        colors.append('#fa0000')  # Red -> PREDICT
-        points.append([i, r_train.errors[-1]])
-        colors.append('#00ff3c')  # Green -> TRAIN
+    errors = []
+    r_train = perceptron.train(x, y)
+
+    testing_x = mutate_input(x, 0.02)  # TODO: recibir por parámetro
+
+    for i in range(len(x)):
+        r_test_errors, r_test_std_devs, = perceptron.predict_set_with_multiple_outputs([x[i]], [y[i]])
+        r_test_errors_mut, r_test_std_devs_mut, = perceptron.predict_set_with_multiple_outputs([testing_x[i]], [y[i]])
+
+        # points.append([i, r_test_errors])
+        # errors.append(r_test_std_dev)
+        # colors.append('#fa0000')  # Red -> PREDICT
+        #
+        # points.append([i, r_train.errors[-1]])
+        # errors.append(r_train.std_devs[-1])
+        # colors.append('#00ff3c')  # Green -> TRAIN
         # graph(range(r_train.iterations), r_train.errors, 'x', 'y', 'Errores por Iteración')
 
-    graph(points=numpy.array(points), points_color=colors)
+    graph(points=numpy.array(points), points_color=colors, e=errors)
+
+
+def mutate_input(x, mutation_prob):
+    random.seed(datetime.datetime.now())
+    aux = copy.deepcopy(x)
+
+    for i in range(len(aux)):
+        for j in range(len(aux[i])):
+            r = random.random()
+            if r < mutation_prob:
+                aux[i][j] = 1 if aux[i][j] == 0 else 0
+
+    return aux
 
 
 if __name__ == "__main__":

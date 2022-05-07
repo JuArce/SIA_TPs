@@ -1,8 +1,8 @@
 {
   "perceptron_algorithm": "not_linear_perceptron",
-  "cota": "1000",
+  "cota": "50000",
   "eta": "0.001",
-  "betha": "2",
+  "betha": "1",
   "function": "tanh",
   "layers": [
     2,

@@ -55,6 +55,8 @@ def __main__():
     points = []
     colors = []
     for i in range(k):
+        # reiniciamos el perceptron
+        perceptron.__init__(perceptron_parameters, len(x[0]), len(y[0]))
         training_x, training_y, testing_x, testing_y = build_train(indexes, x, y, i)
         r_train = perceptron.train(training_x, training_y)
         r_test = perceptron.predict_set(testing_x, testing_y)

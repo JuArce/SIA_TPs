@@ -70,9 +70,8 @@ def __main__():
     # graficar todos los errores en el entrenamiento
     results = perceptron.train(x, y)
     output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
-    graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración')
-    #reiniciamos el perceptron
-    perceptron.__init__(perceptron_parameters)
+    graph(range(results.iterations), results.errors, 'Iteración', 'Error', 'Errores por Iteración')
+
 
 
     # capacidad de generalización del perceptron
@@ -87,6 +86,8 @@ def __main__():
     points = []
     colors = []
     for i in range(k):
+        # reiniciamos el perceptron
+        perceptron.__init__(perceptron_parameters)
         training_x, training_y, testing_x, testing_y = build_train(indexes, x, y, i)
         r_train = perceptron.train(training_x, training_y)
         r_test = perceptron.predict(testing_x, testing_y)
@@ -97,7 +98,7 @@ def __main__():
         points.append([i, r_train.errors[-1]])
         colors.append('#00ff3c')  # Green -> TRAIN
 
-    graph(points=numpy.array(points), points_color=colors)
+    graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)', points=numpy.array(points), points_color=colors)
     # normalizar la salida del no lineal
 
 
