@@ -117,10 +117,10 @@ def __main__():
         train_stdev.append(get_3d_stddev(training_x))
         test_stdev.append(get_3d_stddev(testing_x))
 
-    cell_text.append([round(n, 4) for n in train_errors])
-    cell_text.append([round(n, 4) for n in train_stdev])
-    cell_text.append([round(n, 4) for n in test_errors])
-    cell_text.append([round(n, 4) for n in train_stdev])
+    cell_text.append([round(n, 5) for n in train_errors])
+    cell_text.append([round(n, 5) for n in train_stdev])
+    cell_text.append([round(n, 5) for n in test_errors])
+    cell_text.append([round(n, 5) for n in test_stdev])
     graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)', points=numpy.array(points),
           points_color=colors)
     graph_table(cell_text=cell_text, rows=rows, columns=columns)
