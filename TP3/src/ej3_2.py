@@ -1,4 +1,6 @@
+import copy
 import sys
+from datetime import datetime
 
 import numpy
 
@@ -51,6 +53,17 @@ def __main__():
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
     perceptron: MultiPerceptron = MultiPerceptron(perceptron_parameters, len(x[0]), len(y[0]))
 
+    bethas = [0.1, 0.2, 0.5, 0.8, 1, 1.2, 1.5, 2]
+    aux_parameters = copy.deepcopy(perceptron_parameters)
+    errors_logistic = []
+    errors_tanh = []
+
+    print('Running ' + config.perceptron_algorithm + '...')
+    results = perceptron.train(x, y)
+    print(config.perceptron_algorithm + ' finished.')
+    output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
+    graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
+
     indexes = get_shuffle_indexes(x, k)
     points = []
     colors = []
@@ -66,7 +79,16 @@ def __main__():
         colors.append('#00ff3c')  # Green -> TRAIN
         # graph(range(r_train.iterations), r_train.errors, 'x', 'y', 'Errores por Iteración')
 
-    graph(points=numpy.array(points, dtype=object), points_color=colors)
+    graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)',
+          points=numpy.array(points, dtype=object), points_color=colors)
+
+
+def train_aux(perceptron, x, y, betha, function, errors, parameters):
+    parameters.betha = betha
+    parameters.function = function
+    perceptron.__init__(parameters, len(x[0]), len(y[0]))
+    r_train = perceptron.train(x, y)
+    errors.append(r_train.errors[-1])
 
 
 if __name__ == "__main__":

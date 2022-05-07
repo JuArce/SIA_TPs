@@ -5,8 +5,8 @@
   "betha": "2",
   "function": "tanh",
   "layers": [
-    6,
-    6
+    2
+
   ],
   "max_error": "0.001",
   "k": "5"
