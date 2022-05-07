@@ -89,10 +89,10 @@ def __main__():
     train_stdev = []
     test_stdev = []
 
-    columns = []
+    rows = []
     for i in range(k):
-        columns.append(str(i + 1))
-    rows = ['Error Train', 'Std Dev Train', 'Error Test', 'Std Dev Test']
+        rows.append(str(i + 1))
+    columns = ['Error Train', 'Std Dev Train', 'Error Test', 'Std Dev Test']
 
     for i in range(k):
         # reiniciamos el perceptron
@@ -116,11 +116,15 @@ def __main__():
         test_errors.append(r_test)
         train_stdev.append(get_3d_stddev(training_x))
         test_stdev.append(get_3d_stddev(testing_x))
+        cell_text.append([round(r_train.errors[-1], 8),
+                          round(get_3d_stddev(training_x), 8),
+                          round(r_test, 8),
+                          round(get_3d_stddev(testing_x), 8)])
 
-    cell_text.append([round(n, 5) for n in train_errors])
-    cell_text.append([round(n, 5) for n in train_stdev])
-    cell_text.append([round(n, 5) for n in test_errors])
-    cell_text.append([round(n, 5) for n in test_stdev])
+    # cell_text.append([round(n, 5) for n in train_errors])
+    # cell_text.append([round(n, 5) for n in train_stdev])
+    # cell_text.append([round(n, 5) for n in test_errors])
+    # cell_text.append([round(n, 5) for n in test_stdev])
     graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)', points=numpy.array(points),
           points_color=colors)
     graph_table(cell_text=cell_text, rows=rows, columns=columns)
@@ -138,7 +142,6 @@ def __main__():
 
     graph(bethas, errors_logistic, 'Betha', 'Error', 'Errores para distintos bethas (logistic)')
     graph(bethas, errors_tanh, 'Betha', 'Error', 'Errores para distintos bethas (tanh)')
-
 
     # Seleccionar qué porcentaje es mejor tomar de población para entrenar y para testeo
     points = []
@@ -185,13 +188,12 @@ def train_aux(perceptron, x, y, betha, function, errors, parameters):
     r_train = perceptron.train(x, y)
     errors.append(r_train.errors[-1])
 
-    
+
 def get_3d_stddev(x):
     x_axis_stdev = stdev(x[:, 0])
     y_axis_stdev = stdev(x[:, 1])
     z_axis_stdev = stdev(x[:, 2])
     return (x_axis_stdev + y_axis_stdev + z_axis_stdev) / 3
-
 
 
 if __name__ == "__main__":
