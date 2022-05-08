@@ -6,7 +6,7 @@ import numpy
 
 from algorithms.Perceptron import MultiPerceptron
 from utils.Config_p import Config
-from utils.Graph import graph
+from utils.Graph import graph, graph_multi
 from utils.PerceptronParameters import PerceptronParameters
 
 
@@ -72,11 +72,18 @@ def __main__():
     layers = [[2], [2, 2], [3, 3], [6, 6], [3, 2, 3]]
     aux_parameters = copy.deepcopy(perceptron_parameters)
 
+    x_graph = []
+    y_graph = []
+    labels = []
     for i in range(len(layers)):
         aux_parameters.layers = layers[i]
         perceptron.__init__(aux_parameters, len(x[0]), len(y[0]))
         results = perceptron.train(x, y)
-        graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración')
+        x_graph.append(range(results.iterations))
+        y_graph.append(results.errors)
+        labels.append(str(layers[i]))
+
+    graph_multi(x_graph, y_graph, 'x', 'y', 'Errores por Iteración usando distinta cantidad de capas', labels)
 
 
 def train_aux(perceptron, x, y, betha, function, errors, parameters):

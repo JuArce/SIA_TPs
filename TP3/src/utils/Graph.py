@@ -43,6 +43,21 @@ def graph_table(cell_text=None, rows=None, columns=None, output_dir=None):
         graph_show()
 
 
+def graph_multi(x=None, y=None, x_label='', y_label='', title='', label=None, output_dir=None):
+    graph_init()
+
+    if x is not None and y is not None:
+        for i in range(len(x)):
+            graph_plot_with_label(x[i], y[i], label=label[i])
+
+    graph_description(x_label, y_label, title)
+    plt.legend()
+    if output_dir:
+        graph_save(output_dir)
+    else:
+        graph_show()
+
+
 def graph_init(width=7, height=7):
     plt.clf()
     plt.figure(figsize=(width, height), layout='constrained', dpi=300)
@@ -62,6 +77,10 @@ def graph_save(output_dir):
 
 def graph_plot(x, y):
     plt.plot(x, y)
+
+
+def graph_plot_with_label(x, y, label):
+    plt.plot(x, y, label=label)
 
 
 def graph_points(x, y, colors):

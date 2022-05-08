@@ -131,14 +131,20 @@ def __main__():
     graph(bethas, errors_tanh, 'Betha', 'Error', 'Errores para distintos bethas (tanh)')
 
     # Seleccionar qué porcentaje es mejor tomar de población para entrenar y para testeo
+    percentages = [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
+
     points = []
     errors = []
     colors = []
+    rows = percentages
+    columns = ['Error Train', 'Std Dev Train', 'Error Test', 'Std Dev Test']
+    cell_text = []
 
-    percentages = [0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
     for i in range(len(percentages)):
         i_train_errors = []
         i_test_errors = []
+        training_x = []
+        testing_x = []
         for j in range(10):
             indices = np.arange(x.shape[0])
             np.random.shuffle(indices)
@@ -155,6 +161,11 @@ def __main__():
             i_train_errors.append(r_train.errors[-1])
             i_test_errors.append(r_test)
 
+        cell_text.append([round(i_train_errors[-1], 8),
+                          round(get_3d_stddev(training_x), 8),
+                          round(i_test_errors[-1], 8),
+                          round(get_3d_stddev(testing_x), 8)])
+
         points.append([percentages[i], mean(i_train_errors)])
         errors.append(stdev(i_train_errors))
         colors.append('#00ff3c')  # Green -> TRAIN
@@ -163,8 +174,9 @@ def __main__():
         errors.append(stdev(i_test_errors))
         colors.append('#fa0000')  # Red -> PREDICT
 
-    graph(points=numpy.array(points), points_color=colors, e=errors)
-
+    graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)',
+          points=numpy.array(points), points_color=colors, e=errors)
+    graph_table(cell_text=cell_text, rows=rows, columns=columns)
     print(config.perceptron_algorithm + ' finished.')
 
 
