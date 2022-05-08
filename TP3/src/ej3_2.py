@@ -1,6 +1,5 @@
 import copy
 import sys
-from datetime import datetime
 
 import numpy
 
@@ -59,7 +58,6 @@ def __main__():
     # output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
     # graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
 
-
     # Cuál es la mejor cantidad de capas y unidades
     layers = [[2], [2, 2], [3, 3], [6, 6], [3, 2, 3]]
     aux_parameters = copy.deepcopy(perceptron_parameters)
@@ -77,24 +75,24 @@ def __main__():
 
     graph_multi(x_graph, y_graph, 'x', 'y', 'Errores por Iteración usando distinta cantidad de capas', labels)
 
-    #
-    # indexes = get_shuffle_indexes(x, k)
-    # points = []
-    # colors = []
-    # for i in range(k):
-    #     # reiniciamos el perceptron
-    #     perceptron.__init__(perceptron_parameters, len(x[0]), len(y[0]))
-    #     training_x, training_y, testing_x, testing_y = build_train(indexes, x, y, i)
-    #     r_train = perceptron.train(training_x, training_y)
-    #     r_test = perceptron.predict_set(testing_x, testing_y)
-    #     points.append([i, r_test])
-    #     colors.append('#fa0000')  # Red -> PREDICT
-    #     points.append([i, r_train.errors[-1]])
-    #     colors.append('#00ff3c')  # Green -> TRAIN
-    #     # graph(range(r_train.iterations), r_train.errors, 'x', 'y', 'Errores por Iteración')
-    #
-    # graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)',
-    #       points=numpy.array(points, dtype=object), points_color=colors)
+    # Capacidad de generalización con los k
+    indexes = get_shuffle_indexes(x, k)
+    points = []
+    colors = []
+    for i in range(k):
+        # reiniciamos el perceptron
+        perceptron.__init__(perceptron_parameters, len(x[0]), len(y[0]))
+        training_x, training_y, testing_x, testing_y = build_train(indexes, x, y, i)
+        r_train = perceptron.train(training_x, training_y)
+        r_test = perceptron.predict_set(testing_x, testing_y)
+        points.append([i, r_test])
+        colors.append('#fa0000')  # Red -> PREDICT
+        points.append([i, r_train.errors[-1]])
+        colors.append('#00ff3c')  # Green -> TRAIN
+        # graph(range(r_train.iterations), r_train.errors, 'x', 'y', 'Errores por Iteración')
+
+    graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)',
+          points=numpy.array(points, dtype=object), points_color=colors)
 
 
 def train_aux(perceptron, x, y, betha, function, errors, parameters):
