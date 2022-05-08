@@ -50,9 +50,6 @@ def __main__():
 
     y = numpy.array(y)
 
-    if config.perceptron_algorithm == 'not_linear_perceptron':
-        y = 2 * (y - min(y)) / (max(y) - min(y)) - 1
-
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
 
     perceptron: SimplePerceptron
@@ -79,8 +76,6 @@ def __main__():
     indexes = np.array_split(indexes, k)
 
     # [[1 3 2], [9 5 2], ...[]]
-    results_training = []
-    results_test = []
     points = []
     colors = []
     cell_text = []
@@ -103,9 +98,6 @@ def __main__():
         r_train = perceptron.train(training_x, training_y)
         r_test = perceptron.predict(testing_x, testing_y)
 
-        # results_training.append(r_train)
-        # results_test.append(r_test)
-
         points.append([i, r_train.errors[-1]])
         colors.append('#00ff3c')  # Green -> TRAIN
 
@@ -121,14 +113,9 @@ def __main__():
                           round(r_test, 8),
                           round(get_3d_stddev(testing_x), 8)])
 
-    # cell_text.append([round(n, 5) for n in train_errors])
-    # cell_text.append([round(n, 5) for n in train_stdev])
-    # cell_text.append([round(n, 5) for n in test_errors])
-    # cell_text.append([round(n, 5) for n in test_stdev])
     graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)', points=numpy.array(points),
           points_color=colors)
     graph_table(cell_text=cell_text, rows=rows, columns=columns)
-    # normalizar la salida del no lineal
 
     # Seleccionar cuál es el mejor betha para entrenar a la red
     bethas = [0.1, 0.2, 0.5, 0.8, 1, 1.2, 1.5, 2]
