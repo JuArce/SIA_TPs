@@ -7,7 +7,7 @@ import random
 import datetime
 from algorithms.Perceptron import MultiPerceptron
 from utils.Config_p import Config
-from utils.Graph import graph
+from utils.Graph import graph, graph_table
 from utils.PerceptronParameters import PerceptronParameters
 from utils.Utils import build_train, get_shuffle_indexes
 
@@ -58,31 +58,35 @@ def __main__():
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
     perceptron: MultiPerceptron = MultiPerceptron(perceptron_parameters, len(x[0]), len(y[0]))
 
+    r_train = perceptron.train(x, y)
+    graph(range(r_train.iterations), r_train.errors, 'Iteración', 'Error', 'Errores por Iteración')
+    print("Last error: " + str(r_train.errors[-1]))
+    print("Min error: " + str(min(r_train.errors)))
+
     points = []
     colors = []
     errors = []
-    r_train = perceptron.train(x, y)
+    mut_prob = [0, 0.01, 0.1, 0.25, 0.5]
+    rows = [str(i) for i in range(len(x))]
+    columns = mut_prob
+    cell_text = []
 
-    testing_x = mutate_input(x, 0.02)  # TODO: recibir por parámetro
+    # testing_x = mutate_input(x, 0.02)  # TODO: recibir por parámetro
 
-    for i in range(len(x)):
-        r_test_errors, r_test_std_devs, = perceptron.predict_set_with_multiple_outputs([x[i]], [y[i]])
-        r_test_errors_mut, r_test_std_devs_mut, = perceptron.predict_set_with_multiple_outputs([testing_x[i]], [y[i]])
+    for i in range(len(x)):  # paso por cada numero
+        # recorro cada probabilidad de mutacion
+        aux = []
+        for p in mut_prob:
+            mut_x, changed = mutate_single_input(x[i], p)
+            r_test_errors, r_test_std_devs, = perceptron.predict_set_with_multiple_outputs([mut_x], [y[i]])
+            aux.append(str(round(r_test_errors, 8)) + " (" + str(changed) + ")")
+        cell_text.append(aux)
 
-        # points.append([i, r_test_errors])
-        # errors.append(r_test_std_dev)
-        # colors.append('#fa0000')  # Red -> PREDICT
-        #
-        # points.append([i, r_train.errors[-1]])
-        # errors.append(r_train.std_devs[-1])
-        # colors.append('#00ff3c')  # Green -> TRAIN
-        # graph(range(r_train.iterations), r_train.errors, 'x', 'y', 'Errores por Iteración')
-
-    graph(points=numpy.array(points), points_color=colors, e=errors)
+    graph_table(cell_text=cell_text, rows=rows, columns=columns)
 
 
 def mutate_input(x, mutation_prob):
-    random.seed(datetime.datetime.now())
+    # random.seed(datetime.datetime.now())
     aux = copy.deepcopy(x)
 
     for i in range(len(aux)):
@@ -91,7 +95,18 @@ def mutate_input(x, mutation_prob):
             if r < mutation_prob:
                 aux[i][j] = 1 if aux[i][j] == 0 else 0
 
-    return aux
+
+def mutate_single_input(x, mutation_prob):
+    # random.seed(datetime.datetime.now())
+    aux = copy.deepcopy(x)
+    changed = 0
+    for i in range(len(aux)):
+        r = random.random()
+        if r < mutation_prob:
+            aux[i] = 1 if aux[i] == 0 else 0
+            changed += 1
+
+    return aux, changed
 
 
 if __name__ == "__main__":
