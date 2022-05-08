@@ -317,6 +317,15 @@ class MultiPerceptron:
 
         return self.calculate_errors(x, y, o), std_dev
 
+    def predict_set_with_multiple_outputs_and_activation(self, x, y):
+
+        o = self.calculate_activation(x)
+        std_dev = None
+        if len(y[0]) > 0:
+            std_dev = self.calculate_std_dev(x, y, o)
+
+        return self.calculate_errors(x, y, o), std_dev, o
+
     def build_w(self):
         w = []
 

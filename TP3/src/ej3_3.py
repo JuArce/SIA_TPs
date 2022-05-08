@@ -78,8 +78,8 @@ def __main__():
         aux = []
         for p in mut_prob:
             mut_x, changed = mutate_single_input(x[i], p)
-            r_test_errors, r_test_std_devs, = perceptron.predict_set_with_multiple_outputs([mut_x], [y[i]])
-            aux.append(str(round(r_test_errors, 8)) + " (" + str(changed) + ")")
+            r_test_errors, r_test_std_devs, o = perceptron.predict_set_with_multiple_outputs_and_activation([mut_x], [y[i]])
+            aux.append(str(round(r_test_errors, 8)) + " (" + str(changed) + "): " + str(numpy.argmax(o)))
         cell_text.append(aux)
 
     graph_table(cell_text=cell_text, rows=rows, columns=columns)
