@@ -37,9 +37,9 @@ def __main__():
 
     perceptron: SimplePerceptron
     if config.perceptron_algorithm == 'not_linear_perceptron':
+        y = 2 * (y - min(y)) / (max(y) - min(y)) - 1
         perceptron = NoLinearPerceptron(perceptron_parameters)
     elif config.perceptron_algorithm == 'linear_perceptron':
-        y = 2 * (y - min(y)) / (max(y) - min(y)) - 1
         perceptron = LinearPerceptron(perceptron_parameters)
     else:
         perceptron = SimplePerceptron(perceptron_parameters)
