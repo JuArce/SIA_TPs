@@ -52,11 +52,11 @@ def __main__():
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
     perceptron: MultiPerceptron = MultiPerceptron(perceptron_parameters, len(x[0]), len(y[0]))
 
-    # print('Running ' + config.perceptron_algorithm + '...')
-    # results = perceptron.train(x, y)
-    # print(config.perceptron_algorithm + ' finished.')
-    # output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
-    # graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
+    print('Running ' + config.perceptron_algorithm + '...')
+    results = perceptron.train(x, y)
+    print(config.perceptron_algorithm + ' finished.')
+    output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
+    graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
 
     # Cuál es la mejor cantidad de capas y unidades
     layers = [[2], [2, 2], [3, 3], [6, 6], [3, 2, 3]]
