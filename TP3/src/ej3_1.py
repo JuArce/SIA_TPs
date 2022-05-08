@@ -62,11 +62,21 @@ def __main__():
     graph(bethas, errors_tanh, 'Betha', 'Error', 'Errores para distintos bethas (tanh)')
 
     print('Running ' + config.perceptron_algorithm + '...')
+    perceptron.__init__(perceptron_parameters, len(x[0]), len(y[0]))
     results = perceptron.train(x, y)
     print(config.perceptron_algorithm + ' finished.')
-
     output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
     graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
+
+    # Cuál es la mejor cantidad de capas y unidades
+    layers = [[2], [2, 2], [3, 3], [6, 6], [3, 2, 3]]
+    aux_parameters = copy.deepcopy(perceptron_parameters)
+
+    for i in range(len(layers)):
+        aux_parameters.layers = layers[i]
+        perceptron.__init__(aux_parameters, len(x[0]), len(y[0]))
+        results = perceptron.train(x, y)
+        graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración')
 
 
 def train_aux(perceptron, x, y, betha, function, errors, parameters):
