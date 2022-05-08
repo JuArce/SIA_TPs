@@ -308,6 +308,10 @@ class MultiPerceptron:
         o = self.calculate_activation(x)
         return self.calculate_errors(x, y, o)
 
+    def predict_set_and_activation(self, x, y):
+        o = self.calculate_activation(x)
+        return self.calculate_errors(x, y, o), o
+
     def predict_set_with_multiple_outputs(self, x, y):
 
         o = self.calculate_activation(x)

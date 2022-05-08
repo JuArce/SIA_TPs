@@ -1,11 +1,12 @@
 import copy
 import sys
+from datetime import datetime
 
 import numpy
 
 from algorithms.Perceptron import MultiPerceptron
 from utils.Config_p import Config
-from utils.Graph import graph, graph_multi
+from utils.Graph import graph, graph_multi, graph_table
 from utils.PerceptronParameters import PerceptronParameters
 from utils.Utils import build_train, get_shuffle_indexes
 
@@ -93,6 +94,25 @@ def __main__():
 
     graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)',
           points=numpy.array(points, dtype=object), points_color=colors)
+
+    # Probabilidad de acertar
+    indexes = get_shuffle_indexes(x, k)
+    rows = []
+    columns = ["Error de Entrenamiento", "Error de Test", "Acertó"]
+    cell_text = []
+    for i in range(k):
+        perceptron.__init__(perceptron_parameters, len(x[0]), len(y[0]))
+        training_x, training_y, testing_x, testing_y = build_train(indexes, x, y, i)
+        r_train = perceptron.train(training_x, training_y)
+        r_test, aux_o = perceptron.predict_set_and_activation(testing_x, testing_y)
+
+        rows.append(i)
+        hit = 'Yes' if (-0.5 < aux_o < 0.5 and testing_y[0][0] == 0) or (
+                0.5 < aux_o < 1.5 and testing_y[0][0] == 1) else 'No'
+
+        cell_text.append([round(r_train.errors[-1], 8), round(r_test, 8), hit])
+
+    graph_table(cell_text=cell_text, rows=rows, columns=columns)
 
 
 def train_aux(perceptron, x, y, betha, function, errors, parameters):
