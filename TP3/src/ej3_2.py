@@ -6,7 +6,7 @@ import numpy
 
 from algorithms.Perceptron import MultiPerceptron
 from utils.Config_p import Config
-from utils.Graph import graph
+from utils.Graph import graph, graph_multi
 from utils.PerceptronParameters import PerceptronParameters
 from utils.Utils import build_train, get_shuffle_indexes
 
@@ -53,34 +53,48 @@ def __main__():
     perceptron_parameters: PerceptronParameters = PerceptronParameters(config)
     perceptron: MultiPerceptron = MultiPerceptron(perceptron_parameters, len(x[0]), len(y[0]))
 
-    bethas = [0.1, 0.2, 0.5, 0.8, 1, 1.2, 1.5, 2]
+    # print('Running ' + config.perceptron_algorithm + '...')
+    # results = perceptron.train(x, y)
+    # print(config.perceptron_algorithm + ' finished.')
+    # output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
+    # graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
+
+
+    # Cuál es la mejor cantidad de capas y unidades
+    layers = [[2], [2, 2], [3, 3], [6, 6], [3, 2, 3]]
     aux_parameters = copy.deepcopy(perceptron_parameters)
-    errors_logistic = []
-    errors_tanh = []
 
-    print('Running ' + config.perceptron_algorithm + '...')
-    results = perceptron.train(x, y)
-    print(config.perceptron_algorithm + ' finished.')
-    output_dir = './errors_' + config.perceptron_algorithm + '_' + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.png'
-    graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
+    x_graph = []
+    y_graph = []
+    labels = []
+    for i in range(len(layers)):
+        aux_parameters.layers = layers[i]
+        perceptron.__init__(aux_parameters, len(x[0]), len(y[0]))
+        results = perceptron.train(x, y)
+        x_graph.append(range(results.iterations))
+        y_graph.append(results.errors)
+        labels.append(str(layers[i]))
 
-    indexes = get_shuffle_indexes(x, k)
-    points = []
-    colors = []
-    for i in range(k):
-        # reiniciamos el perceptron
-        perceptron.__init__(perceptron_parameters, len(x[0]), len(y[0]))
-        training_x, training_y, testing_x, testing_y = build_train(indexes, x, y, i)
-        r_train = perceptron.train(training_x, training_y)
-        r_test = perceptron.predict_set(testing_x, testing_y)
-        points.append([i, r_test])
-        colors.append('#fa0000')  # Red -> PREDICT
-        points.append([i, r_train.errors[-1]])
-        colors.append('#00ff3c')  # Green -> TRAIN
-        # graph(range(r_train.iterations), r_train.errors, 'x', 'y', 'Errores por Iteración')
+    graph_multi(x_graph, y_graph, 'x', 'y', 'Errores por Iteración usando distinta cantidad de capas', labels)
 
-    graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)',
-          points=numpy.array(points, dtype=object), points_color=colors)
+    #
+    # indexes = get_shuffle_indexes(x, k)
+    # points = []
+    # colors = []
+    # for i in range(k):
+    #     # reiniciamos el perceptron
+    #     perceptron.__init__(perceptron_parameters, len(x[0]), len(y[0]))
+    #     training_x, training_y, testing_x, testing_y = build_train(indexes, x, y, i)
+    #     r_train = perceptron.train(training_x, training_y)
+    #     r_test = perceptron.predict_set(testing_x, testing_y)
+    #     points.append([i, r_test])
+    #     colors.append('#fa0000')  # Red -> PREDICT
+    #     points.append([i, r_train.errors[-1]])
+    #     colors.append('#00ff3c')  # Green -> TRAIN
+    #     # graph(range(r_train.iterations), r_train.errors, 'x', 'y', 'Errores por Iteración')
+    #
+    # graph(x_label='k', y_label='error', title='Train (Green) vs Test (Red)',
+    #       points=numpy.array(points, dtype=object), points_color=colors)
 
 
 def train_aux(perceptron, x, y, betha, function, errors, parameters):

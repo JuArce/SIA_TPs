@@ -1,6 +1,6 @@
 {
   "perceptron_algorithm": "no_linear_perceptron",
-  "cota": "5000",
+  "cota": "10000",
   "eta": "0.001",
   "betha": "2",
   "function": "tanh",
@@ -9,5 +9,5 @@
 
   ],
   "max_error": "0.001",
-  "k": "5"
+  "k": "10"
 }
