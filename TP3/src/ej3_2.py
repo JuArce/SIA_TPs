@@ -60,7 +60,7 @@ def __main__():
     graph(range(results.iterations), results.errors, 'x', 'y', 'Errores por Iteración', output_dir=output_dir)
 
     # Cuál es la mejor cantidad de capas y unidades
-    layers = [[2], [2, 2], [3, 3], [6, 6], [3, 2, 3]]
+    layers = [[2], [2, 2], [3, 3], [6, 6], [3, 2, 3], [36]]
     aux_parameters = copy.deepcopy(perceptron_parameters)
 
     x_graph = []
