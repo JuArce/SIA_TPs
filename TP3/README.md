@@ -26,16 +26,16 @@ La configuración del programa se encuentra en los archivos de tipo `config.json
 de [recursos](/TP3/resources/). La siguiente tabla describe las configuraciones posibles con sus opciones (en caso que
 aplique):
 
-| Configuración          | Posibles Parámetros                                                                        | Descripción                                                                                                                                                                              | 
-|------------------------|--------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `perceptron_algorithm` | `simple_perceptron`,`lineal_perceptron`,`not_linear_perceptron`,y `multi_layer_perceptron` | Algoritmo de perceptron a utilizar.                                                                                                                                                      |
-| `cota`                 | `int`                                                                                      | Cantidad de iteraciones máximas                                                                                                                                                          |
-| `eta`                  | `float`                                                                                    | Factor para modificar W (η).                                                                                                                                                             |
-| `betha`                | `float`                                                                                    | Valor por el cual se multiplica parámetro de función sigmoidea. Solo sirve para perceptron no lineal.                                                                                    |
-| `function`             | `tanh`,`logistic`                                                                          | Función `g()` a utilizar en estado activación para el perceptrón no lineal.                                                                                                              |
-| `layers`               | [ `int`, `int`, `int`]                                                                     | Cantidad de perceptrones en cada una de las capas ocultas    |
-| `max_error`            | `float`                                                                                    | Condición de corte de error máximo al que puede llegar.                                                                                                                                  |
-| `k`                    | `int`                                                                                      | Cantidad de partes a usar aleatoriamente en validación cruzada por k-partes.                                                                                                             |
+| Configuración          | Posibles Parámetros                                                                        | Descripción                                                                                           | 
+|------------------------|--------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| `perceptron_algorithm` | `simple_perceptron`,`lineal_perceptron`,`not_linear_perceptron` y `multi_layer_perceptron` | Algoritmo de perceptron a utilizar.                                                                   |
+| `cota`                 | `int`                                                                                      | Cantidad de iteraciones máximas                                                                       |
+| `eta`                  | `float`                                                                                    | Factor para modificar W (η).                                                                          |
+| `betha`                | `float`                                                                                    | Valor por el cual se multiplica parámetro de función sigmoidea. Solo sirve para perceptron no lineal. |
+| `function`             | `tanh`,`logistic`                                                                          | Función `g()` a utilizar en estado activación para el perceptrón no lineal.                           |
+| `layers`               | [ `int`, `int`, `int`]                                                                     | Cantidad de perceptrones en cada una de las capas ocultas                                             |
+| `max_error`            | `float`                                                                                    | Condición de corte de error máximo al que puede llegar.                                               |
+| `k`                    | `int`                                                                                      | Cantidad de partes a usar aleatoriamente en validación cruzada por k-partes.                          |
 
 ## Ejecución
 
@@ -66,7 +66,7 @@ donde se tiene que:
   ### ej2:
     * [`training_input.txt`](/TP3/resources/ej2/training_input.txt)
   ### ej3:
-    * [`training_input.txt`](/TP3/resources/ej3/training_input_ej3.txt)
+    * [`training_input_ej3.txt`](/TP3/resources/ej3/training_input_ej3.txt)
 
 
 * `<path_to_output_expected>` posee el path al directorio donde se encuentran los archivos con los resultados esperados
@@ -76,6 +76,8 @@ donde se tiene que:
     * [`xor_output.txt`](/TP3/resources/ej1/xor_output.txt)
   ### ej2:
     * [`training_output.txt`](/TP3/resources/ej2/training_output.txt)
+  ### ej3:
+    * [`training_output_ej3_3.txt`](/TP3/resources/ej3/training_output_ej3_3.txt)
 
 ## Presentación
 
