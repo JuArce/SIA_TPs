@@ -4,8 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+scikit-learn = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+main = "python ./src/main.py"
