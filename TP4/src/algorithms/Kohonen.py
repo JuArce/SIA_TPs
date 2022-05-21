@@ -15,14 +15,13 @@ class Kohonen:
         self.output_layer_len = parameters.output_layer_len
         self.learning_rate = parameters.learning_rate
         self.input_layer_len = len(data[0])
-
         self.weights = self.initialize_weights(data)
 
     def train(self, data):
 
         # Itero todas las entradas 'epochs' veces
         for epoch in range(self.epochs):
-            print(epoch)
+            self.learning_rate = self.learning_rate / (epoch+1)
             for j in range(len(data)):
                 idx = self.get_winner(data[j])
                 self.update_weights(idx, data[j])
@@ -31,7 +30,7 @@ class Kohonen:
     # Devuelve un array de k*k*n siendo n la dimensión de las entradas y k la cantidad de neuronas de la capa de salida
 
     def initialize_weights(self, data):
-        weights = np.empty((self.output_layer_len, self.output_layer_len, self.input_layer_len))
+        weights = np.zeros((self.output_layer_len, self.output_layer_len, self.input_layer_len))
         for i in range(len(weights)):
             for j in range(len(weights[i])):
                 idx = random.randint(0, len(data) - 1)
