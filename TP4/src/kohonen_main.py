@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 from algorithms.Kohonen import Kohonen
-from utils.ConfigUL import Config
+from utils.ConfigULK import Config
 from utils.KohonenParameters import KohonenParameters
 
 

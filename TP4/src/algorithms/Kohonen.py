@@ -21,10 +21,10 @@ class Kohonen:
 
         # Itero todas las entradas 'epochs' veces
         for epoch in range(self.epochs):
-            self.learning_rate = self.learning_rate / (epoch+1)
             for j in range(len(data)):
                 idx = self.get_winner(data[j])
                 self.update_weights(idx, data[j])
+            self.learning_rate = 1 / (epoch + 1)
 
     # Se inicializan los pesos y se les asigna aleatoriamente los pesos de alguna de las entradas
     # Devuelve un array de k*k*n siendo n la dimensión de las entradas y k la cantidad de neuronas de la capa de salida

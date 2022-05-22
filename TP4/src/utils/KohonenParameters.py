@@ -1,4 +1,4 @@
-from utils.ConfigUL import Config
+from utils.ConfigULK import Config
 
 
 class KohonenParameters:
