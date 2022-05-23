@@ -17,3 +17,6 @@ Implementación de redes neuronales para perceptron simple y multicapa.
 
 ## EJ1: [Métodos de Optimización NO lineal](/EJ1)
 Implementación Ejercicio Obligatorio 1 - Métodos de Optimización NO lineal.
+
+## EJ2: [Componentes Principales](/EJ2)
+Implementación Ejercicio Obligatorio 2 - Componentes Principales.
