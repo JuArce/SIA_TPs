@@ -64,6 +64,8 @@ def main():
     parameters = HopfieldParameters(config)
     hopfield = Hopfield(parameters, np.array(patterns_values))
 
+    hopfield.predict(patterns_values[0])
+
 
 if __name__ == '__main__':
     main()
