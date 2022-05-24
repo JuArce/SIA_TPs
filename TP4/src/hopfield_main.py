@@ -5,8 +5,8 @@ import sys
 import numpy as np
 
 from algorithms.Hopfield import Hopfield
-from utils.ConfigULK import Config
-from utils.HopfieldParameters import HopfieldParameters
+from utils.Kohonen.ConfigULK import Config
+from utils.Hopfield.HopfieldParameters import HopfieldParameters
 
 
 def get_all_products(letter_combinations, letters_dict):

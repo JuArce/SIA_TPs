@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 
 from algorithms.Kohonen import Kohonen
-from utils.ConfigULK import Config
-from utils.KohonenParameters import KohonenParameters
+from utils.Kohonen.ConfigULK import Config
+from utils.Kohonen.KohonenParameters import KohonenParameters
 
 
 def main():
@@ -35,6 +35,7 @@ def main():
     parameters = KohonenParameters(config)
     kohonen = Kohonen(parameters, standardize_data)
     kohonen.train(standardize_data)
+    kohonen_results = kohonen.get_results(standardize_data, df.index)
 
 
 if __name__ == '__main__':

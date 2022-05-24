@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 
 from algorithms.Oja import Oja
-from utils.ConfigULO import Config
-from utils.OjaParameters import OjaParameters
+from utils.Oja.ConfigULO import Config
+from utils.Oja.OjaParameters import OjaParameters
 
 
 def main():

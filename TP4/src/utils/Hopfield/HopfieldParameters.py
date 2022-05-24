@@ -1,4 +1,4 @@
-from utils.ConfigULK import Config
+from utils.Kohonen.ConfigULK import Config
 
 
 class HopfieldParameters:

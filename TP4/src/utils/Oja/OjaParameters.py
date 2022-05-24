@@ -1,4 +1,4 @@
-from utils.ConfigULO import Config
+from utils.Oja.ConfigULO import Config
 
 
 class OjaParameters:

@@ -1,6 +1,6 @@
 import numpy as np
 
-from utils.HopfieldParameters import HopfieldParameters
+from utils.Hopfield.HopfieldParameters import HopfieldParameters
 
 
 class Hopfield:

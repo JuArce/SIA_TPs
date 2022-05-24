@@ -1,6 +1,6 @@
 import numpy as np
 
-from utils.OjaParameters import OjaParameters
+from utils.Oja.OjaParameters import OjaParameters
 
 
 class Oja:
