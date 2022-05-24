@@ -68,35 +68,35 @@ Unemployment  0.271656
 ------------------------------
 
 First component on each country
-                       0
-Austria        -1.081748
-Belgium        -0.681094
-Bulgaria        2.609879
-Croatia         1.270149
-Czech Republic -0.167209
-Denmark        -0.955191
-Estonia         2.487735
-Finland        -0.210563
-Germany        -0.592394
-Greece          1.000472
-Hungary         1.396898
-Iceland        -1.583720
-Ireland        -1.808918
-Italy          -0.853224
-Latvia          2.306059
-Lithuania       1.530100
-Luxembourg     -3.478435
-Netherlands    -1.840053
-Norway         -2.106511
-Poland          1.471774
-Portugal        0.526493
-Slovakia        0.782966
-Slovenia        0.067543
-Spain          -0.163767
-Sweden         -0.885105
-Switzerland    -3.281586
-Ukraine         4.580268
-United Kingdom -0.340819
+                Component 1
+Luxembourg        -3.478435
+Switzerland       -3.281586
+Norway            -2.106511
+Netherlands       -1.840053
+Ireland           -1.808918
+Iceland           -1.583720
+Austria           -1.081748
+Denmark           -0.955191
+Sweden            -0.885105
+Italy             -0.853224
+Belgium           -0.681094
+Germany           -0.592394
+United Kingdom    -0.340819
+Finland           -0.210563
+Czech Republic    -0.167209
+Spain             -0.163767
+Slovenia           0.067543
+Portugal           0.526493
+Slovakia           0.782966
+Greece             1.000472
+Croatia            1.270149
+Hungary            1.396898
+Poland             1.471774
+Lithuania          1.530100
+Latvia             2.306059
+Estonia            2.487735
+Bulgaria           2.609879
+Ukraine            4.580268
 ------------------------------
 
 Variance ratio

@@ -60,7 +60,8 @@ def __main__():
 
     # Primera componente de cada pais
     f.write("First component on each country\n")
-    f_c = pd.DataFrame(data=principal_components[:, 0], index=df.index.values)
+    f_c = pd.DataFrame(data=principal_components[:, 0], index=df.index.values, columns=['Component 1'])
+    f_c.sort_values(by='Component 1', axis=0, inplace=True)
     f.write(f_c.to_string())
     f.write("\n------------------------------\n\n")
 
