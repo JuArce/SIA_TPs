@@ -26,17 +26,6 @@ def main():
     df.set_index('Country', drop=True, inplace=True)
     data = df.values
 
-    # Standardize the data
-    # standardize_data = copy.deepcopy(data)
-    #
-    # for i in range(len(data[0])):
-    #     aux = standardize_data[:, i]
-    #     mean_aux = mean(aux)
-    #     stdev_aux = stdev(aux)
-    #     standardize_data[:, i] = (standardize_data[:, i] - mean_aux) / stdev_aux
-
-    # Calculo con librería
-
     standardize_data = StandardScaler().fit_transform(data)
 
     # Principal components
@@ -51,10 +40,14 @@ def main():
     f_c = pd.DataFrame(data=principal_components[:, 0], index=df.index.values, columns=['Component 1'])
     f_c.sort_values(by='Component 1', axis=0, inplace=True)
 
+    # -------------- OJA --------------
     # Con la implementación de oja
     parameters = OjaParameters(config)
     oja = Oja(parameters, len(standardize_data[0]))
     vector = oja.train(standardize_data)
+
+    # Primera componente con Oja
+    f_c_o = np.matmul(standardize_data, vector)
 
 
 if __name__ == '__main__':

@@ -23,11 +23,11 @@ class Kohonen:
     def train(self, data):
 
         # Itero todas las entradas 'epochs' veces
-        for epoch in range(self.epochs):
-            for j in range(len(data)):
-                idx = self.get_winner(data[j])
-                self.update_weights(idx, data[j])
-            self.learning_rate = 1 / (epoch + 1)
+        for i in range(self.epochs):
+            elem = data[random.randint(0, len(data))]
+            idx = self.get_winner(elem)
+            self.update_weights(idx, elem)
+            self.learning_rate = self.learning_rate / (i + 1)
 
     # Se inicializan los pesos y se les asigna aleatoriamente los pesos de alguna de las entradas
     # Devuelve un array de k*k*n siendo n la dimensión de las entradas y k la cantidad de neuronas de la capa de salida
@@ -80,7 +80,7 @@ class Kohonen:
         # Distancia promedio entre neuronas vecinas
         weight_mean = self.get_weight_mean_neighbors()
 
-        return KohonenResults(self.activation_map, elements_per_neuron,weight_mean)
+        return KohonenResults(self.activation_map, elements_per_neuron, weight_mean)
 
     # Retorna el promedio de la distancia entre neuronas vecinas
     def get_weight_mean_neighbors(self):
