@@ -8,8 +8,7 @@ class Oja:
     def __init__(self, parameters: OjaParameters, variables_len):
         self.epochs = parameters.epochs
         self.learning_rate = parameters.learning_rate
-        self.w = np.random.rand(variables_len)
-        self.w = self.w / np.linalg.norm(self.w)
+        self.w = np.random.rand(variables_len) * 2 - 1
 
     def train(self, data):
         for epoch in range(self.epochs):
