@@ -5,7 +5,7 @@ import sys
 import numpy as np
 
 from algorithms.Hopfield import Hopfield
-from utils.Kohonen.ConfigULK import Config
+from utils.Hopfield.ConfigULH import Config
 from utils.Hopfield.HopfieldParameters import HopfieldParameters
 
 
@@ -22,6 +22,15 @@ def get_all_products(letter_combinations, letters_dict):
     ordered_dict = dict(sorted(letters_dict_comb.items(), key=lambda item: item[1]))
 
     return ordered_dict
+
+
+def mutate_pattern(pattern, mutation_prob):
+    for i in range(len(pattern)):
+        r = np.random.random()
+        if r < mutation_prob:
+            pattern[i] = 1 if pattern[i] == -1 else -1
+
+    return pattern
 
 
 def main():
@@ -64,7 +73,11 @@ def main():
     parameters = HopfieldParameters(config)
     hopfield = Hopfield(parameters, np.array(patterns_values))
 
-    hopfield.predict(patterns_values[0])
+    results = hopfield.predict(patterns_values[0])
+    pattern1 = mutate_pattern(patterns_values[0], 0.2)
+    results1 = hopfield.predict(patterns_values[0])
+
+    print(results)
 
 
 if __name__ == '__main__':

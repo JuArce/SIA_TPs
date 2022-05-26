@@ -1,6 +1,7 @@
 import numpy as np
 
 from utils.Hopfield.HopfieldParameters import HopfieldParameters
+from utils.Hopfield.HopfieldResults import HopfieldResults
 
 
 class Hopfield:
@@ -15,12 +16,13 @@ class Hopfield:
         stable = False
         i = 0
         results = []
-
+        errors = []
         prev_state = np.sign(np.matmul(self.w, x))
         results.append(prev_state)
 
         while not stable and i < self.parameters.max_iterations:
             next_state = np.sign(np.matmul(self.w, prev_state))
+            errors.append(next_state - prev_state)
 
             if np.array_equal(next_state, prev_state):
                 stable = True
@@ -28,4 +30,4 @@ class Hopfield:
                 results.append(next_state)
                 prev_state = next_state
 
-        return results
+        return HopfieldResults(np.array(results), np.array(errors))
