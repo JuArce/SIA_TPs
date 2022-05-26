@@ -24,11 +24,11 @@ def get_all_products(letter_combinations, letters_dict):
     return ordered_dict
 
 
-def mutate_pattern(pattern, mutation_prob):
-    for i in range(len(pattern)):
-        r = np.random.random()
-        if r < mutation_prob:
-            pattern[i] = 1 if pattern[i] == -1 else -1
+def mutate_pattern(pattern, bytes_to_change):
+    indexs = np.random.choice(len(pattern), bytes_to_change, replace=False)
+
+    for i in indexs:
+        pattern[i] = 1 if pattern[i] == -1 else -1
 
     return pattern
 
@@ -74,7 +74,8 @@ def main():
     hopfield = Hopfield(parameters, np.array(patterns_values))
 
     results = hopfield.predict(patterns_values[0])
-    pattern1 = mutate_pattern(patterns_values[0], 0.2)
+    pattern1 = mutate_pattern(patterns_values[0], 2)
+
     results1 = hopfield.predict(patterns_values[0])
 
     print(results)
