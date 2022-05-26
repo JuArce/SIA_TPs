@@ -14,12 +14,12 @@ def get_all_products(letter_combinations, letters_dict):
     for i in range(len(letter_combinations)):
         key = ','.join(letter_combinations[i])
         aux = list(itertools.combinations(letter_combinations[i], 2))
-        prod = 0
+        prod = np.zeros(len(aux))
         for j in range(len(aux)):
-            prod += abs(np.dot(letters_dict[aux[j][0]], letters_dict[aux[j][1]]))
-        letters_dict_comb[key] = prod
+            prod[j] = abs(np.dot(letters_dict[aux[j][0]], letters_dict[aux[j][1]]))
+        letters_dict_comb[key] = (np.average(prod), np.max(prod))
 
-    ordered_dict = dict(sorted(letters_dict_comb.items(), key=lambda item: item[1]))
+    ordered_dict = dict(sorted(letters_dict_comb.items(), key=lambda item: (item[1][0], item[1][1])))
 
     return ordered_dict
 
