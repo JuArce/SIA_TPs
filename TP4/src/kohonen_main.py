@@ -1,9 +1,8 @@
-import copy
 import sys
-from statistics import mean, stdev
 
 import numpy as np
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
 
 from algorithms.Kohonen import Kohonen
 from utils.Kohonen.ConfigULK import Config
@@ -24,13 +23,7 @@ def main():
     data = df.values
 
     # Standardize the data
-    standardize_data = copy.deepcopy(data)
-
-    for i in range(len(data[0])):
-        aux = standardize_data[:, i]
-        mean_aux = mean(aux)
-        stdev_aux = stdev(aux)
-        standardize_data[:, i] = (standardize_data[:, i] - mean_aux) / stdev_aux
+    standardize_data = StandardScaler().fit_transform(data)
 
     parameters = KohonenParameters(config)
     kohonen = Kohonen(parameters, standardize_data)

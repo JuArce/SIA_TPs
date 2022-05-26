@@ -24,7 +24,7 @@ class Kohonen:
 
         # Itero todas las entradas 'epochs' veces
         for i in range(self.epochs):
-            elem = data[random.randint(0, len(data))]
+            elem = data[random.randint(0, len(data) - 1)]
             idx = self.get_winner(elem)
             self.update_weights(idx, elem)
             self.learning_rate = self.learning_rate / (i + 1)
