@@ -12,8 +12,10 @@ class Kohonen:
 
     def __init__(self, parameters: KohonenParameters, data):
         self.radius = parameters.initial_radius
+        self.initial_radius = parameters.initial_radius
         self.epochs = parameters.epochs
         self.output_layer_len = parameters.output_layer_len
+        self.initial_learning_rate = parameters.learning_rate
         self.learning_rate = parameters.learning_rate
         self.input_layer_len = len(data[0])
         # Se inicializan con los valores de las variables de los datos de entrada de forma random
@@ -24,12 +26,14 @@ class Kohonen:
 
         # Itero todas las entradas 'epochs' veces
         for i in range(self.epochs):
+            self.learning_rate = self.initial_learning_rate * math.exp(-i / self.epochs)
+            self.radius = self.initial_radius * math.exp(-i / self.epochs)
             elem = data[random.randint(0, len(data) - 1)]
             idx = self.get_winner(elem)
             self.update_weights(idx, elem)
-            self.learning_rate = self.learning_rate / (i + 1)
 
-    # Se inicializan los pesos y se les asigna aleatoriamente los pesos de alguna de las entradas
+            # Se inicializan los pesos y se les asigna aleatoriamente los pesos de alguna de las entradas
+
     # Devuelve un array de k*k*n siendo n la dimensión de las entradas y k la cantidad de neuronas de la capa de salida
 
     def initialize_weights(self, data):
