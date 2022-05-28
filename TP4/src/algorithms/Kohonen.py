@@ -84,7 +84,7 @@ class Kohonen:
         # Distancia promedio entre neuronas vecinas
         weight_mean = self.get_weight_mean_neighbors()
 
-        return KohonenResults(self.activation_map, elements_per_neuron, weight_mean)
+        return KohonenResults(self.activation_map, elements_per_neuron, weight_mean, self.output_layer_len)
 
     # Retorna el promedio de la distancia entre neuronas vecinas
     def get_weight_mean_neighbors(self):
