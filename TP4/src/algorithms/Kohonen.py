@@ -94,11 +94,11 @@ class Kohonen:
             for j in range(len(self.weights[0])):
                 # el radio 1.5 permite obtener a las 8 neuronas vecinas
                 neighbors = self.get_neighbors([i, j], len(self.weights), len(self.weights[0]), 1.5)
-                acum = 0
+                aux = []
                 for n in neighbors:
-                    acum += np.linalg.norm(np.subtract(self.weights[i][j], self.weights[n[0]][n[1]]))
-                acum /= len(neighbors) - 1
-                w_mean[i][j] = acum
+                    if i != n[0] or j != n[1]:
+                        aux.append(np.linalg.norm(np.subtract(self.weights[i][j], self.weights[n[0]][n[1]])))
+                w_mean[i][j] = np.average(aux)
 
         return w_mean
 

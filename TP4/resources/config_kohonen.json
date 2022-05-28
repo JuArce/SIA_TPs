@@ -1,6 +1,6 @@
 {
   "output_layer_qty": 3,
-  "initial_radius": 2,
-  "max_iterations": 10000,
+  "initial_radius": 4,
+  "max_iterations": 50000,
   "learning_rate": 0.001
 }
