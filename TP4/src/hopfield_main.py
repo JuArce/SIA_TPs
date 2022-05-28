@@ -93,6 +93,8 @@ def main():
 
     SeaGraph.graph_multi_heatmap(letters, title="Letters", cols=5, size=15)
 
+    SeaGraph.graph_plot(range(len(results1.energy)), results1.energy, 'iterations', 'Energy', 'Energy function')
+
 
 if __name__ == '__main__':
     main()

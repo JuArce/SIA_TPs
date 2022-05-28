@@ -25,7 +25,8 @@ def graph_multi_heatmap(data, title='', cols=3, size=8):
     for i in range(len(data)):
         row = math.floor(i / cols)
         col = i % cols
-        sns.heatmap(ax=axes[row, col] if rows > 1 else axes[col], data=data[i],  linewidths=.5, linecolor='black', cmap="Blues",
+        sns.heatmap(ax=axes[row, col] if rows > 1 else axes[col], data=data[i], linewidths=.5, linecolor='black',
+                    cmap="Blues",
                     yticklabels=False, xticklabels=False, cbar=False)
 
     plt.show()
@@ -35,5 +36,15 @@ def graph_barplot(x, y, title=''):
     plt.clf()
     plt.figure(figsize=(8, 8), layout='constrained', dpi=300)
     sns.barplot(x=x, y=y, color='b')
+    plt.title(title)
+    plt.show()
+
+
+def graph_plot(x=None, y=None, x_label='', y_label='', title=''):
+    plt.clf()
+    plt.figure(figsize=(8, 8), layout='constrained', dpi=300)
+    plt.plot(x, y)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
     plt.title(title)
     plt.show()
