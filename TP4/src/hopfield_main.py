@@ -1,6 +1,7 @@
 import itertools
 import string
 import sys
+from copy import deepcopy
 
 import numpy as np
 
@@ -27,11 +28,11 @@ def get_all_products(letter_combinations, letters_dict):
 
 def mutate_pattern(pattern, bytes_to_change):
     indexs = np.random.choice(len(pattern), bytes_to_change, replace=False)
-
+    p = deepcopy(pattern)
     for i in indexs:
-        pattern[i] = 1 if pattern[i] == -1 else -1
+        p[i] = 1 if p[i] == -1 else -1
 
-    return pattern
+    return p
 
 
 def main():
@@ -75,7 +76,7 @@ def main():
     hopfield = Hopfield(parameters, np.array(patterns_values))
 
     results = hopfield.predict(patterns_values[0])
-    noise = 8
+    noise = 6
     pattern1 = mutate_pattern(patterns_values[0], noise)
 
     results1 = hopfield.predict(pattern1)
@@ -85,6 +86,12 @@ def main():
         data.append(np.reshape(results1.states[i], (-1, 5)))
 
     SeaGraph.graph_multi_heatmap(data, title="Letter: " + str(patterns_letters[0]) + " | Noise: " + str(noise))
+
+    letters = []
+    for i in range(len(letters_array)):
+        letters.append(np.reshape(letters_dict[letters_array[i]], (-1, 5)))
+
+    SeaGraph.graph_multi_heatmap(letters, title="Letters", cols=5, size=15)
 
 
 if __name__ == '__main__':

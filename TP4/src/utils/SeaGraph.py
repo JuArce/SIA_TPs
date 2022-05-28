@@ -16,11 +16,10 @@ def graph_heatmap(data, annot=None, x_label='', y_label='', title='', c_map=None
     plt.show()
 
 
-def graph_multi_heatmap(data, title=''):
-    cols = 3
-    rows = math.ceil((len(data)) / 3)
+def graph_multi_heatmap(data, title='', cols=3, size=8):
+    rows = math.ceil((len(data)) / cols)
     plt.clf()
-    fig, axes = plt.subplots(rows, cols)
+    fig, axes = plt.subplots(rows, cols, figsize=(size, size))
     fig.suptitle(title)
     [axi.set_axis_off() for axi in axes.ravel()]
     for i in range(len(data)):
