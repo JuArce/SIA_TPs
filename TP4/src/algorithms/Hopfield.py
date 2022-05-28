@@ -19,11 +19,13 @@ class Hopfield:
         energy = []
         results.append(x)
         prev_state = np.sign(np.matmul(self.w, x))
+        prev_state = np.where(prev_state == 0, -1, prev_state)
         results.append(prev_state)
 
         while not stable and i < self.parameters.max_iterations:
             energy.append(self.calculate_energy(prev_state))
             next_state = np.sign(np.matmul(self.w, prev_state))
+            next_state = np.where(next_state == 0, -1, next_state)
 
             if np.array_equal(next_state, prev_state):
                 stable = True
