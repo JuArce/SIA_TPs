@@ -5,6 +5,7 @@ import sys
 import numpy as np
 
 from algorithms.Hopfield import Hopfield
+from utils import SeaGraph
 from utils.Hopfield.ConfigULH import Config
 from utils.Hopfield.HopfieldParameters import HopfieldParameters
 
@@ -74,11 +75,16 @@ def main():
     hopfield = Hopfield(parameters, np.array(patterns_values))
 
     results = hopfield.predict(patterns_values[0])
-    pattern1 = mutate_pattern(patterns_values[0], 2)
+    noise = 8
+    pattern1 = mutate_pattern(patterns_values[0], noise)
 
-    results1 = hopfield.predict(patterns_values[0])
+    results1 = hopfield.predict(pattern1)
 
-    print(results)
+    data = []
+    for i in range(len(results1.states)):
+        data.append(np.reshape(results1.states[i], (-1, 5)))
+
+    SeaGraph.graph_multi_heatmap(data, title="Letter: " + str(patterns_letters[0]) + " | Noise: " + str(noise))
 
 
 if __name__ == '__main__':

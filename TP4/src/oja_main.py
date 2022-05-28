@@ -2,16 +2,19 @@ import sys
 
 import numpy as np
 import pandas as pd
+import seaborn as sns
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 from algorithms.Oja import Oja
+from utils import SeaGraph
 from utils.Oja.ConfigULO import Config
 from utils.Oja.OjaParameters import OjaParameters
 
 variables = ['Area', 'GDP', 'Inflation', 'L.expect', 'Military', 'P.growth', 'Unemployment']
 components = ['Component 1', 'Component 2', 'Component 3', 'Component 4', 'Component 5', 'Component 6', 'Component 7']
 eigenvectors_c = ['1', '2', '3', '4', '5', '6', '7']
+sns.set_color_codes("pastel")
 
 
 def main():
@@ -67,6 +70,12 @@ def main():
     f.write(aux.to_string())
 
     f.close()
+
+    f_c_o_data_frame = pd.DataFrame(data=f_c_o, index=df.index.values, columns=['Component 1'])
+    f_c_o_data_frame.sort_values(by='Component 1', axis=0, inplace=True)
+    SeaGraph.graph_barplot(f_c_o_data_frame.values[:, 0], f_c_o_data_frame.index.values, title="First PC per Country")
+
+    SeaGraph.graph_barplot(results.w[-1], df.columns.values, title="Variables Loads")
 
 
 if __name__ == '__main__':
