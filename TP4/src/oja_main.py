@@ -67,6 +67,7 @@ def main():
     f.write('First Component\n')
     aux = pd.DataFrame(data=np.transpose(aux), index=df.index.values,
                        columns=['Library', 'Oja', 'Error'])
+    aux.sort_values(by='Library', axis=0, inplace=True)
     f.write(aux.to_string())
 
     f.close()
