@@ -32,6 +32,7 @@ class Hopfield:
             else:
                 results.append(next_state)
                 prev_state = next_state
+            i += 1
 
         return HopfieldResults(np.array(results), np.array(energy))
 
