@@ -35,8 +35,12 @@ def main():
     kohonen.train(standardize_data)
     kohonen_results = kohonen.get_results(standardize_data, df.index)
 
-    SeaGraph.graph_heatmap(kohonen_results.elements_per_neuron, annot=kohonen_results.labels, x_label="", y_label="", c_map="GnBu")
-    SeaGraph.graph_heatmap(kohonen_results.weight_mean, annot=np.round(kohonen_results.weight_mean, decimals=4), x_label="", y_label="", c_map="Greys")
+    SeaGraph.graph_heatmap(kohonen_results.elements_per_neuron, annot=kohonen_results.labels,
+                           title="Associated Countries per Neuron\neta = " + str(config.learning_rate) + " | initial_r = " + str(config.initial_radius),
+                           c_map="GnBu")
+    SeaGraph.graph_heatmap(kohonen_results.weight_mean, annot=np.round(kohonen_results.weight_mean, decimals=4),
+                           title="Mean Distance Between Neighbour Neurons",
+                           c_map="Greys")
 
 
 if __name__ == '__main__':
