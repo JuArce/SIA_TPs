@@ -44,6 +44,7 @@ def graph_plot(x=None, y=None, x_label='', y_label='', title=''):
     plt.clf()
     plt.figure(figsize=(8, 8), layout='constrained', dpi=300)
     plt.plot(x, y)
+    plt.scatter(x, y, s=50)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
     plt.title(title)

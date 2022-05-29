@@ -76,24 +76,25 @@ def main():
     hopfield = Hopfield(parameters, np.array(patterns_values))
 
     results = hopfield.predict(patterns_values[0])
-    noise = 6
-    pattern1 = mutate_pattern(patterns_values[0], noise)
 
-    results1 = hopfield.predict(pattern1)
+    noise = 10
+    for i in range(len(patterns_values)):
+        pattern1 = mutate_pattern(patterns_values[i], noise)
 
-    data = []
-    for i in range(len(results1.states)):
-        data.append(np.reshape(results1.states[i], (-1, 5)))
+        results1 = hopfield.predict(pattern1)
 
-    SeaGraph.graph_multi_heatmap(data, title="Letter: " + str(patterns_letters[0]) + " | Noise: " + str(noise))
+        data = []
+        for j in range(len(results1.states)):
+            data.append(np.reshape(results1.states[j], (-1, 5)))
+
+        SeaGraph.graph_multi_heatmap(data, title="Letter: " + str(patterns_letters[i]) + " | Noise: " + str(noise))
+        SeaGraph.graph_plot(range(1, len(results1.energy) + 1), results1.energy, 'iterations', 'Energy', 'Energy function')
 
     letters = []
     for i in range(len(letters_array)):
         letters.append(np.reshape(letters_dict[letters_array[i]], (-1, 5)))
 
     SeaGraph.graph_multi_heatmap(letters, title="Letters", cols=5, size=15)
-
-    SeaGraph.graph_plot(range(1, len(results1.energy) + 1), results1.energy, 'iterations', 'Energy', 'Energy function')
 
 
 if __name__ == '__main__':
