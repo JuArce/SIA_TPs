@@ -49,3 +49,15 @@ def graph_plot(x=None, y=None, x_label='', y_label='', title=''):
     plt.ylabel(y_label)
     plt.title(title)
     plt.show()
+
+
+def graph_boxplot(data, labels, x_label='', y_label='', title=''):
+    plt.clf()
+    plt.figure(figsize=(8, 8), layout='constrained', dpi=300)
+    ax = sns.boxplot(data=data)
+    ax.set_xticklabels(labels)
+    plt.xticks(rotation=45)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(title)
+    plt.show()

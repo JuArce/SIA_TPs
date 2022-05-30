@@ -30,6 +30,9 @@ def main():
     # Standardize the data
     standardize_data = StandardScaler().fit_transform(data)
 
+    SeaGraph.graph_boxplot(data, df.columns.values, title="Non Standardized Data")
+    SeaGraph.graph_boxplot(standardize_data, df.columns.values, title="Standardized Data")
+
     parameters = KohonenParameters(config)
     kohonen = Kohonen(parameters, standardize_data)
     kohonen.train(standardize_data)
