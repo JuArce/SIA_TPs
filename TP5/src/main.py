@@ -23,7 +23,6 @@ def __main__():
         letters_patterns.append(aux)
 
     letters_dict = dict(zip(letters, letters_patterns))
-    print(letters_dict)
 
     autoencoder = Autoencoder(config, len(data[0]), config.layers, config.latent_code_len)
     autoencoder.train(data, data)

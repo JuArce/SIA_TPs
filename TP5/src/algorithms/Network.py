@@ -49,13 +49,14 @@ class Network:
     def _build_weights(self, layers):
         weights = np.empty(len(layers) - 1, dtype=object)
         for i in range(len(weights)):
-            weights[i] = np.empty(layers[i + 1], dtype=object)
-            for j in range(layers[i + 1]):
-                weights[i][j] = np.random.uniform(-1, 1, size=layers[i])
+            weights[i] = np.random.uniform(-1, 1, size=(layers[i + 1], layers[i]))
+
         return weights
 
-    def calculate_error(self, weights, x_data, y_expected):
+    def calculate_error(self, x, x_data, y_expected):
+
         errors = []
+        weights = self.weights_resize(x)
         for i in range(len(x_data)):
             expected = y_expected[i]
             output = self._get_output(x_data[i], weights)
@@ -63,6 +64,19 @@ class Network:
 
         errors = np.array(errors)
         return mean((1 / len(x_data)) * sum(errors))
+
+    def weights_resize(self, weights_array):
+
+        weights = np.empty(len(self.layers) - 1, dtype=object)
+        k = 0
+        for i in range(len(weights)):
+            weights[i] = np.empty((self.layers[i + 1], self.layers[i]))
+            for j in range(len(weights[i])):
+                size = len(weights[i][j])
+                weights[i][j] = weights_array[k:k + len(weights[i][j])]
+                k += size
+
+        return weights
 
     def _get_output(self, input_x, weights):
         x = deepcopy(input_x)
@@ -80,6 +94,9 @@ class Network:
             return self.act_function(h, self.betha)
         else:
             return self.act_function(h)
+
+    def assign_weights(self, weights):
+        self.weights = self.weights_resize(weights)
 
 
 #

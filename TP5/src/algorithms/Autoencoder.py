@@ -10,13 +10,22 @@ class Autoencoder:
         self.layers = self._build_hidden_layers(input_len, hidden_layers, latent_code_len)
         self.network = Network(config, self.layers)
 
+    def array_resize(self, weights):
+        x = np.array([])
+        for w in weights:
+            x = np.concatenate((x, w.flatten()), axis=0)
+        return x
+
     def train(self, data_x, data_y):
-        aux = minimize(self.network.calculate_error, np.concatanate(self.network.weights),
-                       args=(self.network.weights, data_x, data_y), method='Powell', bounds=None,
-                       tol=None, callback=None,
-                       options={'func': None, 'xtol': 0.0001, 'ftol': 0.0001, 'maxiter': None, 'maxfev': None,
-                                'disp': False, 'direc': None, 'return_all': False})
-        return None
+        x = self.array_resize(self.network.weights)
+        result = minimize(self.network.calculate_error, x, method='Powell',
+                          args=(data_x, data_y),
+                          jac=None, bounds=None,
+                          tol=None,
+                          callback=None,
+                          options={'disp': True, 'maxiter': 15000})
+        self.network.assign_weights(result.x)
+
 
     def encode(self):
         return None
