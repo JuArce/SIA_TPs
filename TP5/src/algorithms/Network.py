@@ -37,12 +37,9 @@ class Network:
             self.act_function_derivative = Network.LINEAR_FUNCTIONS[config.function]['fp']
         else:
             raise 'Invalid algorithm for multiperceptron'
-        self.eta = config.eta
-        self.cota = config.cota
         self.betha = config.betha
         self.algorithm = config.algorithm
         self.function = config.function
-        self.max_error = config.max_error
         self.layers = layers
         self.w_by_layer = None
 
@@ -66,17 +63,14 @@ class Network:
         return mean((1 / len(x_data)) * sum(errors))
 
     def weights_resize(self, weights_array):
-
-        weights = np.empty(len(self.layers) - 1, dtype=object)
         k = 0
-        for i in range(len(weights)):
-            weights[i] = np.empty((self.layers[i + 1], self.layers[i]))
-            for j in range(len(weights[i])):
-                size = len(weights[i][j])
-                weights[i][j] = weights_array[k:k + len(weights[i][j])]
+        for i in range(len(self.weights)):
+            for j in range(len(self.weights[i])):
+                size = len(self.weights[i][j])
+                self.weights[i][j] = weights_array[k:k + len(self.weights[i][j])]
                 k += size
 
-        return weights
+        return self.weights
 
     def get_output(self, input_x, weights):
         x = deepcopy(input_x)

@@ -31,7 +31,6 @@ def __main__():
     c = autoencoder.get_output(data[0])
 
 
-
 def to_bin_array(encoded_caracter):
     bin_array = np.zeros((7, 5), dtype=int)
     for row in range(0, 7):

@@ -1,14 +1,15 @@
 {
   "algorithm": "no_linear_perceptron",
-  "cota": "50000",
-  "eta": "0.00005",
+  "learning_rate": "0.00045",
   "betha": "1",
   "function": "tanh",
   "layers": [
-    2,
-    1
+    25,
+    15,
+    10
   ],
+  "max_iter": "50000",
   "latent_code_len": 2,
-  "max_error": "0.001",
+  "min_error": "0.001",
   "k": "10"
 }

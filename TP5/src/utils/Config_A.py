@@ -8,13 +8,13 @@ class Config_A:
     def __init__(self, string):
         config = json.loads(string)
         self.algorithm = config.get('algorithm')
-        self.cota = int(config.get('cota'))
+        self.max_iter = int(config.get('max_iter'))
         self.latent_code_len = int(config.get('latent_code_len'))
-        self.eta = float(config.get('eta'))
+        self.learning_rate = float(config.get('learning_rate'))
         self.betha = float(config.get('betha'))
         self.function = config.get('function')
         self.layers = config.get('layers')
-        self.max_error = float(config.get('max_error'))
+        self.min_error = float(config.get('min_error'))
         self.k = int(config.get('k'))
 
     def __str__(self):
