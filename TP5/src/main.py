@@ -26,6 +26,10 @@ def __main__():
 
     autoencoder = Autoencoder(config, len(data[0]), config.layers, config.latent_code_len)
     autoencoder.train(data, data)
+    a = autoencoder.encode(data[0])
+    b = autoencoder.decode(a)
+    c = autoencoder.get_output(data[0])
+
 
 
 def to_bin_array(encoded_caracter):

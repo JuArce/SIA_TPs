@@ -26,12 +26,11 @@ class Autoencoder:
                           options={'disp': True, 'maxiter': 15000})
         self.network.assign_weights(result.x)
 
+    def encode(self, input_x):
+        return self.network.get_output(input_x, self.network.weights[0:int(len(self.network.weights) / 2)])
 
-    def encode(self):
-        return None
-
-    def decode(self):
-        return None
+    def decode(self, input_x_latent_code):
+        return self.network.get_output(input_x_latent_code, self.network.weights[int(len(self.network.weights) / 2):])
 
     def _build_hidden_layers(self, input_len, hidden_layers, latent_code_len):
         layers = [input_len]
@@ -40,3 +39,6 @@ class Autoencoder:
         layers.extend(list(reversed(hidden_layers)))
         layers.append(input_len)
         return layers
+
+    def get_output(self, input_x):
+        return self.network.get_output(input_x, self.network.weights)
