@@ -6,6 +6,7 @@ from algorithms.Autoencoder import Autoencoder
 from algorithms.fonts import font_2
 from utils.Config_A import Config_A
 from utils.utils import to_bin_array, resize_letter
+from utils import SeaGraphV2
 
 
 def __main__():
@@ -30,6 +31,19 @@ def __main__():
     a = autoencoder.encode(data[0])
     b = autoencoder.decode(a)
     c = autoencoder.get_output(data[0])
+
+    x = []
+    y = []
+    for key, value in letters_dict.items():
+        res = autoencoder.encode(np.concatenate(value))
+        x.append(res[0])
+        y.append(res[1])
+    SeaGraphV2.graph_points(x, y, list(letters_dict.keys()), title="Capa Latente")
+
+    res = autoencoder.get_output(np.concatenate(letters_dict['A']))
+    res = np.array(res)
+    res = np.array(list(map(resize_letter, [res])))
+    SeaGraphV2.graph_multi_heatmap([letters_dict['A'], res[0]], title='Letter: A', c_map="Greys", cols=2)
 
 
 if __name__ == "__main__":

@@ -16,7 +16,7 @@ def graph_heatmap(data, annot=None, x_label='', y_label='', title='', c_map=None
     plt.show()
 
 
-def graph_multi_heatmap(data, title='', cols=3, size=8):
+def graph_multi_heatmap(data, title='', cols=3, size=8, c_map="Blues"):
     rows = math.ceil((len(data)) / cols)
     plt.clf()
     fig, axes = plt.subplots(rows, cols, figsize=(size, 3 * rows))
@@ -26,7 +26,7 @@ def graph_multi_heatmap(data, title='', cols=3, size=8):
         row = math.floor(i / cols)
         col = i % cols
         sns.heatmap(ax=axes[row, col] if rows > 1 else axes[col], data=data[i], linewidths=.5, linecolor='black',
-                    cmap="Blues",
+                    cmap=c_map,
                     yticklabels=False, xticklabels=False, cbar=False)
 
     plt.show()
@@ -63,10 +63,12 @@ def graph_boxplot(data, labels, x_label='', y_label='', title=''):
     plt.show()
 
 
-def graph_points(x, y, labels):
+def graph_points(x, y, labels, title = ''):
     plt.clf()
-    plt.plot(x, y, color='blue', marker='o', linestyle='none', markersize=2)
+    plt.plot(x, y, color='blue', marker='o', linestyle='none', markersize=4)
     for i in range(len(labels)):
-        plt.text(y[i], y[i] + 0.01, labels[i], color='teal', ha='center',
-                 va='center', fontsize=6)
+        plt.text(x[i], y[i] + 0.04, labels[i], color='teal', ha='center',
+                 va='center', fontsize=10)
+    plt.title(title)
+
     plt.show()

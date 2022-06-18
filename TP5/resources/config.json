@@ -4,7 +4,9 @@
   "betha": "1",
   "function": "tanh",
   "layers": [
-    25
+    25,
+    15,
+    10
   ],
   "max_iter": "10",
   "latent_code_len": 2,
