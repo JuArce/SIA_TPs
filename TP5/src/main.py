@@ -40,10 +40,17 @@ def __main__():
         y.append(res[1])
     SeaGraphV2.graph_points(x, y, list(letters_dict.keys()), title="Capa Latente")
 
-    res = autoencoder.get_output(np.concatenate(letters_dict['A']))
-    res = np.array(res)
-    res = np.array(list(map(resize_letter, [res])))
-    SeaGraphV2.graph_multi_heatmap([letters_dict['A'], res[0]], title='Letter: A', c_map="Greys", cols=2)
+    graphs = []
+    for i, l in enumerate(letters):
+        graphs.append(letters_dict[l])  # letra original
+        res = autoencoder.get_output(np.concatenate(letters_dict['A']))
+        res = np.array(res)
+        res = np.array(list(map(resize_letter, [res])))
+        graphs.append(res[0])
+        if (i + 1) % 8 == 0:
+            SeaGraphV2.graph_multi_heatmap(graphs, title='Letters', c_map="Greys", cols=4)
+            graphs = []
+
 
 
 if __name__ == "__main__":
