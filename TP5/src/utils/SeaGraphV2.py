@@ -19,6 +19,7 @@ def graph_heatmap(data, annot=None, x_label='', y_label='', title='', c_map=None
 def graph_multi_heatmap(data, title='', cols=3, size=8, c_map="Blues"):
     rows = math.ceil((len(data)) / cols)
     plt.clf()
+    plt.figure(layout='constrained')
     fig, axes = plt.subplots(rows, cols, figsize=(size, 3 * rows))
     fig.suptitle(title)
     [axi.set_axis_off() for axi in axes.ravel()]
