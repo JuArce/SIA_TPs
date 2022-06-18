@@ -4,12 +4,10 @@
   "betha": "1",
   "function": "tanh",
   "layers": [
-    25,
-    15,
-    10
+    25
   ],
-  "max_iter": "50000",
+  "max_iter": "10",
   "latent_code_len": 2,
-  "min_error": "0.001",
+  "min_error": "0.01",
   "k": "10"
 }

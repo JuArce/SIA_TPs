@@ -7,7 +7,6 @@ from algorithms.Network import Network
 
 
 class Autoencoder:
-    step = 0
 
     def __init__(self, config, input_len, hidden_layers, latent_code_len):
         self.layers = self._build_hidden_layers(input_len, hidden_layers, latent_code_len)
@@ -17,6 +16,7 @@ class Autoencoder:
         self.learning_rate = config.learning_rate
         self.max_iter = config.max_iter
         self.iteration = 0
+        self.config = config
 
     def train(self, data_x, data_y):
         x = self.array_resize(self.network.weights)
@@ -25,7 +25,7 @@ class Autoencoder:
                           jac=None, bounds=None,
                           tol=None,
                           callback=self.print_step,
-                          options={'disp': True, 'maxiter': 10000})
+                          options={'disp': True, 'xtol': self.config.min_error, 'maxiter': self.config.max_iter})
         self.network.assign_weights(result.x)
 
     def encode(self, input_x):
