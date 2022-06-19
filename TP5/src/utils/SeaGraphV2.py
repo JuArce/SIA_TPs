@@ -68,7 +68,7 @@ def graph_points(x, y, labels, title = ''):
     plt.clf()
     plt.plot(x, y, color='blue', marker='o', linestyle='none', markersize=4)
     for i in range(len(labels)):
-        plt.text(x[i], y[i] + 0.04, labels[i], color='teal', ha='center',
+        plt.text(x[i], y[i] + 0.04, labels[i], color='black', ha='center',
                  va='center', fontsize=10)
     plt.title(title)
 
