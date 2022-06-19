@@ -31,8 +31,14 @@ def __main__():
     autoencoder = Autoencoder(config, len(data[0]), config.layers, config.latent_code_len)
 
     # mutate all patterns and train
-    letters_patterns_mutated_to_train = mutate_pattern(data, 10)
-    autoencoder.train(letters_patterns_mutated_to_train, data)
+    # letters_patterns_mutated_to_train = mutate_pattern(data, 10)
+    # autoencoder.train(letters_patterns_mutated_to_train, data)
+    letters_patterns_mutated_to_train = []
+    data_to_train = []
+    for i in range(0, 10):
+        letters_patterns_mutated_to_train.extend(mutate_pattern(data, 10))
+        data_to_train.extend(data)
+    autoencoder.train(letters_patterns_mutated_to_train, data_to_train)
 
     o = []
     for i in range(len(data)):
@@ -74,6 +80,17 @@ def __main__():
         if (i + 1) % 5 == 0:
             SeaGraphV2.graph_multi_heatmap(graphs, title='Letters', c_map="Greys", cols=6)
             graphs = []
+
+    # Grafico de diferentes valores de ruido para la misma letra
+    graphs = [letters_dict['A']]
+    for noise in range(0, 16, 5):
+        letters_patterns_mutated = mutate_pattern(data, noise)
+        o_new_set = []
+        for i in range(len(data)):
+            o_new_set.append(autoencoder.get_output(letters_patterns_mutated[i]))
+        o_new_set = numpy.array(o_new_set)
+        graphs.extend(np.array(list(map(resize_letter, [o_new_set[0]]))))
+    SeaGraphV2.graph_multi_heatmap(graphs, title='Letter A | Noise level {0, 5, 10, 15}', c_map="Greys", cols=6)
 
 
 if __name__ == "__main__":
