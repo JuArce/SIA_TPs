@@ -5,7 +5,7 @@ import numpy as np
 from numpy import mean, sum as npsum
 
 from algorithms.Autoencoder import Autoencoder
-from algorithms.fonts import font_2
+from utils.fonts import font_2
 from utils import SeaGraphV2
 from utils.Config_A import Config_A
 from utils.utils import mutate_pattern, to_bin_array, resize_letter

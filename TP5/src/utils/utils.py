@@ -24,3 +24,7 @@ def mutate_pattern(patterns, bytes_to_change):
 
 def resize_letter(x):
     return np.array(np.split(x, 7))
+
+
+def midpoint(p1_x, p1_y, p2_x, p2_y):
+    return np.array([(p1_x + p2_x) / 2, (p1_y + p2_y) / 2])

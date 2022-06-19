@@ -5,8 +5,10 @@
   "function": "tanh",
   "layers": [
     25,
+    20,
     15,
-    10
+    10,
+    5
   ],
   "max_iter": "10",
   "latent_code_len": 2,
