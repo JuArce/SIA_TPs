@@ -43,7 +43,7 @@ def __main__():
     graphs = []
     for i, l in enumerate(letters):
         graphs.append(letters_dict[l])  # letra original
-        res = autoencoder.get_output(np.concatenate(letters_dict['A']))
+        res = autoencoder.get_output(np.concatenate(letters_dict[l]))
         res = np.array(res)
         res = np.array(list(map(resize_letter, [res])))
         graphs.append(res[0])
