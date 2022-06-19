@@ -8,6 +8,8 @@ numpy = "*"
 scipy = "*"
 keras = "*"
 tensorflow = "*"
+matplotlib = "*"
+seaborn = "*"
 
 [dev-packages]
 

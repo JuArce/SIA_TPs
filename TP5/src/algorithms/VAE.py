@@ -14,7 +14,7 @@ def flatten_set(training_set):
 
 
 class VAE:
-    def _init_(self, latent_neurons, dim, intermediate_layers):
+    def __init__(self, latent_neurons, dim, intermediate_layers):
         self.latent_neurons = latent_neurons
         self.dim = dim
         self.intermediate_layers = intermediate_layers
@@ -41,8 +41,8 @@ class VAE:
         self.model.compile(loss=self.vae_loss)
 
     def set_encoder(self, x):
-        # intermediate layers
-        if (len(self.intermediate_layers) != 0):
+
+        if len(self.intermediate_layers) != 0:
             aux_h = x
             for (i, neurons) in enumerate(self.intermediate_layers[:-1]):
                 h = Dense(neurons, name="encoding_{0}".format(i))(aux_h)
@@ -65,7 +65,7 @@ class VAE:
         # intermediate layers
         reversed_layers = self.intermediate_layers.copy()
         reversed_layers.reverse()
-        if (len(self.intermediate_layers) != 0):
+        if len(self.intermediate_layers) != 0:
             aux_h = input_decoder
             for (i, neurons) in enumerate(reversed_layers[:-1]):
                 h = Dense(neurons, name="encoding_{0}".format(i))(aux_h)
