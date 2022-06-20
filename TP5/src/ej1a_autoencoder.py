@@ -1,6 +1,8 @@
 import sys
 
+import numpy
 import numpy as np
+from numpy import mean, sum as npsum
 
 from algorithms.Autoencoder import Autoencoder
 from utils import SeaGraphV2
@@ -72,6 +74,13 @@ def __main__():
 
     autoencoder = Autoencoder(config, len(data[0]), config.layers, config.latent_code_len)
     autoencoder.train(data, data)
+
+    o_trained = []
+    for i in range(len(data)):
+        o_trained.append(autoencoder.get_output(data[i]))
+    o_trained = numpy.array(o_trained)
+    error_trained = mean((npsum((data - o_trained) ** 2, axis=1) / 2))
+    print("Train error: " + str(error_trained))
 
     x = []
     y = []
