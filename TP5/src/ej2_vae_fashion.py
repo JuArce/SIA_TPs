@@ -55,8 +55,9 @@ def __main__():
     digit_size_x = data_size
     figure = np.zeros((digit_size_y * n, digit_size_x * n))
     # We will sample n points within [-15, 15] standard deviations
-    grid_x = np.linspace(-10, 10, n)
-    grid_y = np.linspace(-10, 10, n)
+    std = 2
+    grid_x = np.linspace(-std, std, n)
+    grid_y = np.linspace(-std, std, n)
 
     for i, yi in enumerate(grid_x):
         for j, xi in enumerate(grid_y):

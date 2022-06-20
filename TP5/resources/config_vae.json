@@ -2,9 +2,6 @@
   "epochs": 10,
   "latent_code_len": 2,
   "neurons_per_layer": [
-    256,
-    128,
-    64,
-    32
+    256
   ]
 }
