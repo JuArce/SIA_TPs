@@ -10,21 +10,6 @@ from utils.Config_A_VAE import Config_A_VAE
 
 
 def __main__():
-    print(f"TensorFlow version: {tf.__version__}")
-    # Check GPU availibility-
-    gpu_devices = tf.config.list_physical_devices('GPU')
-
-    if gpu_devices:
-        # Get number of available GPUs-
-        num_gpus = len(tf.config.list_physical_devices('GPU'))
-        print(f"number of GPUs available = {num_gpus}")
-
-        print(f"GPU: {gpu_devices}")
-        details = tf.config.experimental.get_device_details(gpu_devices[0])
-        print(f"GPU details: {details.get('device_name', 'Unknown GPU')}")
-    else:
-        print("No GPU found")
-
     print('Argument List:', str(sys.argv))
     assert len(sys.argv) == 2, 'Missing arguments'
     f = open(sys.argv[1])
