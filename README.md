@@ -19,7 +19,7 @@ Implementación de redes neuronales para perceptron simple y multicapa.
 Implementación de métodos de aprendizaje NO supervisado. 
 
 ## TP5: [Deep Learning](/TP5)
-Implementación de autoencoder básico.
+Implementación de Autoencoder, Denoising Autoencoder y Variational Autoencoder. 
 
 ## EJ1: [Métodos de Optimización NO lineal](/EJ1)
 Implementación Ejercicio Obligatorio 1 - Métodos de Optimización NO lineal.
