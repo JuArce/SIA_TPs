@@ -1,6 +1,7 @@
 import sys
 
 import numpy as np
+from keras.datasets import mnist
 from matplotlib import pyplot as plt
 
 from algorithms.VAE import VAE, flatten_set
@@ -16,29 +17,27 @@ def __main__():
     config: Config_A_VAE = Config_A_VAE(f.read())
     f.close()
 
-    data = []
-    letters_patterns = []
-    for letter in font_2:
-        aux = to_bin_array(letter)
-        data.append(np.concatenate(aux))
-        letters_patterns.append(aux)
+    (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-    flattened_set = flatten_set(data).astype('float32')
+    x_train = x_train.astype('float32') / 255.
+    x_test = x_test.astype('float32') / 255.
+    x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[1:])))
+    x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:])))
 
-    vae = VAE(config.latent_code_len, len(flattened_set[0]), config.neurons_per_layer)
-    vae.train(flattened_set, config.epochs, len(flattened_set))
-    train_encoded = vae.encoder.predict(flattened_set, batch_size=len(flattened_set[0]))
-
+    vae = VAE(config.latent_code_len, len(x_train[0]), config.neurons_per_layer)
+    vae.train(x_train, config.epochs, len(x_train))
+    train_encoded = vae.encoder.predict(x_test, batch_size=len(x_test[0]))
     train_encoded = train_encoded[0]
+
     plt.figure(figsize=(6, 6))
-    plt.scatter(train_encoded[:, 0], train_encoded[:, 1], cmap='viridis')
+    plt.scatter(train_encoded[:, 0], train_encoded[:, 1], c=y_test, cmap='viridis')
     plt.colorbar()
     plt.show()
 
     # Display a 2D manifold of the digits
-    n = 20
-    digit_size_y = 7
-    digit_size_x = 5
+    n = 15
+    digit_size_y = 28
+    digit_size_x = 28
     figure = np.zeros((digit_size_y * n, digit_size_x * n))
     # We will sample n points within [-15, 15] standard deviations
     grid_x = np.linspace(-1, 1, n)
@@ -55,9 +54,8 @@ def __main__():
             j * digit_size_x: (j + 1) * digit_size_x] = digit
 
     plt.figure(figsize=(10, 10))
-    plt.imshow(figure, cmap="Greys")
+    plt.imshow(figure, cmap="Greys_r")
     plt.show()
-    # SeaGraphV2.graph_multi_heatmap(graphs, c_map="Greys", cols=n)
 
 
 if __name__ == "__main__":
