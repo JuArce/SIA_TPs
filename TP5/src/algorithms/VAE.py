@@ -41,14 +41,14 @@ class VAE:
         self.model.compile(loss=self.vae_loss)
 
     def set_encoder(self, x):
-
+        h = None
         if len(self.intermediate_layers) != 0:
             aux_h = x
-            for (i, neurons) in enumerate(self.intermediate_layers[:-1]):
+            for (i, neurons) in enumerate(self.intermediate_layers[:-1]):  # Todas las capas intermedia menos la última
                 h = Dense(neurons, name="encoding_{0}".format(i))(aux_h)
                 aux_h = h
             h = Dense(self.intermediate_layers[-1], activation="relu",
-                      name="encoding_{0}".format(len(self.intermediate_layers) - 1))(aux_h)
+                      name="encoding_{0}".format(len(self.intermediate_layers) - 1))(aux_h)  # Ultima capa intermedia
         # defining the mean of the latent space
         self.z_mean = Dense(self.latent_neurons, name="mean")(h)
         # defining the log variance of the latent space
@@ -78,6 +78,9 @@ class VAE:
         decoder = Model(input_decoder, x_decoded, name="decoder")
         return decoder
 
+    # Toma la salida de la media y la varianza que estima el Encoder y
+    # la usa para generar una muestra que va a servir para estimar
+    # la pdf de datos
     def get_samples(self, args: tuple):
         # we grab the variables from the tuple
         z_mean, z_log_var = args
