@@ -2,7 +2,7 @@ import sys
 
 import numpy as np
 import tensorflow as tf
-from keras.datasets import mnist
+from keras.datasets import fashion_mnist
 from matplotlib import pyplot as plt
 
 from algorithms.VAE import VAE
@@ -31,7 +31,7 @@ def __main__():
     config: Config_A_VAE = Config_A_VAE(f.read())
     f.close()
 
-    (x_train, y_train), (x_test, y_test) = mnist.load_data()
+    (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
     data_size = 28
 
     x_train = x_train.astype('float32') / 255.
@@ -55,8 +55,8 @@ def __main__():
     digit_size_x = data_size
     figure = np.zeros((digit_size_y * n, digit_size_x * n))
     # We will sample n points within [-15, 15] standard deviations
-    grid_x = np.linspace(-15, 15, n)
-    grid_y = np.linspace(-15, 15, n)
+    grid_x = np.linspace(-10, 10, n)
+    grid_y = np.linspace(-10, 10, n)
 
     for i, yi in enumerate(grid_x):
         for j, xi in enumerate(grid_y):
