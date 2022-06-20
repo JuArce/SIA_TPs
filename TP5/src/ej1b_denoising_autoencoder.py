@@ -42,15 +42,17 @@ def __main__():
 
     o = []
     for i in range(len(data)):
-        o.append(autoencoder.get_output(letters_patterns_mutated_to_train[i]))
+        o.append(autoencoder.get_output(data[i]))
     o = numpy.array(o)
     error = mean((npsum((data - o) ** 2, axis=1) / 2))
+    print("Train error with original patterns: " + str(error))
 
     o_trained = []
     for i in range(len(data)):
         o_trained.append(autoencoder.get_output(letters_patterns_mutated_to_train[i]))
     o_trained = numpy.array(o_trained)
-    error_trained = mean((npsum((data - o_trained) ** 2, axis=1) / 2))
+    error = mean((npsum((data - o_trained) ** 2, axis=1) / 2))
+    print("Train error with mutated trained patterns: " + str(error))
 
     # generate a new set
     letters_patterns_mutated = mutate_pattern(data, 10)
@@ -60,6 +62,7 @@ def __main__():
         o_new_set.append(autoencoder.get_output(letters_patterns_mutated[i]))
     o_new_set = numpy.array(o_new_set)
     error = mean((npsum((data - o_new_set) ** 2, axis=1) / 2))
+    print("Train error with new mutated patterns: " + str(error))
 
     # resize all outputs
     letters_patterns_mutated_to_train = np.array(list(map(resize_letter, letters_patterns_mutated_to_train)))
